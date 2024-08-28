@@ -9,13 +9,26 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
 
-    img {
-        max-width: 150px;
-        margin-bottom: 20px;
-    }
+.logo-container img {
+    max-width: 80px;
+    margin-bottom: 20px;
+    animation: jump 1s ease-in-out infinite;
+}
 
-    ion-spinner {
-        color: black;
+@keyframes jump {
+    0% {
+        transform: translateY(0);
     }
+    50% {
+        transform: translateY(-25px); 
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+ion-spinner {
+    color: #000000;
 }

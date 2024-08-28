@@ -12,4 +12,5 @@ export class OnboardingPage implements OnInit {
   ngOnInit() {
   }
 
+
 }
