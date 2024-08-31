@@ -4,16 +4,16 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'splash-screen',
+    redirectTo: 'folder/Inbox',
     pathMatch: 'full'
+  },
+  {
+    path: 'folder/:id',
+    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
   },
   {
     path: 'splash-screen',
     loadChildren: () => import('./pages/splash-screen/splash-screen.module').then( m => m.SplashScreenPageModule)
-  },
-  {
-    path: 'onboarding',
-    loadChildren: () => import('./pages/onboarding/onboarding.module').then( m => m.OnboardingPageModule)
   },
   {
     path: 'login',
@@ -23,6 +23,18 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/registration/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/pasajero/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/conductor/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/admin/home/home.module').then( m => m.HomePageModule)
+  }
 ];
 
 @NgModule({
@@ -31,4 +43,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
