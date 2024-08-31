@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'splash-screen',
     pathMatch: 'full'
   },
   {
@@ -24,15 +24,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/registration/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'home',
+    path: 'pasajero-home',
     loadChildren: () => import('./pages/pasajero/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'home',
+    path: 'conductor-home',
     loadChildren: () => import('./pages/conductor/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'home',
+    path: 'admin-home',
     loadChildren: () => import('./pages/admin/home/home.module').then( m => m.HomePageModule)
   }
 ];

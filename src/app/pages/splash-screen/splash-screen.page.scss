@@ -1,0 +1,42 @@
+ion-content {
+    --background: #F2F2F2;
+}
+
+ion-header {
+    --background: #F2F2F2;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-container img {
+    max-width: 70px;
+    margin-bottom: 20px;
+    animation: jump 1s ease-in-out infinite;
+}
+
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-25px); 
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+ion-spinner {
+    color: #000000;
+}

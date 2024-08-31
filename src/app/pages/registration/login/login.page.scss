@@ -1,0 +1,43 @@
+ion-content {
+    --background: #F2F2F2;
+    --color: #000000;
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.box-sup {
+    margin-top: 30%;
+    margin-bottom: 20%;
+}
+
+ion-card {
+    display: flex;
+    flex-direction: column;
+    width: 120%;
+    margin-left: -10%;
+
+    ion-card-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    ion-button {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}
+
+h6 {
+    display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    margin-top: 50%;
+}

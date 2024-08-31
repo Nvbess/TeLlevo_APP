@@ -1,13 +1,28 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="box-sup">
+    <h1 class="titulo">Bienvenido a <br>Te Llevo APP</h1>
+  </div>
+  <div class="box-med">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Estudiantes</ion-card-title>
+        <ion-card-subtitle>Registrate como estudiante!</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-button expand="block">Registrarse</ion-button>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Conductores</ion-card-title>
+        <ion-card-subtitle>Registrate como conductor!</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-button expand="block">Registrarse</ion-button>
+    </ion-card>
+    <h6>Ya tienes una cuenta?<a href="">Inicia Sesión</a></h6>
+  </div>
+  
 </ion-content>
