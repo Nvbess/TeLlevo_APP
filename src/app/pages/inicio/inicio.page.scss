@@ -1,6 +1,8 @@
 ion-content {
-    --background: #1c46ce;
+    --background: #1D64F2;
     --color: #ffffff;
+    position: relative;
+    overflow: hidden;
 }
 
 .logo-container {
@@ -29,14 +31,14 @@ ion-content {
     justify-content: start;
     align-items: center;
     margin-left: 10px;
+}
 
-    .titulo {
-        font-family: "Roboto", sans-serif;
-        display: flex;
-        font-size: 30px;
-        margin-top: 40px;
-        margin-bottom: 60px;
-    }
+.titulo {
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    font-size: 30px;
+    margin-top: 40px;
+    margin-bottom: 60px;
 }
 
 ion-card {
@@ -50,21 +52,77 @@ ion-card {
 }
 
 ion-card-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
     margin-top: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 18px;
-}
-
-ion-button {
-    --color: #ffffff;
-    margin-left: 10%;
-    margin-right: 10%;
+    font-size: 22px;
 }
 
 .botones {
     margin-top: 50px;
     margin-bottom: 80px;
+}
+
+ion-button {
+    --background: var(--ion-color-warning); 
+    --color: #ffffff; 
+    margin-left: 10%; 
+    margin-right: 10%; 
+    font-weight: bold; 
+    border: #000000;
+    text-shadow: 
+        5px 5px 0 #000000,  
+        -5px -5px 0 #000000, 
+        5px -5px 0 #000000,  
+        -5px 5px 0 #000000; 
+}
+
+
+
+.wave {
+    background: rgb(28 70 206 / 50%);
+    border-radius: 1000% 1000% 0 0;
+    position: absolute;
+    width: 200%;
+    height: 12em;
+    animation: wave 10s -3s linear infinite;
+    transform: translate3d(0, 0, 0);
+    opacity: 0.8;
+    bottom: 24em;
+    left: 0;
+    z-index: -1;
+}
+
+.wave:nth-of-type(2) {
+    bottom: 22.75em;
+    animation: wave 18s linear reverse infinite;
+    opacity: 0.8;
+}
+
+.wave:nth-of-type(3) {
+    bottom: 21.5em;
+    animation: wave 20s -1s reverse infinite;
+    opacity: 0.9;
+}
+
+@keyframes wave {
+    2% {
+        transform: translateX(1);
+    }
+    25% {
+        transform: translateX(-25%);
+    }
+    50% {
+        transform: translateX(-50%);
+    }
+    75% {
+        transform: translateX(-25%);
+    }
+    100% {
+        transform: translateX(1);
+    }
 }

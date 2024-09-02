@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-login',
@@ -15,16 +16,13 @@ export class LoginPage implements OnInit {
   emailValue?: string;
   passValue?: string;
 
-  usuarios = [
-    {'email':'admin@admin.cl','pass':'admin123','tipo':'admin',},
-    {'email':'pasajero@user.cl','pass':'user123','tipo':'pasajero',},
-    {'email':'conductor@user.cl','pass':'user123','tipo':'conductor',}
-    ]
+  
 
   constructor(private router: Router, 
               private loadingController: LoadingController, 
               private alertController: AlertController,
-              private formBuilder: FormBuilder) 
+              private formBuilder: FormBuilder,
+              private usuarioService: UsuariosService) 
               { 
                 this.loginForm = this.formBuilder.group({
                   email: ['', [Validators.required, Validators.email]],
@@ -55,7 +53,8 @@ export class LoginPage implements OnInit {
 
     // PREGUNTAR POR EL USUARIO
 
-    const usuario = this.usuarios.find(aux => aux.email === email && aux.pass === pass);
+    const aux = this.usuarioService.getUsuarios();
+    const usuario = aux.find(aux => aux.email === email && aux.pass === pass);
 
     if (usuario ){
       localStorage.setItem('usuarioLogin', JSON.stringify(usuario));
