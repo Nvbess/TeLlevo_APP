@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
+
+  @ViewChild('card', { static: false }) card!: ElementRef;
 
   constructor(private router: Router) { }
 
@@ -18,7 +20,12 @@ export class InicioPage implements OnInit {
     this.router.navigate(['login']);
   }
 
-  register() {
-    this.router.navigate(['register']);
+  ToRegister() {
+    if (this.card && this.card.nativeElement) {
+      this.card.nativeElement.classList.add('expand');
+    }
+    setTimeout(() => {
+      this.router.navigate(['/register']);
+    }, 300);
   }
 }

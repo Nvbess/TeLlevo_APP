@@ -14,13 +14,16 @@
   </div>
 
   <div class="box-med">
-    <ion-card>
+    <ion-card #card>
       <ion-card-title>Bienvenido!</ion-card-title>
       <div class="botones">
-        <ion-button expand="block" (click)="login()">Iniciar Sesión</ion-button>
-        <ion-button expand="block" (click)="register()">Registrarse</ion-button>
+          <ion-button expand="block" (click)="login()">Iniciar Sesión</ion-button>
+          <div class="divider">
+              <span>O</span>
+          </div>
+          <ion-button expand="block" fill="outline" (click)="ToRegister()">Registrarse</ion-button>
       </div>
-    </ion-card>
+  </ion-card>
   </div>
 
 </ion-content>

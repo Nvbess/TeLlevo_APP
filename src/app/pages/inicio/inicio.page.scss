@@ -49,12 +49,13 @@ ion-card {
     min-height: max-content;
     border-radius: 70px;
     background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
 }
 
 ion-card-title {
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
-    margin-top: 60px;
+    margin-top: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,8 +64,8 @@ ion-card-title {
 }
 
 .botones {
-    margin-top: 50px;
-    margin-bottom: 80px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 ion-button {
@@ -73,15 +74,33 @@ ion-button {
     margin-left: 10%; 
     margin-right: 10%; 
     font-weight: bold; 
-    border: #000000;
-    text-shadow: 
-        5px 5px 0 #000000,  
-        -5px -5px 0 #000000, 
-        5px -5px 0 #000000,  
-        -5px 5px 0 #000000; 
 }
 
+ion-button[fill="outline"] {
+    --border-color: var(--ion-color-warning);
+    --color: var(--ion-color-warning);
+    --background: transparent;
+    font-weight: bold;
+}
 
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 35px;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    color: #cacaca;
+    width: 100%;
+    max-width: calc(100% - 20%); 
+    box-sizing: border-box;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid #b0b0b0;
+    margin: 0 5px;
+}
 
 .wave {
     background: rgb(28 70 206 / 50%);
