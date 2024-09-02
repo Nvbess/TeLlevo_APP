@@ -1,0 +1,70 @@
+ion-content {
+    --background: #1c46ce;
+    --color: #ffffff;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.logo {
+    width: 25px; 
+    height: auto;
+    margin-right: 10px;
+}
+
+.titulo-app {
+    font-size: 18px;
+    margin: 0;
+}
+
+.box-sup {
+    flex: 1;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 10px;
+
+    .titulo {
+        font-family: "Roboto", sans-serif;
+        display: flex;
+        font-size: 30px;
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+}
+
+ion-card {
+    display: flex;
+    flex-direction: column;
+    width: 120%;
+    margin-left: -10%;
+    min-height: max-content;
+    border-radius: 70px;
+    background-color: #ffffff;
+}
+
+ion-card-title {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+}
+
+ion-button {
+    --color: #ffffff;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.botones {
+    margin-top: 50px;
+    margin-bottom: 80px;
+}

@@ -12,7 +12,7 @@ export class SplashScreenPage implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.router.navigate(['login']);
+      this.router.navigate(['inicio']);
     }, 2000);
   }
 

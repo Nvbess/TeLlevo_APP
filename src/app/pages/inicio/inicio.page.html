@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="logo-container">
+    <img src="assets/logo.png" class="logo">
+    <h1 class="titulo-app">Te Llevo APP</h1>
+  </div>
+  <div class="box-sup">
+    <h1 class="titulo">Necesitas llegar a <br>tu sede?</h1>
+  </div>
+  <div class="box-med">
+    <ion-card>
+      <ion-card-title>Bienvenido!</ion-card-title>
+      <div class="botones">
+        <ion-button expand="block" color="warning" (click)="login()">Iniciar Sesión</ion-button>
+        <ion-button expand="block" color="warning" (click)="register()">Registrarse</ion-button>
+      </div>
+    </ion-card>
+  </div>
+</ion-content>

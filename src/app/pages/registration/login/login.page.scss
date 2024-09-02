@@ -1,43 +1,54 @@
 ion-content {
-    --background: #F2F2F2;
-    --color: #000000;
+    display: flex;
+    --background: #1c46ce;
+    --color: #ffffff;
 }
 
-.titulo {
+.logo-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    margin-top: 10px;
+}
+
+.logo {
+    width: 25px; 
+    height: auto;
+    margin-right: 10px;
+}
+
+.titulo-app {
+    font-size: 18px;
+    margin: 0;
 }
 
 .box-sup {
-    margin-top: 30%;
-    margin-bottom: 20%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .titulo {
+        font-family: "Roboto", sans-serif;
+        display: flex;
+        font-size: 35px;
+        margin-top: 40%;
+    }
 }
 
 ion-card {
-    display: flex;
-    flex-direction: column;
-    width: 120%;
-    margin-left: -10%;
+    margin-top: 10%;
+    width: 100%;
+    margin-left: 0%;
+    border-radius: 30px;
 
-    ion-card-header {
-        display: flex;
+    ion-card-title {
+        font-size: 25px;
         justify-content: center;
         align-items: center;
         text-align: center;
     }
-
-    ion-button {
-        margin-left: 10%;
-        margin-right: 10%;
+    ion-button{
+        margin-top: 10%;
     }
-}
-
-h6 {
-    display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    margin-top: 50%;
 }

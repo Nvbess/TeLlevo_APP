@@ -16,12 +16,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/splash-screen/splash-screen.module').then( m => m.SplashScreenPageModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import('./pages/registration/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
     path: 'register',
     loadChildren: () => import('./pages/registration/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/registration/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'pasajero-home',
@@ -34,7 +34,11 @@ const routes: Routes = [
   {
     path: 'admin-home',
     loadChildren: () => import('./pages/admin/home/home.module').then( m => m.HomePageModule)
-  }
+  },
+  {
+    path: 'inicio',
+    loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
+  },
 ];
 
 @NgModule({
