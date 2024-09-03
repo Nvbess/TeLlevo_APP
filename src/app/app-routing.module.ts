@@ -13,11 +13,11 @@ const routes: Routes = [
   },
   {
     path: 'splash-screen',
-    loadChildren: () => import('./pages/splash-screen/splash-screen.module').then( m => m.SplashScreenPageModule)
+    loadChildren: () => import('./pages/onboarding/splash-screen/splash-screen.module').then( m => m.SplashScreenPageModule)
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/registration/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/registration/register-pas/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: 'login',
@@ -37,7 +37,15 @@ const routes: Routes = [
   },
   {
     path: 'inicio',
-    loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
+    loadChildren: () => import('./pages/onboarding/inicio/inicio.module').then( m => m.InicioPageModule)
+  },
+  {
+    path: 'register-cond',
+    loadChildren: () => import('./pages/registration/register-cond/register-cond.module').then( m => m.RegisterCondPageModule)
+  },
+  {
+    path: 'tipo-reg',
+    loadChildren: () => import('./pages/onboarding/tipo-reg/tipo-reg.module').then( m => m.TipoRegPageModule)
   },
 ];
 

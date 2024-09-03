@@ -1,0 +1,113 @@
+ion-content {
+  display: flex;
+  --background: #1D64F2;
+  --color: #ffffff;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.logo {
+  width: 25px; 
+  height: auto;
+  margin-right: 10px;
+}
+
+.titulo-app {
+  font-size: 18px;
+  margin: 0;
+}
+
+.box-sup {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .titulo {
+      font-family: "Roboto", sans-serif;
+      display: flex;    
+      font-size: 35px;
+      margin-top: 10%;
+  }
+}
+
+ion-card {
+  margin-top: 5%;
+  width: 100%;
+  margin-left: 0%;
+  border-radius: 30px;
+
+  ion-card-title {
+      font-size: 25px;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+  }
+
+  ion-button {
+      --background: var(--ion-color-warning); 
+      --color: #ffffff;
+      margin-top: 6%; 
+      margin-left: 10%; 
+      margin-right: 10%; 
+      font-weight: bold;
+  
+      --background-active: var(--ion-color-warning); 
+      --color-active: #ffffff;
+      
+      --background-hover: var(--ion-color-warning); 
+      --color-hover: #ffffff;
+  }
+}
+
+.wave {
+  background: rgb(28 70 206 / 50%);
+  border-radius: 1000% 1000% 0 0;
+  position: absolute;
+  width: 300%;
+  height: 580px;
+  animation: wave 10s -3s linear infinite;
+  transform: translate3d(0, 0, 0);
+  opacity: 0.8;
+  bottom: 0em;
+  left: 0;
+  z-index: -1;
+}
+
+.wave:nth-of-type(2) {
+  bottom: -0.5em;
+  animation: wave 18s linear reverse infinite;
+  opacity: 0.8;
+}
+
+.wave:nth-of-type(3) {
+  bottom: -1em;
+  animation: wave 20s -1s reverse infinite;
+  opacity: 0.9;
+}
+
+@keyframes wave {
+  2% {
+      transform: translateX(1);
+  }
+  25% {
+      transform: translateX(-25%);
+  }
+  50% {
+      transform: translateX(-50%);
+  }
+  75% {
+      transform: translateX(-25%);
+  }
+  100% {
+      transform: translateX(1);
+  }
+}

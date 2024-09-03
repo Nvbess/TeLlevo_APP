@@ -6,15 +6,41 @@ import { Usuario } from '../interfaces/usuario';
 })
 export class UsuariosService {
 
+  private nextId: number = 1;
+
   usuarios = [
-    {'email':'admin@admin.cl','pass':'admin123','tipo':'admin',},
-    {'email':'pasajero@user.cl','pass':'user123','tipo':'pasajero',},
-    {'email':'conductor@user.cl','pass':'user123','tipo':'conductor',}
-  ]
+    {
+        "email": "admin@admin.cl",
+        "pass": "admin123",
+        "tipo": "admin",
+        "nombre": "Juan",
+        "apellido": "Pérez",
+        "celular": "+56 9 1234 5678",
+        "id": 1
+    },
+    {
+        "email": "pasajero@user.cl",
+        "pass": "user123",
+        "tipo": "pasajero",
+        "nombre": "Ana",
+        "apellido": "Gómez",
+        "celular": "+56 9 2345 6789",
+        "id": 2
+    },
+    {
+        "email": "conductor@user.cl",
+        "pass": "user123",
+        "tipo": "conductor",
+        "nombre": "Carlos",
+        "apellido": "Sánchez",
+        "celular": "+56 9 3456 7890",
+        "id": 3
+    }
+]
 
   constructor() { }
 
-  getUsuarios() {
+  getUsuarios(): Usuario[] {
     return this.usuarios;
   }
 
@@ -22,8 +48,10 @@ export class UsuariosService {
 
   }
 
-  addUsuario(usuario: Usuario) {
-    this.usuarios.push(usuario)
+  addUsuario(usuario: Omit<Usuario, 'id'>): Usuario {
+    const newUsuario: Usuario = { ...usuario, id: this.nextId++ };
+    this.usuarios.push(newUsuario);
+    return newUsuario;
   }
 
   delUsuario() {

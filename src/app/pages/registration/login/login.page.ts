@@ -33,6 +33,10 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
+  forgotpass() {
+    this.router.navigate(['inicio']);
+  }
+
   async login() {
 
     // Creamos loading
@@ -62,11 +66,11 @@ export class LoginPage implements OnInit {
       setTimeout(async() => {
         (await loading).dismiss();
         if (usuario.tipo === 'admin') {
-          this.router.navigate(['']);
+          this.router.navigate(['admin-home']);
         } else if (usuario.tipo === 'pasajero') {
-          this.router.navigate(['']);
+          this.router.navigate(['pasajero-home']);
         } else {
-          this.router.navigate(['']);
+          this.router.navigate(['conductor-home']);
         }
         
       },2000);

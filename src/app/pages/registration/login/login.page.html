@@ -2,12 +2,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="logo-container">
+    <img src="assets/logo.png" class="logo" />
+    <h1 class="titulo-app">Te Llevo APP</h1>
+  </div>
   <div class="box-sup">
     <h1 class="titulo">Bienvenido!</h1>
-  </div>
-  <div class="logo-container">
-    <img src="assets/logo.png" class="logo">
-    <h1 class="titulo-app">Te Llevo APP</h1>
   </div>
   <ion-card>
     <ion-card-content [formGroup]="loginForm">
@@ -35,7 +38,8 @@
         Contraseña debe tener mínimo 6 caracteres.
       </ion-text>
 
-      <ion-button expand="block" color="warning" (click)="login()">Ingresar</ion-button>
+      <ion-button expand="block" (click)="login()">Ingresar</ion-button>
     </ion-card-content>
   </ion-card>
+  <h1 class="forgot-pass" (click)="forgotpass()">Olvidaste tu contraseña?</h1>
 </ion-content>

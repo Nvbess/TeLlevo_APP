@@ -37,8 +37,8 @@ ion-content {
     font-family: "Roboto", sans-serif;
     display: flex;
     font-size: 30px;
-    margin-top: 40px;
-    margin-bottom: 60px;
+    margin-top: 100px;
+    margin-bottom: 10px;
 }
 
 ion-card {
@@ -64,7 +64,7 @@ ion-card-title {
 }
 
 .botones {
-    margin-top: 20px;
+    margin-top: 190px;
     margin-bottom: 30px;
 }
 
@@ -73,7 +73,13 @@ ion-button {
     --color: #ffffff; 
     margin-left: 10%; 
     margin-right: 10%; 
-    font-weight: bold; 
+    font-weight: bold;
+
+    --background-active: var(--ion-color-warning); 
+    --color-active: #ffffff;
+    
+    --background-hover: var(--ion-color-warning); 
+    --color-hover: #ffffff;
 }
 
 ion-button[fill="outline"] {
@@ -81,18 +87,41 @@ ion-button[fill="outline"] {
     --color: var(--ion-color-warning);
     --background: transparent;
     font-weight: bold;
+
+    --border-width: 2px;
+    --border-style: solid;
+
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); 
+
+    &:active {
+        --border-color: var(--ion-color-warning);
+        --color: var(--ion-color-warning);
+        --background: transparent;
+        --color: #ffffff;
+        --color-hover: #ffffff;
+    }
+
+    &:hover {
+        --border-color: var(--ion-color-warning);
+        --color: var(--ion-color-warning);
+        --background: transparent;
+        --color: #ffffff;
+        --color-hover: #ffffff;
+    }
 }
+
 
 .divider {
     display: flex;
     align-items: center;
-    margin: 20px 35px;
+    margin: 20px 30px;
     font-family: "Roboto", sans-serif;
     font-size: 16px;
     color: #cacaca;
     width: 100%;
     max-width: calc(100% - 20%); 
     box-sizing: border-box;
+    position: relative;
 }
 
 .divider::before, .divider::after {
@@ -100,30 +129,40 @@ ion-button[fill="outline"] {
     flex: 1;
     border-top: 1px solid #b0b0b0;
     margin: 0 5px;
+    position: relative;
 }
+
+.divider::before {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.divider::after {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
 
 .wave {
     background: rgb(28 70 206 / 50%);
     border-radius: 1000% 1000% 0 0;
     position: absolute;
-    width: 200%;
-    height: 12em;
+    width: 300%;
+    height: 580px;
     animation: wave 10s -3s linear infinite;
     transform: translate3d(0, 0, 0);
     opacity: 0.8;
-    bottom: 24em;
+    bottom: 0em;
     left: 0;
     z-index: -1;
 }
 
 .wave:nth-of-type(2) {
-    bottom: 22.75em;
+    bottom: -0.5em;
     animation: wave 18s linear reverse infinite;
     opacity: 0.8;
 }
 
 .wave:nth-of-type(3) {
-    bottom: 21.5em;
+    bottom: -1em;
     animation: wave 20s -1s reverse infinite;
     opacity: 0.9;
 }

@@ -25,7 +25,7 @@ export class InicioPage implements OnInit {
       this.card.nativeElement.classList.add('expand');
     }
     setTimeout(() => {
-      this.router.navigate(['/register']);
+      this.router.navigate(['/tipo-reg']);
     }, 300);
   }
 }

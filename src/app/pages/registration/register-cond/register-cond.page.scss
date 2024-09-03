@@ -2,69 +2,56 @@ ion-content {
     display: flex;
     --background: #1D64F2;
     --color: #ffffff;
-}
-
-.logo-container {
+  }
+  
+  .logo-container {
     display: flex;
     justify-content: start;
     align-items: center;
     margin-top: 40px;
     margin-bottom: 20px;
     margin-left: 10px;
-}
-
-.logo {
+  }
+  
+  .logo {
     width: 25px; 
     height: auto;
     margin-right: 10px;
-}
-
-.titulo-app {
+  }
+  
+  .titulo-app {
     font-size: 18px;
     margin: 0;
-}
-
-.box-sup {
+  }
+  
+  .box-sup {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    text-align: center;
+  
     .titulo {
         font-family: "Roboto", sans-serif;
         display: flex;
         font-size: 35px;
-        margin-top: 30%;
+        margin-top: 10%;
     }
-}
-
-.forgot-pass {
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 14px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.forgot-pass:hover {
-    text-decoration: none; /* Mantiene el subrayado al pasar el mouse */
-}
-
-ion-card {
-    margin-top: 10%;
+  }
+  
+  ion-card {
+    margin-top: 5%;
     width: 100%;
     margin-left: 0%;
     border-radius: 30px;
-
+  
     ion-card-title {
         font-size: 25px;
         justify-content: center;
         align-items: center;
         text-align: center;
     }
-
+  
     ion-button {
         --background: var(--ion-color-warning); 
         --color: #ffffff;
@@ -79,9 +66,9 @@ ion-card {
         --background-hover: var(--ion-color-warning); 
         --color-hover: #ffffff;
     }
-}
-
-.wave {
+  }
+  
+  .wave {
     background: rgb(28 70 206 / 50%);
     border-radius: 1000% 1000% 0 0;
     position: absolute;
@@ -93,21 +80,21 @@ ion-card {
     bottom: 0em;
     left: 0;
     z-index: -1;
-}
-
-.wave:nth-of-type(2) {
+  }
+  
+  .wave:nth-of-type(2) {
     bottom: -0.5em;
     animation: wave 18s linear reverse infinite;
     opacity: 0.8;
-}
-
-.wave:nth-of-type(3) {
+  }
+  
+  .wave:nth-of-type(3) {
     bottom: -1em;
     animation: wave 20s -1s reverse infinite;
     opacity: 0.9;
-}
-
-@keyframes wave {
+  }
+  
+  @keyframes wave {
     2% {
         transform: translateX(1);
     }
@@ -123,4 +110,4 @@ ion-card {
     100% {
         transform: translateX(1);
     }
-}
+  }
