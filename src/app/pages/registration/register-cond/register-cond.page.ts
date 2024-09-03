@@ -54,6 +54,7 @@ export class RegisterCondPage implements OnInit {
         celular: this.celValue || '',
         id: 0,
       };
+      this.usuarioService.addUsuario(nuevoUsuario);
       this.router.navigate(['login']);
     } else {
       const alert = await this.alertController.create({

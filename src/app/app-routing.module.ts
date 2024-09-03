@@ -46,7 +46,19 @@ const routes: Routes = [
   {
     path: 'tipo-reg',
     loadChildren: () => import('./pages/onboarding/tipo-reg/tipo-reg.module').then( m => m.TipoRegPageModule)
+  },  {
+    path: 'adm-usuarios',
+    loadChildren: () => import('./pages/admin/adm-usuarios/adm-usuarios.module').then( m => m.AdmUsuariosPageModule)
   },
+  {
+    path: 'adm-viajes',
+    loadChildren: () => import('./pages/admin/adm-viajes/adm-viajes.module').then( m => m.AdmViajesPageModule)
+  },
+  {
+    path: 'config',
+    loadChildren: () => import('./pages/admin/config/config.module').then( m => m.ConfigPageModule)
+  },
+
 ];
 
 @NgModule({

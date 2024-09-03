@@ -24,6 +24,7 @@ export class AppComponent {
       this.tipoUsuario = user.tipo;
       this.emailUsuario = user.email;
       this.nombreUsuario = user.nombre;
+      this.apellUsuario = user.apellido;
       this.configSideMenu();
     } else {
     }
@@ -32,27 +33,29 @@ export class AppComponent {
   configSideMenu() {
     if (this.tipoUsuario === 'admin') {
       this.appPages = [
-        { title: 'Dashboard', url: '/home', icon: 'home' },
-        { title: 'Usuarios', url: '/home', icon: 'mail' },
-        { title: 'Log out', url: '', icon: 'log-out', action: this.logout.bind(this) },
+        { title: 'Home', url: '/home', icon: 'home' },
+        { title: 'Administrar Usuarios', url: '/adm-usuarios', icon: 'people' },
+        { title: 'Administrar Viajes', url: '/adm-viajes', icon: 'car' },
+        { title: 'Configuración', url: '/config', icon: 'construct' },
+        { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
       ]
     } else if (this.tipoUsuario === 'pasajero') {
       this.appPages = [
+        { title: 'Home', url: '/home', icon: 'home' },
         {title: '', url: '', icon: ''},
-        {title: '', url: '', icon: ''},
-        {title: '', url: '', icon: ''},
+        { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
       ]
     } else {
       this.appPages = [
+        { title: 'Home', url: '/home', icon: 'home' },
         {title: '', url: '', icon: ''},
-        {title: '', url: '', icon: ''},
-        {title: '', url: '', icon: ''},
+        { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
       ]
     }
   }
 
   logout() {
     localStorage.removeItem('usuarioLogin');
-    this.router.navigate(['login']);
+    this.router.navigate(['inicio']);
   }
 }
