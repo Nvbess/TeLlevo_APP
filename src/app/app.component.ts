@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Page } from './interfaces/page';
+import { register } from 'swiper/element/bundle';
+
+register();
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
