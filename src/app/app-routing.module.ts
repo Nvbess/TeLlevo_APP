@@ -58,6 +58,14 @@ const routes: Routes = [
     path: 'config',
     loadChildren: () => import('./pages/admin/config/config.module').then( m => m.ConfigPageModule)
   },
+  {
+    path: 'pj-profile',
+    loadChildren: () => import('./pages/pasajero/pj-profile/pj-profile.module').then( m => m.PjProfilePageModule)
+  },
+  {
+    path: 'pj-actividad',
+    loadChildren: () => import('./pages/pasajero/pj-actividad/pj-actividad.module').then( m => m.PjActividadPageModule)
+  },
 
 ];
 
