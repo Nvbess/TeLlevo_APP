@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-inicio',
@@ -10,10 +11,13 @@ export class InicioPage implements OnInit {
 
   @ViewChild('card', { static: false }) card!: ElementRef;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private menuController: MenuController
+  ) { }
 
 
   ngOnInit() {
+    this.menuController.enable(false);
   }
 
   login() {

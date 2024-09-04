@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -22,7 +22,8 @@ export class LoginPage implements OnInit {
               private loadingController: LoadingController, 
               private alertController: AlertController,
               private formBuilder: FormBuilder,
-              private usuarioService: UsuariosService) 
+              private usuarioService: UsuariosService,
+              private menuController: MenuController) 
               { 
                 this.loginForm = this.formBuilder.group({
                   email: ['', [Validators.required, Validators.email]],
@@ -31,6 +32,7 @@ export class LoginPage implements OnInit {
               }
 
   ngOnInit() {
+    this.menuController.enable(false);
   }
 
   forgotpass() {

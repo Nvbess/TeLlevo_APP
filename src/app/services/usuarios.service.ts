@@ -44,8 +44,8 @@ export class UsuariosService {
     return this.usuarios;
   }
 
-  getUsuario() {
-
+  getUsuario(email:string) {
+    return this.usuarios.find(aux => aux.email === email);
   }
 
   addUsuario(usuario: Omit<Usuario, 'id'>): Usuario {

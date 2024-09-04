@@ -46,9 +46,19 @@ const routes: Routes = [
   {
     path: 'tipo-reg',
     loadChildren: () => import('./pages/onboarding/tipo-reg/tipo-reg.module').then( m => m.TipoRegPageModule)
-  },  {
-    path: 'adm-usuarios',
-    loadChildren: () => import('./pages/admin/adm-usuarios/adm-usuarios.module').then( m => m.AdmUsuariosPageModule)
+  },
+  {
+    path: 'usuarios',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/admin/adm-usuarios/adm-usuarios.module').then( m => m.AdmUsuariosPageModule)
+      },
+      {
+        path: ':email',
+        loadChildren: () => import('./pages/admin/det-usuarios/det-usuarios.module').then( m => m.DetUsuariosPageModule)
+      },
+    ]
   },
   {
     path: 'adm-viajes',
@@ -65,6 +75,10 @@ const routes: Routes = [
   {
     path: 'pj-actividad',
     loadChildren: () => import('./pages/pasajero/pj-actividad/pj-actividad.module').then( m => m.PjActividadPageModule)
+  },
+  {
+    path: 'det-usuarios',
+    loadChildren: () => import('./pages/admin/det-usuarios/det-usuarios.module').then( m => m.DetUsuariosPageModule)
   },
 
 ];

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from 'src/app/interfaces/usuario';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-adm-usuarios',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdmUsuariosPage implements OnInit {
 
-  constructor() { }
+  usuarios: Usuario[] = [];
+
+  constructor(private usuarioService: UsuariosService) { }
 
   ngOnInit() {
+    this.config()
+  }
+
+  config() {
+    this.usuarios = this.usuarioService.getUsuarios();
+
   }
 
 }

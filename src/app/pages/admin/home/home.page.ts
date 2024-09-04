@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -14,10 +15,13 @@ export class HomePage implements OnInit {
   public apellUsuario?: string;
   public celUsuario?: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private menuController: MenuController
+  ) { }
 
 
   ngOnInit() {
+    this.menuController.enable(true);
     const usuarioLogin = localStorage.getItem('usuarioLogin');
     
     if (usuarioLogin) {

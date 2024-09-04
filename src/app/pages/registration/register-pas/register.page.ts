@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -25,7 +25,8 @@ export class RegisterPage implements OnInit {
               private loadingController: LoadingController, 
               private alertController: AlertController,
               private formBuilder: FormBuilder,
-              private usuarioService: UsuariosService) 
+              private usuarioService: UsuariosService,
+              private menuController: MenuController) 
               { 
                 this.registerForm = this.formBuilder.group(
                   {
@@ -39,6 +40,7 @@ export class RegisterPage implements OnInit {
               }
 
   ngOnInit() {
+    this.menuController.enable(false);
   }
 
   async register() {
