@@ -39,6 +39,15 @@ swiper-slide {
     margin-top: 0px;
 }
 
+.mini-card {
+    --background: #1B78F2;
+    color:#ffffff;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 50px;
+}
+
 ion-card {
     --background: #ffffff;
     border-radius: 20px;
@@ -58,4 +67,56 @@ ion-card {
     }
 }
 
+.floating-menu-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    --background: transparent;
+    --color: black;
+  }
+  
+  .wave {
+    background: rgba(233, 233, 233, 0.5);
+    border-radius: 1000% 1000% 0 0;
+    position: absolute;
+    width: 600%;
+    height: 480px;
+    animation: wave 10s -3s linear infinite;
+    transform: translate3d(0, 0, 0);
+    opacity: 0.8;
+    bottom: 0em;
+    left: 0;
+    z-index: -1;
+}
+
+.wave:nth-of-type(2) {
+    bottom: -0.5em;
+    animation: wave 18s linear reverse infinite;
+    opacity: 0.8;
+}
+
+.wave:nth-of-type(3) {
+    bottom: -1em;
+    animation: wave 20s -1s reverse infinite;
+    opacity: 0.9;
+}
+
+@keyframes wave {
+    2% {
+        transform: translateX(1);
+    }
+    25% {
+        transform: translateX(-25%);
+    }
+    50% {
+        transform: translateX(-50%);
+    }
+    75% {
+        transform: translateX(-25%);
+    }
+    100% {
+        transform: translateX(1);
+    }
+}
 

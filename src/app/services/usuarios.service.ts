@@ -13,8 +13,8 @@ export class UsuariosService {
         "email": "admin@admin.cl",
         "pass": "admin123",
         "tipo": "admin",
-        "nombre": "Juan",
-        "apellido": "Pérez",
+        "nombre": "Luis",
+        "apellido": "Galeano",
         "celular": "+56 9 1234 5678",
         "id": 1
     },

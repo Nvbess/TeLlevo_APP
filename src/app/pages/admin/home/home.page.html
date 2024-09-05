@@ -1,74 +1,84 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
+<ion-header class="ion-no-border header-transparent">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="box-sup">
-    <p class="titulo">Hola!</p>
-    <h1 class="nombre-usuario">{{ nombreUsuario }} {{ apellUsuario }}</h1>
-  </div>
-  <div class="box-med">
-    <h5 class="titulo-cont">Últimos viajes</h5>
-    <swiper-container>
-      <swiper-slide>
-        <ion-card routerLink="/adm-viajes">
-          <img class="img-map" src="assets/maps/map-1.png">
-          <ion-card-header>
-            <ion-card-title class="direccion-viaje">Av. San Carlos 1340</ion-card-title>
-          </ion-card-header>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+    <div class="box-sup">
+      <p class="titulo">Hola!</p>
+      <h1 class="nombre-usuario">{{ nombreUsuario }} {{ apellUsuario }}</h1>
+    </div>
+    <div class="box-med">
+      <h5 class="titulo-cont">Últimos viajes</h5>
+      <swiper-container>
+        <swiper-slide>
+          <ion-card routerLink="/adm-viajes">
+            <img class="img-map" src="assets/maps/map-1.png" />
+            <ion-card-header>
+              <ion-card-title class="direccion-viaje"
+                >Av. San Carlos 1340</ion-card-title
+              >
+            </ion-card-header>
+            <ion-card-content>
+              <ion-card-subtitle>18 Ago. 14:00 p.m.</ion-card-subtitle>
+              <ion-card-subtitle>CLP 3.000</ion-card-subtitle>
+            </ion-card-content>
+          </ion-card>
+        </swiper-slide>
+        <swiper-slide>
+          <ion-card routerLink="/adm-viajes">
+            <img class="img-map" src="assets/maps/map-2.png" />
+            <ion-card-header>
+              <ion-card-title class="direccion-viaje"
+                >Av. Mexico 7384</ion-card-title
+              >
+            </ion-card-header>
+            <ion-card-content>
+              <ion-card-subtitle>15 Ago. 14:00 p.m.</ion-card-subtitle>
+              <ion-card-subtitle>CLP 5.500</ion-card-subtitle>
+            </ion-card-content>
+          </ion-card>
+        </swiper-slide>
+        <swiper-slide>
+          <ion-card routerLink="/adm-viajes">
+            <img class="img-map" src="assets/maps/map-3.png" />
+            <ion-card-header>
+              <ion-card-title class="direccion-viaje"
+                >Pasaje Caleta Rios 1232</ion-card-title
+              >
+            </ion-card-header>
+            <ion-card-content>
+              <ion-card-subtitle>12 Ago. 14:00 p.m.</ion-card-subtitle>
+              <ion-card-subtitle>CLP 3.000</ion-card-subtitle>
+            </ion-card-content>
+          </ion-card>
+        </swiper-slide>
+      </swiper-container>
+      <div class="adm">
+        <h5 class="titulo-cont">Administración</h5>
+        <ion-card class="mini-card" routerLink="/lista-pas">
           <ion-card-content>
-            <ion-card-subtitle>18 Ago. 14:00 p.m.</ion-card-subtitle>
-            <ion-card-subtitle>CLP 3.000</ion-card-subtitle>
+            <h2 class="tit-adm">Administrar Pasajeros</h2>
           </ion-card-content>
         </ion-card>
-      </swiper-slide>
-      <swiper-slide>
-        <ion-card routerLink="/adm-viajes">
-          <img class="img-map" src="assets/maps/map-2.png">
-          <ion-card-header>
-            <ion-card-title class="direccion-viaje">Av. Mexico 7384</ion-card-title>
-          </ion-card-header>
+        <ion-card class="mini-card" routerLink="/lista-cond">
           <ion-card-content>
-            <ion-card-subtitle>15 Ago. 14:00 p.m.</ion-card-subtitle>
-            <ion-card-subtitle>CLP 5.500</ion-card-subtitle>
+            <h2 class="tit-adm">Administrar Conductores</h2>
           </ion-card-content>
         </ion-card>
-      </swiper-slide>
-      <swiper-slide>
-        <ion-card routerLink="/adm-viajes">
-          <img class="img-map" src="assets/maps/map-3.png">
-          <ion-card-header>
-            <ion-card-title class="direccion-viaje">Pasaje Caleta Rios 1232</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-card-subtitle>12 Ago. 14:00 p.m.</ion-card-subtitle>
-            <ion-card-subtitle>CLP 3.000</ion-card-subtitle>
-          </ion-card-content>
-        </ion-card>
-      </swiper-slide>
-    </swiper-container>
-    <h5 class="titulo-cont">Administración</h5>
-    <swiper-container>
-      <swiper-slide>
-        <ion-card>
-          <ion-card-content>
-            Administrar Pasajeros
-          </ion-card-content>
-        </ion-card>
-      </swiper-slide>
-      <swiper-slide>
-        <ion-card>
-          <ion-card-content>
-            Administrar Conductores
-          </ion-card-content>
-        </ion-card>
-      </swiper-slide>
-    </swiper-container>
-  </div>
+      </div>
+    </div>
 </ion-content>
 
 <ion-footer>
