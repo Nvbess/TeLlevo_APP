@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ListaPasPageRoutingModule } from './lista-pas-routing.module';
 
 import { ListaPasPage } from './lista-pas.page';
+import { AdmtoolbarModule } from 'src/app/components/admtoolbar/admtoolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListaPasPageRoutingModule
+    ListaPasPageRoutingModule,
+    AdmtoolbarModule
   ],
   declarations: [ListaPasPage]
 })

@@ -38,7 +38,8 @@ export class AppComponent {
     if (this.tipoUsuario === 'admin') {
       this.appPages = [
         { title: 'Home', url: '/admin-home', icon: 'home' },
-        { title: 'Administrar Usuarios', url: '/usuarios', icon: 'people' },
+        { title: 'Administrar Pasajeros', url: '/lista-pas', icon: 'people' },
+        { title: 'Administrar Conductores', url: '/lista-cond', icon: 'people' },
         { title: 'Administrar Viajes', url: '/adm-viajes', icon: 'car' },
         { title: 'Configuración', url: '/config', icon: 'construct' },
         { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },

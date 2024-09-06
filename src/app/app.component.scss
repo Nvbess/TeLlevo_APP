@@ -1,3 +1,23 @@
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+
+  .logo {
+    width: 25px; 
+    height: auto;
+    margin-right: 10px;
+  }
+  
+  .titulo-app {
+    font-size: 18px;
+    margin: 0;
+  }
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }

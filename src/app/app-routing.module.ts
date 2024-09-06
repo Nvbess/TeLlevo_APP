@@ -79,7 +79,8 @@ const routes: Routes = [
   {
     path: 'det-usuarios',
     loadChildren: () => import('./pages/admin/det-usuarios/det-usuarios.module').then( m => m.DetUsuariosPageModule)
-  },  {
+  },
+  {
     path: 'lista-cond',
     loadChildren: () => import('./pages/admin/lista-cond/lista-cond.module').then( m => m.ListaCondPageModule)
   },

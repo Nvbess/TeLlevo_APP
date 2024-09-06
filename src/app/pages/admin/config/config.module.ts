@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ConfigPageRoutingModule } from './config-routing.module';
 
 import { ConfigPage } from './config.page';
+import { AdmtoolbarModule } from 'src/app/components/admtoolbar/admtoolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ConfigPageRoutingModule
+    ConfigPageRoutingModule,
+    AdmtoolbarModule
   ],
   declarations: [ConfigPage]
 })

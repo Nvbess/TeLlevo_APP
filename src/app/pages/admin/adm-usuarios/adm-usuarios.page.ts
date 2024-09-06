@@ -19,7 +19,6 @@ export class AdmUsuariosPage implements OnInit {
 
   config() {
     this.usuarios = this.usuarioService.getUsuarios();
-
   }
 
 }

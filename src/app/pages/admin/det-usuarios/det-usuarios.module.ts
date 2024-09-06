@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { DetUsuariosPageRoutingModule } from './det-usuarios-routing.module';
 
 import { DetUsuariosPage } from './det-usuarios.page';
+import { AdmtoolbarModule } from 'src/app/components/admtoolbar/admtoolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DetUsuariosPageRoutingModule
+    DetUsuariosPageRoutingModule,
+    AdmtoolbarModule
   ],
   declarations: [DetUsuariosPage]
 })

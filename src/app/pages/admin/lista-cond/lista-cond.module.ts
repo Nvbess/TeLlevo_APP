@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ListaCondPageRoutingModule } from './lista-cond-routing.module';
 
 import { ListaCondPage } from './lista-cond.page';
+import { AdmtoolbarModule } from 'src/app/components/admtoolbar/admtoolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListaCondPageRoutingModule
+    ListaCondPageRoutingModule,
+    AdmtoolbarModule
   ],
   declarations: [ListaCondPage]
 })

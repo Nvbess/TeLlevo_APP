@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { Viaje } from 'src/app/interfaces/viaje';
+import { ViajesService } from 'src/app/services/viajes.service';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +11,8 @@ import { MenuController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
+  viajes: Viaje[] = [];
+  
   public tipoUsuario?: string;
   public emailUsuario?: string;
   public nombreUsuario?: string;
@@ -16,11 +20,13 @@ export class HomePage implements OnInit {
   public celUsuario?: string;
 
   constructor(private router: Router,
-              private menuController: MenuController
+              private menuController: MenuController,
+              private viajesService: ViajesService
   ) { }
 
 
   ngOnInit() {
+    this.config()
     this.menuController.enable(true);
     const usuarioLogin = localStorage.getItem('usuarioLogin');
     
@@ -31,6 +37,10 @@ export class HomePage implements OnInit {
       this.nombreUsuario = user.nombre;
       this.apellUsuario = user.apellido;
     }
+  }
+
+  config(){
+    this.viajes = this.viajesService.getViajes();
   }
 
   goHome() {

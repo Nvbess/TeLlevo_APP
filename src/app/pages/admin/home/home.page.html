@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border header-transparent">
-    <ion-toolbar>
+    <ion-toolbar class="toolbar-transparent">
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
@@ -22,51 +22,21 @@
     <div class="box-med">
       <h5 class="titulo-cont">Últimos viajes</h5>
       <swiper-container>
-        <swiper-slide>
-          <ion-card routerLink="/adm-viajes">
+        <swiper-slide *ngFor="let aux of viajes">
+          <ion-card routerLink="/adm-viajes" >
             <img class="img-map" src="assets/maps/map-1.png" />
             <ion-card-header>
-              <ion-card-title class="direccion-viaje"
-                >Av. San Carlos 1340</ion-card-title
-              >
+              <ion-card-title class="direccion-viaje"> {{ aux.destino }} </ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-card-subtitle>18 Ago. 14:00 p.m.</ion-card-subtitle>
-              <ion-card-subtitle>CLP 3.000</ion-card-subtitle>
-            </ion-card-content>
-          </ion-card>
-        </swiper-slide>
-        <swiper-slide>
-          <ion-card routerLink="/adm-viajes">
-            <img class="img-map" src="assets/maps/map-2.png" />
-            <ion-card-header>
-              <ion-card-title class="direccion-viaje"
-                >Av. Mexico 7384</ion-card-title
-              >
-            </ion-card-header>
-            <ion-card-content>
-              <ion-card-subtitle>15 Ago. 14:00 p.m.</ion-card-subtitle>
-              <ion-card-subtitle>CLP 5.500</ion-card-subtitle>
-            </ion-card-content>
-          </ion-card>
-        </swiper-slide>
-        <swiper-slide>
-          <ion-card routerLink="/adm-viajes">
-            <img class="img-map" src="assets/maps/map-3.png" />
-            <ion-card-header>
-              <ion-card-title class="direccion-viaje"
-                >Pasaje Caleta Rios 1232</ion-card-title
-              >
-            </ion-card-header>
-            <ion-card-content>
-              <ion-card-subtitle>12 Ago. 14:00 p.m.</ion-card-subtitle>
-              <ion-card-subtitle>CLP 3.000</ion-card-subtitle>
+              <ion-card-subtitle>{{ aux.fecha }} {{ aux.hora }}</ion-card-subtitle>
+              <ion-card-subtitle>CLP {{ aux.costo }}</ion-card-subtitle>
             </ion-card-content>
           </ion-card>
         </swiper-slide>
       </swiper-container>
+      <h5 class="titulo-adm">Administración</h5>
       <div class="adm">
-        <h5 class="titulo-cont">Administración</h5>
         <ion-card class="mini-card" routerLink="/lista-pas">
           <ion-card-content>
             <h2 class="tit-adm">Administrar Pasajeros</h2>
@@ -78,26 +48,14 @@
           </ion-card-content>
         </ion-card>
       </div>
+      <ion-card class="mini-card" routerLink="/lista-cond">
+        <ion-card-content>
+          <h2 class="tit-adm">Administrar Viajes</h2>
+        </ion-card-content>
+      </ion-card>
     </div>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" (click)="goHome()">
-          <ion-icon name="home-sharp"></ion-icon>
-          Inicio
-        </ion-tab-button>
-        <ion-tab-button tab="historial" (click)="goPerfil()">
-          <ion-icon name="receipt-sharp"></ion-icon>
-          Actividad
-        </ion-tab-button>
-        <ion-tab-button tab="perfil" (click)="goPerfil()">
-          <ion-icon name="person"></ion-icon>
-          Perfil
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-toolbar>
+  <app-toolbar-adm></app-toolbar-adm>
 </ion-footer>

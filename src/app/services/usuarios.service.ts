@@ -6,8 +6,6 @@ import { Usuario } from '../interfaces/usuario';
 })
 export class UsuariosService {
 
-  private nextId: number = 1;
-
   usuarios = [
     {
         "email": "admin@admin.cl",
@@ -48,10 +46,8 @@ export class UsuariosService {
     return this.usuarios.find(aux => aux.email === email);
   }
 
-  addUsuario(usuario: Omit<Usuario, 'id'>): Usuario {
-    const newUsuario: Usuario = { ...usuario, id: this.nextId++ };
-    this.usuarios.push(newUsuario);
-    return newUsuario;
+  addUsuario(usuario: Usuario) {
+    this.usuarios.push(usuario)
   }
 
   delUsuario() {
