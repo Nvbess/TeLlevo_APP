@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ConfigPageRoutingModule } from './config-routing.module';
+import { DetViajesPageRoutingModule } from './det-viajes-routing.module';
 
-import { ConfigPage } from './config.page';
+import { DetViajesPage } from './det-viajes.page';
 import { AdmtoolbarModule } from 'src/app/components/admtoolbar/admtoolbar.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { AdmtoolbarModule } from 'src/app/components/admtoolbar/admtoolbar.modul
     CommonModule,
     FormsModule,
     IonicModule,
-    ConfigPageRoutingModule,
+    DetViajesPageRoutingModule,
     AdmtoolbarModule
   ],
-  declarations: [ConfigPage]
+  declarations: [DetViajesPage]
 })
-export class ConfigPageModule {}
+export class DetViajesPageModule {}

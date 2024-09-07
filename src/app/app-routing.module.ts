@@ -65,10 +65,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin/adm-viajes/adm-viajes.module').then( m => m.AdmViajesPageModule)
   },
   {
-    path: 'config',
-    loadChildren: () => import('./pages/admin/config/config.module').then( m => m.ConfigPageModule)
-  },
-  {
     path: 'pj-profile',
     loadChildren: () => import('./pages/pasajero/pj-profile/pj-profile.module').then( m => m.PjProfilePageModule)
   },
@@ -88,6 +84,28 @@ const routes: Routes = [
     path: 'lista-pas',
     loadChildren: () => import('./pages/admin/lista-pas/lista-pas.module').then( m => m.ListaPasPageModule)
   },
+  {
+    path: 'viajes',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/admin/adm-viajes/adm-viajes.module').then( m => m.AdmViajesPageModule)
+      },
+      {
+        path: ':id',
+        loadChildren: () => import('./pages/admin/det-viajes/det-viajes.module').then( m => m.DetViajesPageModule)
+      },
+    ]
+  },
+  {
+    path: 'det-viajes',
+    loadChildren: () => import('./pages/admin/det-viajes/det-viajes.module').then( m => m.DetViajesPageModule)
+  },  {
+    path: 'perfil-admin',
+    loadChildren: () => import('./pages/admin/perfil-admin/perfil-admin.module').then( m => m.PerfilAdminPageModule)
+  },
+
+
 
 
 
