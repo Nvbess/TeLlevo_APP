@@ -16,6 +16,7 @@ export class DetUsuariosPage implements OnInit {
   userApellido?: string | null;
   userCelular?: string | null;
   userID?: number | null;
+  userTipo?: string | null;
 
   constructor(private activatedRoute: ActivatedRoute,
               private usuarioService: UsuariosService
@@ -30,6 +31,7 @@ export class DetUsuariosPage implements OnInit {
         this.userApellido = this.usuario.apellido;
         this.userCelular = this.usuario.celular;
         this.userID = this.usuario.id;
+        this.userTipo = this.usuario.tipo;
       }
     }
   }

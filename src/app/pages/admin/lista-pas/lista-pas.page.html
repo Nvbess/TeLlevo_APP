@@ -4,9 +4,6 @@
     <ion-buttons slot="start">
       <ion-back-button default-href="/admin-home"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -15,13 +12,9 @@
     <ion-item
       [button]="true"
       *ngFor="let aux of usuarios"
-      [routerLink]="['/usuarios', aux.email]"
-    >
+      [routerLink]="['/usuarios', aux.email]">
       <ion-avatar aria-hidden="true" slot="start">
-        <img
-          alt=""
-          src="https://ionicframework.com/docs/img/demos/avatar.svg"
-        />
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg">
       </ion-avatar>
       <ion-note slot="end" color="tertiary"> {{ aux.tipo }} </ion-note>
       <ion-label slot="start"> {{ aux.nombre }} {{ aux.apellido }} </ion-label>

@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FolderPageRoutingModule } from './folder-routing.module';
+import { PjViajesdisPageRoutingModule } from './pj-viajesdis-routing.module';
 
-import { FolderPage } from './folder.page';
+import { PjViajesdisPage } from './pj-viajesdis.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FolderPageRoutingModule
+    PjViajesdisPageRoutingModule
   ],
-  declarations: [FolderPage]
+  declarations: [PjViajesdisPage]
 })
-export class FolderPageModule {}
+export class PjViajesdisPageModule {}

@@ -16,4 +16,12 @@ export class ToolbarAdmComponent  implements OnInit {
     this.navControl.navigateForward('/admin-home');
   }
 
+  goPerfil() {
+    this.navControl.navigateForward('/perfil-admin');
+  }
+
+  goActividad() {
+    this.navControl.navigateForward('/adm-viajes');
+  }
+
 }

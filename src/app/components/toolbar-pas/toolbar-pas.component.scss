@@ -1,0 +1,21 @@
+ion-tab-bar {
+    --background: white;
+    --color: #888;
+    --color-active: #000;
+}
+
+ion-tab-button {
+    --background: transparent;
+    --color: #888;
+    --color-active: #000;
+    padding: 3px;
+}
+
+ion-tab-button.ion-selected {
+    --background: #007bff;
+    --color: white;
+}
+
+ion-tab-button ion-icon {
+    color: inherit;
+}

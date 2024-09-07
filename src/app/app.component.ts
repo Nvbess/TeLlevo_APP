@@ -41,7 +41,7 @@ export class AppComponent {
         { title: 'Administrar Pasajeros', url: '/lista-pas', icon: 'people' },
         { title: 'Administrar Conductores', url: '/lista-cond', icon: 'people' },
         { title: 'Administrar Viajes', url: '/adm-viajes', icon: 'car' },
-        { title: 'Configuración', url: '/config', icon: 'construct' },
+        { title: 'Perfil', url: '/perfil-admin', icon: 'construct' },
         { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
       ]
     } else if (this.tipoUsuario === 'pasajero') {
@@ -54,7 +54,8 @@ export class AppComponent {
     } else {
       this.appPages = [
         { title: 'Home', url: '/conductor-home', icon: 'home' },
-        {title: '', url: '', icon: ''},
+        {title: 'Actividad', url: '/cond-actividad', icon: 'receipt'},
+        {title: 'Perfil', url: '/cond-profile', icon: 'person'},
         { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
       ]
     }

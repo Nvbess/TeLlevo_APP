@@ -1,0 +1,24 @@
+<ion-header class="ion-no-border header-transparent">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Viajes</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/conductor-home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="light">
+  <ion-list [inset]="true">
+    <ion-item [button]="true" *ngFor="let aux of viajes" [routerLink]="['/viajes', aux.id]">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="assets/icon/icono-car.png">
+      </ion-avatar>
+      <ion-note slot="end" color="tertiary"> ID {{ aux.id }} </ion-note>
+      <ion-label slot="start"> Viaje <br> {{ aux.fecha }} {{ aux.hora }} </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <app-toolbar-cond></app-toolbar-cond>
+</ion-footer>

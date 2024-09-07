@@ -47,15 +47,16 @@ export class ViajesService {
         "celular": "+56 9 3456 7890",
         "id": 3
     },
-      "pasajeros": {
-        "email": "pasajero@user.cl",
-        "pass": "user123",
-        "tipo": "pasajero",
-        "nombre": "Ana",
-        "apellido": "Gómez",
-        "celular": "+56 9 2345 6789",
-        "id": 2
-    },
+      "pasajeros": 
+        {
+          "email": "pasajero1@user.cl",
+          "pass": "user123",
+          "tipo": "pasajero",
+          "nombre": "Ana",
+          "apellido": "Gómez",
+          "celular": "+56 9 2345 6789",
+          "id": 2
+        },
       "origen": "Campus Este",
       "destino": "Calle Los Pinos 456",
       "fecha": "18 Ago.",

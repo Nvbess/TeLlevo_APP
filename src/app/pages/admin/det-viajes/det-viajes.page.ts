@@ -23,6 +23,7 @@ export class DetViajesPage implements OnInit {
   horaViaje?: string | null;
   costoViaje?: number | null;
   capacidadViaje?: number | null;
+  
 
   constructor(
     private activatedRoute: ActivatedRoute,
