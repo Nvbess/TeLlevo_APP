@@ -8,9 +8,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">pj-actividad</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list [inset]="true">
+    <ion-item [button]="true" *ngFor="let aux of viajes" [routerLink]="['/viajes-pas', aux.id]">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="assets/icon/icono-car.png">
+      </ion-avatar>
+      <ion-note slot="end" color="tertiary"> ID {{ aux.id }} </ion-note>
+      <ion-label slot="start"> Viaje <br> {{ aux.fecha }} {{ aux.hora }} </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <app-toolbar-pas></app-toolbar-pas>
+</ion-footer>

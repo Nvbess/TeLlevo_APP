@@ -21,6 +21,6 @@ export class ToolbarPasComponent  implements OnInit {
   }
 
   goActividad() {
-    this.navControl.navigateForward('/pj-actividad');
+    this.navControl.navigateForward('/viajes-pas');
   }
 }

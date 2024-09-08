@@ -47,7 +47,7 @@ export class AppComponent {
     } else if (this.tipoUsuario === 'pasajero') {
       this.appPages = [
         { title: 'Home', url: '/pasajero-home', icon: 'home' },
-        {title: 'Actividad', url: '/pj-actividad', icon: 'receipt'},
+        {title: 'Actividad', url: '/viajes-pas', icon: 'receipt'},
         {title: 'Perfil', url: '/pj-profile', icon: 'person'},
         { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
       ]

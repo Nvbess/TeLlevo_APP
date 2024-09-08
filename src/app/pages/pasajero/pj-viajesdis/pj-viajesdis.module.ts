@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PjViajesdisPageRoutingModule } from './pj-viajesdis-routing.module';
 
 import { PjViajesdisPage } from './pj-viajesdis.page';
+import { PastoolbarModule } from 'src/app/components/pastoolbar/pastoolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PjViajesdisPageRoutingModule
+    PjViajesdisPageRoutingModule,
+    PastoolbarModule
   ],
   declarations: [PjViajesdisPage]
 })
