@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PjViajeinitPageRoutingModule } from './pj-viajeinit-routing.module';
 
 import { PjViajeinitPage } from './pj-viajeinit.page';
+import { PastoolbarModule } from 'src/app/components/pastoolbar/pastoolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PjViajeinitPageRoutingModule
+    PjViajeinitPageRoutingModule,
+    PastoolbarModule
   ],
   declarations: [PjViajeinitPage]
 })
