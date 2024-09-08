@@ -1,0 +1,28 @@
+<ion-header class="ion-no-border header-transparent">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Codigo QR</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/pj-viajeinit"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <img class="img-map" src="assets/maps/map-1.png" />
+    <ion-card-header>
+      <ion-card-title class="titulo-carta">Viaje Aceptado</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Recuerde que al llegar el conductor, usted debe escanear el codigo QR.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button shape="round" class="boton-qr">Ecanear codigo QR</ion-button>
+</ion-content>
+
+<ion-footer>
+  <app-toolbar-pas></app-toolbar-pas>
+</ion-footer>

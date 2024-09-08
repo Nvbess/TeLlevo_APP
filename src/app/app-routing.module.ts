@@ -137,6 +137,10 @@ const routes: Routes = [
     path: 'reset-pass',
     loadChildren: () => import('./pages/registration/reset-pass/reset-pass.module').then( m => m.ResetPassPageModule)
   },
+  {
+    path: 'pj-qr',
+    loadChildren: () => import('./pages/pasajero/pj-qr/pj-qr.module').then( m => m.PjQrPageModule)
+  },
 
 ];
 
