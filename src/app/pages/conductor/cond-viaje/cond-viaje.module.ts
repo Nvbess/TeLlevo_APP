@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -15,7 +15,8 @@ import { CondtoolbarModule } from 'src/app/components/condtoolbar/condtoolbar.mo
     FormsModule,
     IonicModule,
     CondViajePageRoutingModule,
-    CondtoolbarModule
+    CondtoolbarModule,
+    ReactiveFormsModule
   ],
   declarations: [CondViajePage]
 })
