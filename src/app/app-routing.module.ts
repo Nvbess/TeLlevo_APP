@@ -133,13 +133,18 @@ const routes: Routes = [
   {
     path: 'pj-viajeinit',
     loadChildren: () => import('./pages/pasajero/pj-viajeinit/pj-viajeinit.module').then( m => m.PjViajeinitPageModule)
-  },  {
+  },
+  {
     path: 'reset-pass',
     loadChildren: () => import('./pages/registration/reset-pass/reset-pass.module').then( m => m.ResetPassPageModule)
   },
   {
     path: 'cond-detviaje',
     loadChildren: () => import('./pages/conductor/cond-detviaje/cond-detviaje.module').then( m => m.CondDetviajePageModule)
+  },
+  {
+    path: 'pj-qr',
+    loadChildren: () => import('./pages/pasajero/pj-qr/pj-qr.module').then( m => m.PjQrPageModule)
   },
 
 ];

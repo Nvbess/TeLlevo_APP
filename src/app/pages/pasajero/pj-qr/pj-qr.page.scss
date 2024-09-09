@@ -34,8 +34,15 @@ ion-card {
     }
 }
 
-.boton-aceptar{
+.titulo-carta {
+    text-align: center;
+  color: #000;
+  font-weight: bold;
+}
+
+.boton-qr {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
+
