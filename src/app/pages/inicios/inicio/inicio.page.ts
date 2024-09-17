@@ -9,8 +9,6 @@ import { MenuController } from '@ionic/angular';
 })
 export class InicioPage implements OnInit {
 
-  @ViewChild('card', { static: false }) card!: ElementRef;
-
   constructor(private router: Router,
               private menuController: MenuController
   ) { }
@@ -25,11 +23,6 @@ export class InicioPage implements OnInit {
   }
 
   ToRegister() {
-    if (this.card && this.card.nativeElement) {
-      this.card.nativeElement.classList.add('expand');
-    }
-    setTimeout(() => {
-      this.router.navigate(['/tipo-reg']);
-    }, 300);
+      this.router.navigate(['/register']);
   }
 }

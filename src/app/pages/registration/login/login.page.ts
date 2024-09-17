@@ -13,23 +13,19 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
 
-  emailValue?: string;
-  passValue?: string;
-
-  
-
-  constructor(private router: Router, 
-              private loadingController: LoadingController, 
-              private alertController: AlertController,
-              private formBuilder: FormBuilder,
-              private usuarioService: UsuariosService,
-              private menuController: MenuController) 
-              { 
-                this.loginForm = this.formBuilder.group({
-                  email: ['', [Validators.required, Validators.email]],
-                  pass: ['', [Validators.required, Validators.minLength(6)]],
-                });
-              }
+  constructor(
+    private router: Router, 
+    private loadingController: LoadingController, 
+    private alertController: AlertController,
+    private formBuilder: FormBuilder,
+    private usuarioService: UsuariosService,
+    private menuController: MenuController) 
+  { 
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      pass: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
   ngOnInit() {
     this.menuController.enable(false);
@@ -40,49 +36,46 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
+    if (this.loginForm.invalid) {
+      await this.presentAlert('Error', 'Por favor, completa todos los campos correctamente.');
+      return;
+    }
 
-    // Creamos loading
-    const loading = this.loadingController.create({
+    const loading = await this.loadingController.create({
       message: 'Cargando...',
-      duration: 2000
     });
+    await loading.present();
 
-    // Creamos alerta
-    const alert = this.alertController.create({
-      header: 'Acceso denegado',
-      message: 'Usuario o Contraseña incorrectas!',
-      buttons: ['OK']
-    });
-
-    const email = this.emailValue;
-    const pass = this.passValue;
-
-    // PREGUNTAR POR EL USUARIO
+    const { email, pass } = this.loginForm.value;
 
     const aux = this.usuarioService.getUsuarios();
     const usuario = aux.find(aux => aux.email === email && aux.pass === pass);
 
-    if (usuario ){
+    if (usuario) {
       localStorage.setItem('usuarioLogin', JSON.stringify(usuario));
-      (await loading).present();
-      setTimeout(async() => {
-        (await loading).dismiss();
+      setTimeout(async () => {
+        await loading.dismiss();
         if (usuario.tipo === 'admin') {
           this.router.navigate(['admin-home']);
         } else if (usuario.tipo === 'pasajero') {
           this.router.navigate(['pasajero-home']);
         } else {
-          this.router.navigate(['conductor-home']);
+          this.router.navigate(['cond-home']);
         }
-        
-      },2000);
+      }, 2000);
     } else {
-      (await alert).present();
-      this.emailValue = '';
-      this.passValue = '';
+      await loading.dismiss();
+      await this.presentAlert('Acceso denegado', 'Usuario o Contraseña incorrectas!');
+      this.loginForm.reset();
     }
-
-    
   }
 
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
 }

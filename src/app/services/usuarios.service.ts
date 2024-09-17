@@ -6,7 +6,7 @@ import { Usuario } from '../interfaces/usuario';
 })
 export class UsuariosService {
 
-  usuarios = [
+  usuarios: Usuario[] = [
     {
         "email": "admin@admin.cl",
         "pass": "admin123",
@@ -32,9 +32,11 @@ export class UsuariosService {
         "nombre": "Carlos",
         "apellido": "Sánchez",
         "celular": "+56 9 3456 7890",
-        "id": 3
+        "id": 3,
+        "modeloAuto": "Toyota",
+        "patenteAuto": "XYZ123"
     }
-]
+  ];
 
   constructor() { }
 
@@ -42,20 +44,22 @@ export class UsuariosService {
     return this.usuarios;
   }
 
-  getUsuario(email:string) {
+  getUsuario(email: string): Usuario | undefined {
     return this.usuarios.find(aux => aux.email === email);
   }
 
   addUsuario(usuario: Usuario) {
-    this.usuarios.push(usuario)
+    this.usuarios.push({
+      ...usuario,
+      id: this.usuarios.length + 1 
+    });
   }
 
-  delUsuario() {
-
+  delUsuario(id: number) {
+    this.usuarios = this.usuarios.filter(usuario => usuario.id !== id);
   }
 
   updUsuario() {
-
   }
 
 }

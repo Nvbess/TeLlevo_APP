@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="logo-container">
+    <img src="assets/logo.png" class="logo" />
+    <h1 class="titulo-app">Te Llevo APP</h1>
+  </div>
+  <div class="box-sup">
+    <h1 class="titulo">Registro</h1>
+  </div>
+  <ion-card>
+    <ion-card-content [formGroup]="registerForm">
+      <ion-item>
+        <ion-input formControlName="nombre" label="Nombre" labelPlacement="floating" placeholder="Ej: Juan"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="apellido" label="Apellido" labelPlacement="floating" placeholder="Ej: Pérez"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="celular" label="Celular" labelPlacement="floating" placeholder="Ej: +56 9 1234 5678"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="email" type="email" label="Correo Electrónico" labelPlacement="floating" placeholder="Ej: User@user.com"></ion-input>
+      </ion-item>
+      <ion-text position="stacked" color="danger"
+        *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')">
+        Correo obligatorio.
+      </ion-text>
+      <ion-text position="stacked" color="danger"
+        *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')">
+        Correo inválido.
+      </ion-text>
+      <ion-item>
+        <ion-input formControlName="pass" type="password" label="Contraseña" labelPlacement="floating" placeholder="Ej: 12345"></ion-input>
+      </ion-item>
+      <ion-text position="stacked" color="danger" *ngIf="registerForm.get('pass')?.touched && registerForm.get('pass')?.hasError('required')">
+        Contraseña obligatoria.
+      </ion-text>
+      <ion-text position="stacked" color="danger" *ngIf="registerForm.get('pass')?.touched && registerForm.get('pass')?.hasError('minlength')">
+        Contraseña debe tener mínimo 6 caracteres.
+      </ion-text>
+
+      <!-- Pregunta si tiene auto -->
+      <ion-item>
+        <ion-select formControlName="tieneAuto" label="¿Tienes auto?" label-placement="floating" (ionChange)="TieneAuto($event)">
+          <ion-select-option value="si">Sí</ion-select-option>
+          <ion-select-option value="no">No</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Pregunta si desea ser conductor -->
+      <ion-item *ngIf="esConductor">
+        <ion-select formControlName="crearConductor" label="¿Deseas ser conductor?" label-placement="floating" (ionChange)="CrearConductor($event)">
+          <ion-select-option value="si">Sí</ion-select-option>
+          <ion-select-option value="no">No</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+      <!-- Campos del auto solo si elige 'Sí' en crear cuenta de conductor -->
+      <ion-item *ngIf="esConductor && deseaConductor">
+        <ion-input formControlName="modeloAuto" label="Modelo del Auto" labelPlacement="floating" placeholder="Ej: Toyota"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="esConductor && deseaConductor">
+        <ion-input formControlName="patenteAuto" label="Patente del Auto" labelPlacement="floating" placeholder="Ej: ABCD123"></ion-input>
+      </ion-item>
+      
+
+      <ion-button expand="block" (click)="register()">Registrarse</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

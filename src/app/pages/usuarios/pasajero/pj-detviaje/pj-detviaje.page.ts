@@ -4,11 +4,11 @@ import { Viaje } from 'src/app/interfaces/viaje';
 import { ViajesService } from 'src/app/services/viajes.service';
 
 @Component({
-  selector: 'app-cond-detviaje',
-  templateUrl: './cond-detviaje.page.html',
-  styleUrls: ['./cond-detviaje.page.scss'],
+  selector: 'app-pj-detviaje',
+  templateUrl: './pj-detviaje.page.html',
+  styleUrls: ['./pj-detviaje.page.scss'],
 })
-export class CondDetviajePage implements OnInit {
+export class PjDetviajePage implements OnInit {
 
   viajeID?: number;
   viaje?: Viaje;
@@ -24,9 +24,12 @@ export class CondDetviajePage implements OnInit {
   horaViaje?: string | null;
   costoViaje?: number | null;
   capacidadViaje?: number | null;
+  
 
-  constructor(private activatedRoute: ActivatedRoute,
-    private viajesService: ViajesService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private viajesService: ViajesService
+  ) {}
 
   ngOnInit() {
     const id_viaje = this.activatedRoute.snapshot.paramMap.get('id');
@@ -38,8 +41,8 @@ export class CondDetviajePage implements OnInit {
       if (this.viaje) {
         this.nombreConductor = this.viaje.conductor.nombre;
         this.apellidoConductor = this.viaje.conductor.apellido;
-        this.nombrePasajero = this.viaje.pasajeros.nombre;
-        this.apellidoPasajero = this.viaje.pasajeros.apellido;
+        this.nombrePasajero = this.viaje.pasajeros.map(pasajero => pasajero.nombre).join(', ');
+        this.apellidoPasajero = this.viaje.pasajeros.map(pasajero => pasajero.apellido).join(', ');
         this.idConductor = this.viaje.conductor.id;
         this.idPasajero = this.viaje.conductor.id;
         this.origenViaje = this.viaje.origen;
@@ -51,5 +54,4 @@ export class CondDetviajePage implements OnInit {
       }
     }
   }
-
 }

@@ -40,8 +40,8 @@ export class DetViajesPage implements OnInit {
       if (this.viaje) {
         this.nombreConductor = this.viaje.conductor.nombre;
         this.apellidoConductor = this.viaje.conductor.apellido;
-        this.nombrePasajero = this.viaje.pasajeros.nombre;
-        this.apellidoPasajero = this.viaje.pasajeros.apellido;
+        this.nombrePasajero = this.viaje.pasajeros.map(pasajero => pasajero.nombre).join(', ');
+        this.apellidoPasajero = this.viaje.pasajeros.map(pasajero => pasajero.apellido).join(', ');
         this.idConductor = this.viaje.conductor.id;
         this.idPasajero = this.viaje.conductor.id;
         this.origenViaje = this.viaje.origen;

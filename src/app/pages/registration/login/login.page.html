@@ -15,7 +15,7 @@
   <ion-card>
     <ion-card-content [formGroup]="loginForm">
       <ion-item>
-        <ion-input formControlName="email" [(ngModel)]="emailValue" type="email" label="Correo Electrónico" labelPlacement="floating" placeholder="Ej: User@user.com"></ion-input>
+        <ion-input formControlName="email" type="email" label="Correo Electrónico" labelPlacement="floating" placeholder="Ej: User@user.com"></ion-input>
       </ion-item>
       <ion-text position="stacked" color="danger"
         *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')">
@@ -27,7 +27,7 @@
       </ion-text>
 
       <ion-item>
-        <ion-input formControlName="pass" [(ngModel)]="passValue" type="password" label="Contraseña" labelPlacement="floating" placeholder="Ej: 12345"></ion-input>
+        <ion-input formControlName="pass" type="password" label="Contraseña" labelPlacement="floating" placeholder="Ej: 12345"></ion-input>
       </ion-item>
       <ion-text position="stacked" color="danger"
         *ngIf="loginForm.get('pass')?.touched && loginForm.get('pass')?.hasError('required')">

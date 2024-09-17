@@ -9,23 +9,23 @@ const routes: Routes = [
   },
   {
     path: 'splash-screen',
-    loadChildren: () => import('./pages/onboarding/splash-screen/splash-screen.module').then( m => m.SplashScreenPageModule)
-  },
-  {
-    path: 'register',
-    loadChildren: () => import('./pages/registration/register-pas/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/inicios/splash-screen/splash-screen.module').then( m => m.SplashScreenPageModule)
   },
   {
     path: 'login',
     loadChildren: () => import('./pages/registration/login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'register',
+    loadChildren: () => import('./pages/registration/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
     path: 'pasajero-home',
-    loadChildren: () => import('./pages/pasajero/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/usuarios/pasajero/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'conductor-home',
-    loadChildren: () => import('./pages/conductor/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/usuarios/conductor/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'admin-home',
@@ -33,15 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'inicio',
-    loadChildren: () => import('./pages/onboarding/inicio/inicio.module').then( m => m.InicioPageModule)
-  },
-  {
-    path: 'register-cond',
-    loadChildren: () => import('./pages/registration/register-cond/register-cond.module').then( m => m.RegisterCondPageModule)
-  },
-  {
-    path: 'tipo-reg',
-    loadChildren: () => import('./pages/onboarding/tipo-reg/tipo-reg.module').then( m => m.TipoRegPageModule)
+    loadChildren: () => import('./pages/inicios/inicio/inicio.module').then( m => m.InicioPageModule)
   },
   {
     path: 'usuarios',
@@ -62,18 +54,18 @@ const routes: Routes = [
   },
   {
     path: 'pj-profile',
-    loadChildren: () => import('./pages/pasajero/pj-profile/pj-profile.module').then( m => m.PjProfilePageModule)
+    loadChildren: () => import('./pages/usuarios/pasajero/pj-profile/pj-profile.module').then( m => m.PjProfilePageModule)
   },
   {
     path: 'viajes-pas',
     children: [
       {
         path: '',
-        loadChildren: () => import('./pages/pasajero/pj-actividad/pj-actividad.module').then( m => m.PjActividadPageModule)
+        loadChildren: () => import('./pages/usuarios/pasajero/pj-actividad/pj-actividad.module').then( m => m.PjActividadPageModule)
       },
       {
         path: ':id',
-        loadChildren: () => import('./pages/pasajero/pj-detviaje/pj-detviaje.module').then( m => m.PjDetviajePageModule)
+        loadChildren: () => import('./pages/usuarios/pasajero/pj-detviaje/pj-detviaje.module').then( m => m.PjDetviajePageModule)
       },
     ]
   },
@@ -112,27 +104,27 @@ const routes: Routes = [
   },
   {
     path: 'cond-profile',
-    loadChildren: () => import('./pages/conductor/cond-profile/cond-profile.module').then( m => m.CondProfilePageModule)
+    loadChildren: () => import('./pages/usuarios/conductor/cond-profile/cond-profile.module').then( m => m.CondProfilePageModule)
   },
   {
     path: 'cond-actividad',
-    loadChildren: () => import('./pages/conductor/cond-actividad/cond-actividad.module').then( m => m.CondActividadPageModule)
+    loadChildren: () => import('./pages/usuarios/conductor/cond-actividad/cond-actividad.module').then( m => m.CondActividadPageModule)
   },
   {
     path: 'cond-viaje',
-    loadChildren: () => import('./pages/conductor/cond-viaje/cond-viaje.module').then( m => m.CondViajePageModule)
+    loadChildren: () => import('./pages/usuarios/conductor/cond-viaje/cond-viaje.module').then( m => m.CondViajePageModule)
   },
   {
     path: 'cond-viajeinit',
-    loadChildren: () => import('./pages/conductor/cond-viajeinit/cond-viajeinit.module').then( m => m.CondViajeinitPageModule)
+    loadChildren: () => import('./pages/usuarios/conductor/cond-viajeinit/cond-viajeinit.module').then( m => m.CondViajeinitPageModule)
   },
   {
     path: 'pj-viajesdis',
-    loadChildren: () => import('./pages/pasajero/pj-viajesdis/pj-viajesdis.module').then( m => m.PjViajesdisPageModule)
+    loadChildren: () => import('./pages/usuarios/pasajero/pj-viajesdis/pj-viajesdis.module').then( m => m.PjViajesdisPageModule)
   },
   {
     path: 'pj-viajeinit',
-    loadChildren: () => import('./pages/pasajero/pj-viajeinit/pj-viajeinit.module').then( m => m.PjViajeinitPageModule)
+    loadChildren: () => import('./pages/usuarios/pasajero/pj-viajeinit/pj-viajeinit.module').then( m => m.PjViajeinitPageModule)
   },
   {
     path: 'reset-pass',
@@ -140,12 +132,13 @@ const routes: Routes = [
   },
   {
     path: 'cond-detviaje',
-    loadChildren: () => import('./pages/conductor/cond-detviaje/cond-detviaje.module').then( m => m.CondDetviajePageModule)
+    loadChildren: () => import('./pages/usuarios/conductor/cond-detviaje/cond-detviaje.module').then( m => m.CondDetviajePageModule)
   },
   {
     path: 'pj-qr',
-    loadChildren: () => import('./pages/pasajero/pj-qr/pj-qr.module').then( m => m.PjQrPageModule)
+    loadChildren: () => import('./pages/usuarios/pasajero/pj-qr/pj-qr.module').then( m => m.PjQrPageModule)
   },
+
 
 ];
 

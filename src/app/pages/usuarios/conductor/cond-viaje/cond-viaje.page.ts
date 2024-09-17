@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, MenuController } from '@ionic/angular';
+import {
+  AlertController,
+  LoadingController,
+  MenuController,
+} from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -13,8 +17,6 @@ import { ViajesService } from 'src/app/services/viajes.service';
   styleUrls: ['./cond-viaje.page.scss'],
 })
 export class CondViajePage implements OnInit {
-
-
   viajeForm: FormGroup;
 
   origenValue?: string;
@@ -24,29 +26,24 @@ export class CondViajePage implements OnInit {
   valorValue?: number;
   capacidadValue?: number;
   asientosValue?: number;
-  
 
-
-  constructor(private router: Router, 
-              private loadingController: LoadingController,
-              private alertController: AlertController,
-              private formBuilder: FormBuilder,
-              private viajeService: ViajesService,
-              private menuController: MenuController
-            )
-
-        {this.viajeForm = this.formBuilder.group(
-          {
-            origen: ['', [Validators.required]],
-            destino: ['', [Validators.required]],
-            fecha: ['', [Validators.required]],
-            hora: ['', [Validators.required]],
-            valor: ['', [Validators.required]],
-            capacidad: ['', [Validators.required]],
-          }
-      );
-
-         }
+  constructor(
+    private router: Router,
+    private loadingController: LoadingController,
+    private alertController: AlertController,
+    private formBuilder: FormBuilder,
+    private viajeService: ViajesService,
+    private menuController: MenuController
+  ) {
+    this.viajeForm = this.formBuilder.group({
+      origen: ['', [Validators.required]],
+      destino: ['', [Validators.required]],
+      fecha: ['', [Validators.required]],
+      hora: ['', [Validators.required]],
+      valor: ['', [Validators.required]],
+      capacidad: ['', [Validators.required]],
+    });
+  }
 
   ngOnInit() {
     this.menuController.enable(true);
@@ -54,28 +51,31 @@ export class CondViajePage implements OnInit {
 
   async registerViaje() {
     if (this.viajeForm.valid) {
-      const { id, origen, destino, fecha, hora, costo, capacidad } = this.viajeForm.value;
-      
+      const { id, origen, destino, fecha, hora, costo, capacidad } =
+        this.viajeForm.value;
+
       const nuevoViaje: Viaje = {
-        id: 5,
+        id: 1,
         conductor: {
-        "email": "conductor@user.cl",
-        "pass": "user123",
-        "tipo": "conductor",
-        "nombre": "Carlos",
-        "apellido": "Sánchez",
-        "celular": "+56 9 3456 7890",
-        "id": 3
+          email: 'conductor@user.cl',
+          pass: 'user123',
+          tipo: 'conductor',
+          nombre: 'Carlos',
+          apellido: 'Sánchez',
+          celular: '+56 9 3456 7890',
+          id: 3,
         },
-        pasajeros: {
-          "email": "pasajero@user.cl",
-          "pass": "user123",
-          "tipo": "pasajero",
-          "nombre": "Ana",
-          "apellido": "Gómez",
-          "celular": "+56 9 2345 6789",
-          "id": 2
-        },
+        pasajeros: [
+          {
+            email: 'pasajero@user.cl',
+            pass: 'user123',
+            tipo: 'pasajero',
+            nombre: 'Ana',
+            apellido: 'Gómez',
+            celular: '+56 9 2345 6789',
+            id: 2,
+          },
+        ],
         origen: this.origenValue || '',
         destino: this.destinoValue || '',
         fecha: this.fechaValue || '',
@@ -83,8 +83,6 @@ export class CondViajePage implements OnInit {
         costo: this.valorValue || 0,
         capacidad: this.capacidadValue || 4,
         asientos_disponibles: 3,
-
-
       };
       this.viajeService.addViaje(nuevoViaje);
       this.router.navigate(['/cond-viajeinit']);
@@ -92,7 +90,7 @@ export class CondViajePage implements OnInit {
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Por favor, complete todos los campos correctamente.',
-        buttons: ['OK']
+        buttons: ['OK'],
       });
       await alert.present();
     }

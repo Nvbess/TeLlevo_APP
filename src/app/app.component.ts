@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Page } from './interfaces/page';
-import { register } from 'swiper/element/bundle';
-
-register();
+import { Router } from '@angular/router';
+import { InicioPage } from './pages/inicios/inicio/inicio.page';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +9,46 @@ register();
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+
   public appPages: Page[] = [];
   public tipoUsuario?: string;
   public emailUsuario?: string;
   public nombreUsuario?: string;
   public apellUsuario?: string;
-  public celUsuario?: string;
 
-  constructor(private router: Router) {}
+  private ADMIN_PAGES: Page[] = [
+    { title: 'Home', url: '/admin-home', icon: 'home' },
+    { title: 'Administrar Pasajeros', url: '', icon: 'people' },
+    { title: 'Administrar Conductores', url: '', icon: 'people' },
+    { title: 'Administrar Viajes', url: '', icon: 'car' },
+    { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
+  ];
+
+  private PASAJERO_PAGES: Page[] = [
+    { title: 'Home', url: '/pasajero-home', icon: 'home' },
+    { title: 'Actividad', url: '', icon: 'receipt' },
+    { title: 'Perfil', url: '', icon: 'person' },
+    { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
+  ];
+
+  private CONDUCTOR_PAGES: Page[] = [
+    { title: 'Home', url: '/conductor-home', icon: 'home' },
+    { title: 'Actividad', url: '', icon: 'receipt' },
+    { title: 'Perfil', url: '', icon: 'person' },
+    { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
+  ];
+
+  public labels = ['Family', 'Friends', 'Notes',];
+
+  constructor(
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.cargarDatosUsuario();
+  }
+
+  private cargarDatosUsuario() {
     const usuarioLogin = localStorage.getItem('usuarioLogin');
     
     if (usuarioLogin) {
@@ -29,40 +57,33 @@ export class AppComponent {
       this.emailUsuario = user.email;
       this.nombreUsuario = user.nombre;
       this.apellUsuario = user.apellido;
+
       this.configSideMenu();
     } else {
+      this.router.navigate(['/inicio']);
     }
   }
 
-  configSideMenu() {
-    if (this.tipoUsuario === 'admin') {
-      this.appPages = [
-        { title: 'Home', url: '/admin-home', icon: 'home' },
-        { title: 'Administrar Pasajeros', url: '/lista-pas', icon: 'people' },
-        { title: 'Administrar Conductores', url: '/lista-cond', icon: 'people' },
-        { title: 'Administrar Viajes', url: '/adm-viajes', icon: 'car' },
-        { title: 'Perfil', url: '/perfil-admin', icon: 'construct' },
-        { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
-      ]
-    } else if (this.tipoUsuario === 'pasajero') {
-      this.appPages = [
-        { title: 'Home', url: '/pasajero-home', icon: 'home' },
-        {title: 'Actividad', url: '/viajes-pas', icon: 'receipt'},
-        {title: 'Perfil', url: '/pj-profile', icon: 'person'},
-        { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
-      ]
-    } else {
-      this.appPages = [
-        { title: 'Home', url: '/conductor-home', icon: 'home' },
-        {title: 'Actividad', url: '/cond-actividad', icon: 'receipt'},
-        {title: 'Perfil', url: '/cond-profile', icon: 'person'},
-        { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
-      ]
+  private configSideMenu() {
+    switch (this.tipoUsuario) {
+      case 'admin':
+        this.appPages = [...this.ADMIN_PAGES];
+        break;
+      case 'pasajero':
+        this.appPages = [...this.PASAJERO_PAGES];
+        break;
+      case 'conductor':
+        this.appPages = [...this.CONDUCTOR_PAGES];
+        break;
+      default:
+        this.appPages = [];
     }
   }
 
-  logout() {
+  logout(){
+    localStorage.clear();
     localStorage.removeItem('usuarioLogin');
-    this.router.navigate(['inicio']);
+    this.router.navigate(['/inicio']);
   }
 }
+

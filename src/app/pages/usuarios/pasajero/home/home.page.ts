@@ -14,7 +14,7 @@ export class HomePage implements OnInit {
   public emailUsuario?: string;
   public nombreUsuario?: string;
   public apellUsuario?: string;
-  public celUsuario?: string;
+  public idUsuario?: number;
 
   constructor(private router: Router,
               private menuController: MenuController,
@@ -30,6 +30,7 @@ export class HomePage implements OnInit {
       this.emailUsuario = user.email;
       this.nombreUsuario = user.nombre;
       this.apellUsuario = user.apellido;
+      this.idUsuario = user.id;
     }
   }
 }

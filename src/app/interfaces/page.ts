@@ -1,5 +1,5 @@
 export interface Page {
-    title: string; 
+    title: string;
     url: string;
     icon: string;
     action?: () => void;
