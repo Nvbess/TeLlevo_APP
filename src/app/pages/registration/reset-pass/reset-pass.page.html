@@ -1,4 +1,5 @@
-<ion-header [translucent]="true"> </ion-header>
+<ion-header [translucent]="true">
+</ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="wave"></div>
@@ -11,13 +12,13 @@
   <div class="box-sup">
     <h1 class="titulo ion-text-center">Recuperar Contraseña</h1>
   </div>
-  <ion-card>
+  <ion-card [formGroup]="recoveryForm" (ngSubmit)="recoveryPass(recoveryForm.value.email)"> 
     <ion-card-content>
       <ion-item>
-        <ion-input>Correo Electrónico</ion-input>
+        <ion-input formControlName="email" type="email" label="Correo Electrónico" labelPlacement="floating" placeholder="Ej: User@user.com"></ion-input>
       </ion-item>
-      <ion-button expand="block">Recuperar</ion-button>
+      <ion-button expand="block" type="submit">Recuperar</ion-button>
     </ion-card-content>
-  </ion-card>
+  </ion-card> 
   <h1 class="forgot-pass" routerLink="/login">Deseas iniciar sesión?</h1>
 </ion-content>
