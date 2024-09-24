@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
+import { AuthService } from 'src/app/services/firebase/auth.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -13,16 +16,16 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
-  esConductor: boolean = false;
-  deseaConductor: boolean = false;
+  esConductor?: boolean;
+  deseaConductor?: boolean;
 
   constructor(
     private router: Router, 
-    private loadingController: LoadingController, 
-    private alertController: AlertController,
+    private loadingController: LoadingController,
     private formBuilder: FormBuilder,
-    private usuarioService: UsuariosService,
-    private menuController: MenuController) 
+    private authService: AuthService,
+    private menuController: MenuController,
+    private fireStore: AngularFirestore,) 
     { 
       this.registerForm = this.formBuilder.group
       ({
@@ -68,44 +71,47 @@ export class RegisterPage implements OnInit {
     }
   
     async register() {
-      if (this.registerForm.valid) {
+      try {
         const loading = await this.loadingController.create({
           message: 'Registrando...',
+          duration: 2000,
         });
         await loading.present();
-  
-        const nuevoUsuario: Usuario = {
+
+        const aux = await this.authService.register(this.registerForm.value.email, this.registerForm.value.pass);
+        const user = aux.user;
+
+        if (user) {
+          await this.fireStore.collection('usuarios').doc(user.uid).set({
+          uid: user.uid,
           nombre: this.registerForm.value.nombre,
           apellido: this.registerForm.value.apellido,
-          email: this.registerForm.value.email,
+          email: user.email,
           pass: this.registerForm.value.pass,
           tipo: this.esConductor ? 'conductor' : 'pasajero', 
           celular: this.registerForm.value.celular,
-          id: 0,
           modeloAuto: this.registerForm.value.modeloAuto || '',
           patenteAuto: this.registerForm.value.patenteAuto || '',
-        };
-        try {
-          this.usuarioService.addUsuario(nuevoUsuario);
-          await this.router.navigate(['login']);
-        } catch (error) {
-          const alert = await this.alertController.create({
-            header: 'Error',
-            message: 'Hubo un problema al registrar el usuario. Inténtelo de nuevo.',
-            buttons: ['OK']
           });
-          await alert.present();
-        } finally {
-          loading.dismiss();
+          await loading.dismiss();
+          Swal.fire({
+            icon: 'success',
+            title: 'Registro Exitoso',
+            text: 'Usuario Registrado Correctamente',
+            confirmButtonText: 'OK',
+            heightAuto: false,
+          }).then(() => {
+            this.router.navigate(['/login']);
+          })
         }
-  
-      } else {
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: 'Por favor, complete todos los campos correctamente.',
-          buttons: ['OK']
-        });
-        await alert.present();
+      } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Registro Fallido!',
+            text: 'Error al registrar',
+            confirmButtonText: 'OK',
+            heightAuto: false,
+          })
       }
     }
 }

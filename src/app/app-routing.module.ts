@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 const routes: Routes = [
   {

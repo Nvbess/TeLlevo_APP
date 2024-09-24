@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, MenuController } from '@ionic/angular';
-import { UsuariosService } from 'src/app/services/usuarios.service';
+import { AuthService } from 'src/app/services/firebase/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginPage implements OnInit {
     private loadingController: LoadingController, 
     private alertController: AlertController,
     private formBuilder: FormBuilder,
-    private usuarioService: UsuariosService,
+    private authService: AuthService,
     private menuController: MenuController) 
   { 
     this.loginForm = this.formBuilder.group({
@@ -36,46 +37,40 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    if (this.loginForm.invalid) {
-      await this.presentAlert('Error', 'Por favor, completa todos los campos correctamente.');
-      return;
-    }
+    try {
+      const loading = await this.loadingController.create({
+        message: 'Cargando...',
+      });
+      await loading.present();
+  
+      const { email, pass } = this.loginForm.value;
+  
+      const aux = await this.authService.login(email as string,pass as string);
+      const usuario = aux.user;
+  
+      if (usuario) {
+        localStorage.setItem('usuarioLogin', email as string);
 
-    const loading = await this.loadingController.create({
-      message: 'Cargando...',
-    });
-    await loading.present();
+        const tipo = 'admin';
 
-    const { email, pass } = this.loginForm.value;
-
-    const aux = this.usuarioService.getUsuarios();
-    const usuario = aux.find(aux => aux.email === email && aux.pass === pass);
-
-    if (usuario) {
-      localStorage.setItem('usuarioLogin', JSON.stringify(usuario));
-      setTimeout(async () => {
         await loading.dismiss();
-        if (usuario.tipo === 'admin') {
-          this.router.navigate(['admin-home']);
-        } else if (usuario.tipo === 'pasajero') {
-          this.router.navigate(['pasajero-home']);
-        } else {
-          this.router.navigate(['cond-home']);
-        }
-      }, 2000);
-    } else {
-      await loading.dismiss();
-      await this.presentAlert('Acceso denegado', 'Usuario o Contraseña incorrectas!');
-      this.loginForm.reset();
-    }
-  }
 
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ['OK'],
-    });
-    await alert.present();
+        if (tipo === 'admin') {
+          this.router.navigate(['/admin-home']);
+        } else if (tipo === 'pasajero') {
+          this.router.navigate(['/pasajero-home']);
+        } else {
+          this.router.navigate(['/conductor-home']);
+        }
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Inicio de Sesión Fallido',
+        text: '',
+        confirmButtonText: 'OK',
+        heightAuto: false,
+      })
+    }
   }
 }

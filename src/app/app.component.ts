@@ -18,23 +18,23 @@ export class AppComponent {
 
   private ADMIN_PAGES: Page[] = [
     { title: 'Home', url: '/admin-home', icon: 'home' },
-    { title: 'Administrar Pasajeros', url: '', icon: 'people' },
-    { title: 'Administrar Conductores', url: '', icon: 'people' },
-    { title: 'Administrar Viajes', url: '', icon: 'car' },
+    { title: 'Administrar Pasajeros', url: '/lista-pas', icon: 'people' },
+    { title: 'Administrar Conductores', url: '/lista-cond', icon: 'people' },
+    { title: 'Administrar Viajes', url: '/det-viajes', icon: 'car' },
     { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
   ];
 
   private PASAJERO_PAGES: Page[] = [
     { title: 'Home', url: '/pasajero-home', icon: 'home' },
-    { title: 'Actividad', url: '', icon: 'receipt' },
-    { title: 'Perfil', url: '', icon: 'person' },
+    { title: 'Actividad', url: '/pj-actividad', icon: 'receipt' },
+    { title: 'Perfil', url: '/pj-profile', icon: 'person' },
     { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
   ];
 
   private CONDUCTOR_PAGES: Page[] = [
     { title: 'Home', url: '/conductor-home', icon: 'home' },
-    { title: 'Actividad', url: '', icon: 'receipt' },
-    { title: 'Perfil', url: '', icon: 'person' },
+    { title: 'Actividad', url: '/cond-actividad', icon: 'receipt' },
+    { title: 'Perfil', url: '/cond-profile', icon: 'person' },
     { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
   ];
 
