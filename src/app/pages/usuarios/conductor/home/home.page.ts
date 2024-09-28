@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.config()
     this.menuController.enable(true);
-    const usuarioLogin = localStorage.getItem('usuarioLogin');
+    /*const usuarioLogin = localStorage.getItem('usuarioLogin');
 
     if (usuarioLogin) {
       const user = JSON.parse(usuarioLogin);
@@ -36,7 +36,7 @@ export class HomePage implements OnInit {
       this.emailUsuario = user.email;
       this.nombreUsuario = user.nombre;
       this.apellUsuario = user.apellido;
-    }
+    }*/
   }
 
   config(){

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, MenuController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, NavController } from '@ionic/angular';
+import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import Swal from 'sweetalert2';
 
@@ -17,10 +19,10 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router, 
     private loadingController: LoadingController, 
-    private alertController: AlertController,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private menuController: MenuController) 
+    private menuController: MenuController,
+    private firestore: AngularFirestore) 
   { 
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,45 +34,45 @@ export class LoginPage implements OnInit {
     this.menuController.enable(false);
   }
 
-  forgotpass() {
-    this.router.navigate(['reset-pass']);
-  }
-
   async login() {
     try {
       const loading = await this.loadingController.create({
         message: 'Cargando...',
+        duration: 2000,
       });
+
       await loading.present();
-  
       const { email, pass } = this.loginForm.value;
   
-      const aux = await this.authService.login(email as string,pass as string);
-      const usuario = aux.user;
+      const aux = await this.authService.login(email as string, pass as string);
   
-      if (usuario) {
-        localStorage.setItem('usuarioLogin', email as string);
+      if (aux.user) {
+        const usuarioLogeado = await this.firestore.collection('usuarios').doc(aux.user.uid).get().toPromise();
+        const usuarioData = usuarioLogeado?.data() as Usuario;
+  
+        setTimeout(async() => {
+          await loading.dismiss();
 
-        const tipo = 'admin';
-
-        await loading.dismiss();
-
-        if (tipo === 'admin') {
-          this.router.navigate(['/admin-home']);
-        } else if (tipo === 'pasajero') {
-          this.router.navigate(['/pasajero-home']);
-        } else {
-          this.router.navigate(['/conductor-home']);
-        }
+          if ( usuarioData.tipo === 'admin' ) {
+            this.router.navigate(['/admin-home']);
+          } else if ( usuarioData.tipo === 'pasajero' ) {
+            this.router.navigate(['/pasajero-home']);
+          } else {
+            this.router.navigate(['/conductor-home']);
+          }
+        },2000);
       }
     } catch (error) {
+      console.error('Error en el login:', error);
       Swal.fire({
         icon: 'error',
-        title: 'Inicio de Sesión Fallido',
-        text: '',
+        title: 'Error',
+        text: 'Hubo un error al iniciar sesión.',
         confirmButtonText: 'OK',
-        heightAuto: false,
-      })
+        heightAuto: false
+      });
+      this.loginForm.reset();
     }
   }
+
 }

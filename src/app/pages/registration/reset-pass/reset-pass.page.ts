@@ -23,22 +23,45 @@ export class ResetPassPage implements OnInit {
 
   ngOnInit() {}
 
-  async recoveryPass(email: string) {
+  async recoveryEmail() {
     try {
-      await this.authService.recoverypass(email);
+      let timerInterval: any;
       Swal.fire({
-        icon: 'success',
-        title: 'Correo Enviado!',
-        confirmButtonText: 'OK',
+        title: "Procesando",
+        html: "Enviando correo...",
+        timer: 1000,
+        timerProgressBar: true,
         heightAuto: false,
-      })
+        didOpen: () => {
+          Swal.showLoading();
+          const timer = Swal.getPopup()!.querySelector("b");
+          timerInterval = setInterval(() => {
+            timer!.textContent = `${Swal.getTimerLeft()}`;
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        }
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+          this.authService.recoveryPassword(this.recoveryForm.value.email);
+          Swal.fire({
+            icon:'success',
+            title:'Correo enviado',
+            text: 'Se ha enviado un correo para restablecer tu contraseña!',
+            confirmButtonText: 'OK',
+            heightAuto: false
+          });
+        }
+      });
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error al enviar!',
+        icon:'error',
+        title:'Error',
+        text: 'Hubo un problema al enviar el correo!',
         confirmButtonText: 'OK',
-        heightAuto: false,
-      })
+        heightAuto: false
+      });
     }
   }
 }

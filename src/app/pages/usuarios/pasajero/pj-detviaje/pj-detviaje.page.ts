@@ -14,10 +14,10 @@ export class PjDetviajePage implements OnInit {
   viaje?: Viaje;
   nombreConductor?: string | null;
   apellidoConductor?: string | null;
-  idConductor?: number | null;
+  idConductor?: string | null;
   nombrePasajero?: string | null;
   apellidoPasajero?: string | null;
-  idPasajero?: number | null;
+  idPasajero?: string | null;
   origenViaje?: string | null;
   destinoViaje?: string | null;
   fechaViaje?: string | null;
@@ -43,8 +43,8 @@ export class PjDetviajePage implements OnInit {
         this.apellidoConductor = this.viaje.conductor.apellido;
         this.nombrePasajero = this.viaje.pasajeros.map(pasajero => pasajero.nombre).join(', ');
         this.apellidoPasajero = this.viaje.pasajeros.map(pasajero => pasajero.apellido).join(', ');
-        this.idConductor = this.viaje.conductor.id;
-        this.idPasajero = this.viaje.conductor.id;
+        this.idConductor = this.viaje.conductor.uid;
+        this.idPasajero = this.viaje.conductor.uid;
         this.origenViaje = this.viaje.origen;
         this.destinoViaje = this.viaje.destino;
         this.fechaViaje = this.viaje.fecha;

@@ -17,7 +17,7 @@ export class ViajesService {
         nombre: "Carlos",
         apellido: "Sánchez",
         celular: "+56 9 3456 7890",
-        id: 3,
+        uid: '3',
         modeloAuto: "Toyota",
         patenteAuto: "XYZ123"
       },
@@ -29,7 +29,7 @@ export class ViajesService {
           nombre: "Ana",
           apellido: "Gómez",
           celular: "+56 9 2345 6789",
-          id: 2
+          uid: '2'
         }
       ],
       origen: "Campus Norte",
@@ -49,7 +49,7 @@ export class ViajesService {
         nombre: "Carlos",
         apellido: "Sánchez",
         celular: "+56 9 3456 7890",
-        id: 3,
+        uid: '3',
         modeloAuto: "Toyota",
         patenteAuto: "XYZ123"
       },
@@ -74,29 +74,15 @@ export class ViajesService {
     return this.viajes.find(viaje => viaje.id === id);
   }
 
-  addViaje(viaje: Viaje) {
-    viaje.id = this.viajes.length + 1;
-    this.viajes.push(viaje);
+  addViaje() {
   }
 
-  addPasajero(viajeId: number, pasajero: Usuario) {
-    const viaje = this.getViaje(viajeId);
-    if (viaje && viaje.asientos_disponibles > 0) {
-      viaje.pasajeros.push(pasajero);
-      viaje.asientos_disponibles--;
-    } else {
-      throw new Error('No hay asientos disponibles o el viaje no existe.');
-    }
+  addPasajero() {
   }
 
-  delViaje(id: number) {
-    this.viajes = this.viajes.filter(viaje => viaje.id !== id);
+  delViaje() {
   }
 
-  updViaje(id: number, updatedData: Partial<Viaje>) {
-    const index = this.viajes.findIndex(viaje => viaje.id === id);
-    if (index !== -1) {
-      this.viajes[index] = { ...this.viajes[index], ...updatedData };
-    }
+  updViaje() {
   }
 }

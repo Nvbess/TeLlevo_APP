@@ -10,6 +10,10 @@ export class AuthService {
     private angularFireAuth: AngularFireAuth,
   ) { }
 
+  getUsuario() {
+      return this.angularFireAuth.currentUser;
+  }
+
   login(email: string, pass: string,) {
     return this.angularFireAuth.signInWithEmailAndPassword(email,pass);
   }
@@ -22,14 +26,14 @@ export class AuthService {
     return this.angularFireAuth.signOut();
   }
 
-  recoverypass(email: string) {
+  recoveryPassword(email: string) {
     return this.angularFireAuth.sendPasswordResetEmail(email)
     .then(() => {
-      console.log('Correo Enviado!');
+      console.log('Correo enviado!');
     })
     .catch((error) => {
       console.log('Error al enviar el correo!');
       throw error;
-    })
+    });
   }
 }

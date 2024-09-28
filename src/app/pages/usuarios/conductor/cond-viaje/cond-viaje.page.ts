@@ -49,41 +49,11 @@ export class CondViajePage implements OnInit {
     this.menuController.enable(true);
   }
 
-  async registerViaje() {
+  /*async registerViaje() {
     if (this.viajeForm.valid) {
-      const { id, origen, destino, fecha, hora, costo, capacidad } =
+      const { uid, origen, destino, fecha, hora, costo, capacidad } =
         this.viajeForm.value;
 
-      const nuevoViaje: Viaje = {
-        id: 1,
-        conductor: {
-          email: 'conductor@user.cl',
-          pass: 'user123',
-          tipo: 'conductor',
-          nombre: 'Carlos',
-          apellido: 'Sánchez',
-          celular: '+56 9 3456 7890',
-          id: 3,
-        },
-        pasajeros: [
-          {
-            email: 'pasajero@user.cl',
-            pass: 'user123',
-            tipo: 'pasajero',
-            nombre: 'Ana',
-            apellido: 'Gómez',
-            celular: '+56 9 2345 6789',
-            id: 2,
-          },
-        ],
-        origen: this.origenValue || '',
-        destino: this.destinoValue || '',
-        fecha: this.fechaValue || '',
-        hora: this.horaValue || '',
-        costo: this.valorValue || 0,
-        capacidad: this.capacidadValue || 4,
-        asientos_disponibles: 3,
-      };
       this.viajeService.addViaje(nuevoViaje);
       this.router.navigate(['/cond-viajeinit']);
     } else {
@@ -94,5 +64,5 @@ export class CondViajePage implements OnInit {
       });
       await alert.present();
     }
-  }
+  }*/
 }

@@ -1,11 +1,11 @@
 export interface Usuario {
-  id: number;
+  uid: string;
   nombre: string;
   apellido: string;
   email: string;
   pass: string;
   celular: string;
-  tipo: 'admin' | 'pasajero' | 'conductor';
+  tipo: string;
   modeloAuto?: string;
   patenteAuto?: string;
 }

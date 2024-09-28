@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -9,16 +10,17 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class AdmUsuariosPage implements OnInit {
 
-  usuarios: Usuario[] = [];
+  usuarios: any = [];
 
-  constructor(private usuarioService: UsuariosService) { }
+  constructor(private firestore: AngularFirestore) { }
 
   ngOnInit() {
     this.config()
   }
 
   config() {
-    this.usuarios = this.usuarioService.getUsuarios();
+    this.firestore.collection('usuarios').valueChanges().subscribe(aux => {
+      this.usuarios = aux;
+    });
   }
-
 }
