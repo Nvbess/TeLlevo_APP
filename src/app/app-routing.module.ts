@@ -46,7 +46,7 @@ const routes: Routes = [
         loadChildren: () => import('./pages/admin/adm-usuarios/adm-usuarios.module').then( m => m.AdmUsuariosPageModule)
       },
       {
-        path: ':email',
+        path: ':uid',
         loadChildren: () => import('./pages/admin/det-usuarios/det-usuarios.module').then( m => m.DetUsuariosPageModule)
       },
     ]

@@ -12,7 +12,7 @@
     <ion-item
       [button]="true"
       *ngFor="let aux of usuarios"
-      [routerLink]="['/usuarios', aux.email]"
+      [routerLink]="['/usuarios', aux.uid]"
     >
       <ion-avatar aria-hidden="true" slot="start">
         <img

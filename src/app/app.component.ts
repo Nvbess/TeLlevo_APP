@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Page } from './interfaces/page';
 import { Router } from '@angular/router';
 import { InicioPage } from './pages/inicios/inicio/inicio.page';
+import { AuthService } from './services/firebase/auth.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Usuario } from './interfaces/usuario';
 
 @Component({
   selector: 'app-root',
@@ -21,50 +24,53 @@ export class AppComponent {
     { title: 'Administrar Pasajeros', url: '/lista-pas', icon: 'people' },
     { title: 'Administrar Conductores', url: '/lista-cond', icon: 'people' },
     { title: 'Administrar Viajes', url: '/det-viajes', icon: 'car' },
-    { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
+    { title: 'Cerrar Sesión', url: '', icon: 'log-out'}
   ];
 
   private PASAJERO_PAGES: Page[] = [
     { title: 'Home', url: '/pasajero-home', icon: 'home' },
     { title: 'Actividad', url: '/pj-actividad', icon: 'receipt' },
     { title: 'Perfil', url: '/pj-profile', icon: 'person' },
-    { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
+    { title: 'Cerrar Sesión', url: '', icon: 'log-out'},
   ];
 
   private CONDUCTOR_PAGES: Page[] = [
     { title: 'Home', url: '/conductor-home', icon: 'home' },
     { title: 'Actividad', url: '/cond-actividad', icon: 'receipt' },
     { title: 'Perfil', url: '/cond-profile', icon: 'person' },
-    { title: 'Cerrar Sesión', url: '', icon: 'log-out', action: this.logout.bind(this) },
+    { title: 'Cerrar Sesión', url: '', icon: 'log-out'},
   ];
 
   public labels = ['Family', 'Friends', 'Notes',];
 
   constructor(
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private fireStore: AngularFirestore
   ) {}
 
   ngOnInit() {
     this.cargarDatosUsuario();
   }
 
-  private cargarDatosUsuario() {
-    const usuarioLogin = localStorage.getItem('usuarioLogin');
-    
-    if (usuarioLogin) {
-      const user = JSON.parse(usuarioLogin);
-      this.tipoUsuario = user.tipo;
-      this.emailUsuario = user.email;
-      this.nombreUsuario = user.nombre;
-      this.apellUsuario = user.apellido;
-
-      this.configSideMenu();
-    } else {
-      this.router.navigate(['/inicio']);
+  async cargarDatosUsuario() {
+      this.authService.isLogged().subscribe(async (user)=> {
+        if(user) {
+          // Logeado
+          const usuarioLogeado = await this.fireStore.collection('usuarios').doc(user.uid).get().toPromise();
+          const usuarioData = usuarioLogeado?.data() as Usuario;
+  
+          if (usuarioData) {
+            this.tipoUsuario = usuarioData.tipo;
+            this.emailUsuario = usuarioData.email;
+            this.nombreUsuario = usuarioData.nombre;
+            this.apellUsuario = usuarioData.apellido;
+          }
+        }
+      })
     }
-  }
 
-  private configSideMenu() {
+  configSideMenu() {
     switch (this.tipoUsuario) {
       case 'admin':
         this.appPages = [...this.ADMIN_PAGES];
@@ -81,9 +87,7 @@ export class AppComponent {
   }
 
   logout(){
-    localStorage.clear();
-    localStorage.removeItem('usuarioLogin');
-    this.router.navigate(['/inicio']);
+    this.authService.logout();
   }
 }
 
