@@ -13,10 +13,10 @@
     <h1 class="titulo ion-text-center">Recuperar Contraseña</h1>
   </div>
   <form (submit)="recoveryEmail()">
-    <ion-card [formGroup]="recoveryForm">
+    <ion-card>
       <ion-card-content>
         <ion-item>
-          <ion-input formControlName="email" type="email" label="Correo Electrónico" labelPlacement="floating" placeholder="Ej: User@user.com"></ion-input>
+          <ion-input [(ngModel)]="email" type="email" label="Correo Electrónico" labelPlacement="floating" placeholder="Ej: User@user.com"></ion-input>
         </ion-item>
         <ion-button expand="block" type="submit">Recuperar</ion-button>
       </ion-card-content>

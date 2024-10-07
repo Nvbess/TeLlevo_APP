@@ -10,16 +10,11 @@ import Swal from 'sweetalert2';
 })
 export class ResetPassPage implements OnInit {
 
-  recoveryForm: FormGroup;
+  email: string = '';
 
   constructor(
-    private authService: AuthService, 
-    private formBuilder: FormBuilder
-  ) {
-    this.recoveryForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-    });
-  }
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {}
 
@@ -43,12 +38,13 @@ export class ResetPassPage implements OnInit {
           clearInterval(timerInterval);
         }
       }).then((result) => {
+        /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
-          this.authService.recoveryPassword(this.recoveryForm.value.email);
+          this.authService.recoveryPassword(this.email);
           Swal.fire({
             icon:'success',
             title:'Correo enviado',
-            text: 'Se ha enviado un correo para restablecer tu contraseña!',
+            text: 'Se ha enviado un correo para reetablecer tu contraseña!',
             confirmButtonText: 'OK',
             heightAuto: false
           });
