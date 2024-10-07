@@ -21,9 +21,10 @@ export class AppComponent {
 
   private ADMIN_PAGES: Page[] = [
     { title: 'Home', url: '/admin-home', icon: 'home' },
+    { title: 'Administrar Usuarios', url: '/usuarios', icon: 'people' },
     { title: 'Administrar Pasajeros', url: '/lista-pas', icon: 'people' },
     { title: 'Administrar Conductores', url: '/lista-cond', icon: 'people' },
-    { title: 'Administrar Viajes', url: '/det-viajes', icon: 'car' },
+    { title: 'Administrar Viajes', url: '/viajes', icon: 'car' },
     { title: 'Cerrar Sesión', url: '', icon: 'log-out'}
   ];
 
@@ -40,8 +41,6 @@ export class AppComponent {
     { title: 'Perfil', url: '/cond-profile', icon: 'person' },
     { title: 'Cerrar Sesión', url: '', icon: 'log-out'},
   ];
-
-  public labels = ['Family', 'Friends', 'Notes',];
 
   constructor(
     private router: Router,
@@ -65,6 +64,7 @@ export class AppComponent {
             this.emailUsuario = usuarioData.email;
             this.nombreUsuario = usuarioData.nombre;
             this.apellUsuario = usuarioData.apellido;
+            this.configSideMenu();
           }
         }
       })
@@ -86,8 +86,8 @@ export class AppComponent {
     }
   }
 
-  logout(){
-    this.authService.logout();
+  logout() {
+      this.authService.logout();
   }
 }
 

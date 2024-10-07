@@ -49,8 +49,4 @@ export class DetUsuariosPage implements OnInit {
       });
     }
   }
-  /*
-  async updateUser() {
-    await this.firestore.collection('usuarios').doc(this.userUid).update(this.editUserForm.value);
-  }*/
 }

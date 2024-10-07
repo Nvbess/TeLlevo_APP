@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -9,12 +10,22 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class ListaPasPage implements OnInit {
 
-  usuarios: Usuario[] = [];
+  usuarios: any = [];
 
-  constructor(private usuariosService: UsuariosService) { }
+  constructor(
+    private firestore: AngularFirestore
+  ) { }
 
   ngOnInit() {
-    this.usuarios = this.usuariosService.getUsuarios().filter(aux => aux.tipo === 'pasajero');
+    this.config();
+  }
+
+  config() {
+    this.firestore.collection('usuarios', ref => ref.where('tipo', '==', 'pasajero'))
+      .valueChanges()
+      .subscribe(aux => {
+        this.usuarios = aux;
+      });
   }
 
 }

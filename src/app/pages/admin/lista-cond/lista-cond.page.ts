@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -9,12 +10,22 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class ListaCondPage implements OnInit {
 
-  usuarios: Usuario[] = [];
+  usuarios: any = [];
 
-  constructor(private usuariosService: UsuariosService) { }
+  constructor(
+    private firestore: AngularFirestore
+  ) { }
 
   ngOnInit() {
-    this.usuarios = this.usuariosService.getUsuarios().filter(aux => aux.tipo === 'conductor');
+    this.config();
+  }
+
+  config() {
+    this.firestore.collection('usuarios', ref => ref.where('tipo', '==', 'conductor'))
+      .valueChanges()
+      .subscribe(aux => {
+        this.usuarios = aux;
+      });
   }
 
 }

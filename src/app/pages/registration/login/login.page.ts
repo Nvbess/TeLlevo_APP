@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { AlertController, LoadingController, MenuController, NavController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/firebase/auth.service';
@@ -38,9 +38,8 @@ export class LoginPage implements OnInit {
     try {
       const loading = await this.loadingController.create({
         message: 'Cargando...',
-        duration: 2000,
       });
-
+  
       await loading.present();
       const { email, pass } = this.loginForm.value;
   
@@ -50,17 +49,19 @@ export class LoginPage implements OnInit {
         const usuarioLogeado = await this.firestore.collection('usuarios').doc(aux.user.uid).get().toPromise();
         const usuarioData = usuarioLogeado?.data() as Usuario;
   
-        setTimeout(async() => {
-          await loading.dismiss();
-
-          if ( usuarioData.tipo === 'admin' ) {
-            this.router.navigate(['/admin-home']);
-          } else if ( usuarioData.tipo === 'pasajero' ) {
-            this.router.navigate(['/pasajero-home']);
-          } else {
-            this.router.navigate(['/conductor-home']);
+        if (usuarioData.tipo === 'admin') {
+          this.router.navigate(['/admin-home']);
+        } else if (usuarioData.tipo === 'pasajero') {
+          this.router.navigate(['/pasajero-home']);
+        } else {
+          this.router.navigate(['/conductor-home']);
+        }
+  
+        this.router.events.subscribe(event => {
+          if (event instanceof NavigationEnd) {
+            loading.dismiss();
           }
-        },2000);
+        });
       }
     } catch (error) {
       console.error('Error en el login:', error);

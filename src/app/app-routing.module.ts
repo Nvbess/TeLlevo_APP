@@ -141,6 +141,11 @@ const routes: Routes = [
     path: 'pj-qr',
     loadChildren: () => import('./pages/usuarios/pasajero/pj-qr/pj-qr.module').then( m => m.PjQrPageModule)
   },
+  {
+    path: 'mod-usuarios/:uid',
+    loadChildren: () => import('./pages/admin/mod-usuarios/mod-usuarios.module').then( m => m.ModUsuariosPageModule)
+  },
+
 
 
 ];
