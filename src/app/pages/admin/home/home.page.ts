@@ -5,7 +5,7 @@ import { MenuController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { AuthService } from 'src/app/services/firebase/auth.service';
-import { ViajesService } from 'src/app/services/viajes.service';
+import { ViajesService } from 'src/app/services/firebase/viajes.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,7 @@ import { ViajesService } from 'src/app/services/viajes.service';
 })
 export class HomePage implements OnInit {
 
-  viajes: Viaje[] = [];
+  viajes: any = [];
   
   public tipoUsuario?: string;
   public emailUsuario?: string;
@@ -55,7 +55,9 @@ export class HomePage implements OnInit {
   }
 
   config(){
-    this.viajes = this.viajesService.getViajes();
+    this.fireStore.collection('viajes').valueChanges().subscribe(aux => {
+      this.viajes = aux;
+    });
   }
   
 }

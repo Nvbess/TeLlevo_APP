@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Viaje } from 'src/app/interfaces/viaje';
-import { ViajesService } from 'src/app/services/viajes.service';
+import { ViajesService } from 'src/app/services/firebase/viajes.service';
 
 @Component({
   selector: 'app-pj-detviaje',
@@ -31,7 +31,8 @@ export class PjDetviajePage implements OnInit {
     private viajesService: ViajesService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+  /*ngOnInit() {
     const id_viaje = this.activatedRoute.snapshot.paramMap.get('id');
     if (id_viaje) {
       this.viajeID = Number(id_viaje);
@@ -53,5 +54,5 @@ export class PjDetviajePage implements OnInit {
         this.capacidadViaje = this.viaje.capacidad;
       }
     }
-  }
+  }*/
 }

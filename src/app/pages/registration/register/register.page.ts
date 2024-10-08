@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, MenuController } from '@ionic/angular';
-import { Usuario } from 'src/app/interfaces/usuario';
+import { LoadingController, MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/firebase/auth.service';
-import { UsuariosService } from 'src/app/services/usuarios.service';
 import Swal from 'sweetalert2';
 
 @Component({

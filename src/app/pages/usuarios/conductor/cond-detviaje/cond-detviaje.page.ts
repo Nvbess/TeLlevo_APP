@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Viaje } from 'src/app/interfaces/viaje';
-import { ViajesService } from 'src/app/services/viajes.service';
+import { ViajesService } from 'src/app/services/firebase/viajes.service';
 
 @Component({
   selector: 'app-cond-detviaje',
@@ -29,7 +29,7 @@ export class CondDetviajePage implements OnInit {
     private viajesService: ViajesService) { }
 
   ngOnInit() {
-    const id_viaje = this.activatedRoute.snapshot.paramMap.get('id');
+    /*const id_viaje = this.activatedRoute.snapshot.paramMap.get('id');
     if (id_viaje) {
       this.viajeID = Number(id_viaje);
     }
@@ -48,8 +48,6 @@ export class CondDetviajePage implements OnInit {
         this.horaViaje = this.viaje.hora;
         this.costoViaje = this.viaje.costo;
         this.capacidadViaje = this.viaje.capacidad;
-      }
+      }*/
     }
   }
-
-}

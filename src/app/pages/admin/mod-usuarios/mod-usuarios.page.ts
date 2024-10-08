@@ -3,7 +3,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
-import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-mod-usuarios',
@@ -17,7 +16,6 @@ export class ModUsuariosPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private usuariosService: UsuariosService,
     private formBuilder: FormBuilder,
     private firestore: AngularFirestore
   ) {

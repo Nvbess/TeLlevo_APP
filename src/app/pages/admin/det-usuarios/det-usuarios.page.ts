@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/firebase/auth.service';
-import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-det-usuarios',

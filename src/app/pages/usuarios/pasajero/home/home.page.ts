@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { ViajesService } from 'src/app/services/viajes.service';
+import { ViajesService } from 'src/app/services/firebase/viajes.service';
 import * as L from 'leaflet';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/firebase/auth.service';

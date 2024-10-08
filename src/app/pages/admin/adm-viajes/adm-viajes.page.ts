@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Viaje } from 'src/app/interfaces/viaje';
-import { ViajesService } from 'src/app/services/viajes.service';
+import { ViajesService } from 'src/app/services/firebase/viajes.service';
 
 @Component({
   selector: 'app-adm-viajes',
@@ -9,16 +10,18 @@ import { ViajesService } from 'src/app/services/viajes.service';
 })
 export class AdmViajesPage implements OnInit {
 
-  viajes: Viaje[] = [];
+  viajes: any = [];
 
-  constructor(private viajesService: ViajesService) { }
+  constructor(private fireStore: AngularFirestore) { }
 
   ngOnInit() {
     this.config()
   }
 
   config(){
-    this.viajes = this.viajesService.getViajes();
+    this.fireStore.collection('viajes').valueChanges().subscribe(aux => {
+      this.viajes = aux;
+    });
   }
 
 }
