@@ -1,53 +1,46 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border header-transparent">
   <ion-toolbar>
-    <ion-title>mod-usuarios</ion-title>
+    <ion-title class="ion-text-start">Modificar Usuario</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/admin-home"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content color="light" [fullscreen]="true">
   <ion-card>
-    <ion-card-header>
-      <ion-card-title> </ion-card-title>
-    </ion-card-header>
     <ion-card-content>
       <form [formGroup]="editUserForm" (ngSubmit)="updateUser()">
         <ion-list>
           <ion-item>
-            <ion-label>Nombre:</ion-label>
-            <ion-input formControlName="nombre"></ion-input>
+            <ion-input formControlName="nombre" label="Nombre" labelPlacement="floating" class="center-text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Apellido:</ion-label>
-            <ion-input formControlName="apellido"></ion-input>
+            <ion-input formControlName="apellido" label="Apellido" labelPlacement="floating" class="center-text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Email:</ion-label>
-            <ion-input formControlName="email" type="email"></ion-input>
+            <ion-input formControlName="email" type="email" label="Email" labelPlacement="floating" class="center-text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Contraseña:</ion-label>
-            <ion-input formControlName="pass" type="password"></ion-input>
+            <ion-input formControlName="pass" type="password" label="Contraseña" labelPlacement="floating" class="center-text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Tipo:</ion-label>
-            <ion-select formControlName="tipo">
+            <ion-select formControlName="tipo" label="Tipo" labelPlacement="floating" class="center-text">
               <ion-select-option value="admin">Administrador</ion-select-option>
               <ion-select-option value="conductor">Conductor</ion-select-option>
               <ion-select-option value="pasajero">Pasajero</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label>Modelo Auto:</ion-label>
-            <ion-input formControlName="modeloAuto"></ion-input>
+            <ion-input formControlName="modeloAuto" label="Modelo de Auto" labelPlacement="floating" class="center-text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Patente Auto:</ion-label>
-            <ion-input formControlName="patenteAuto"></ion-input>
+            <ion-input formControlName="patenteAuto" label="Patente de Auto" labelPlacement="floating" class="center-text"></ion-input>
           </ion-item>
         </ion-list>
-        <ion-footer>
+        <div class="button-container">
           <ion-button type="submit">Modificar</ion-button>
-        </ion-footer>
+        </div>
       </form>
     </ion-card-content>
   </ion-card>

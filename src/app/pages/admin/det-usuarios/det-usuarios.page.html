@@ -8,26 +8,41 @@
 </ion-header>
 
 <ion-content color="light" [fullscreen]="true">
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
   <div class="titulo-datos">
-    <h2>Datos Personales</h2>
+    <ion-avatar aria-hidden="true">
+      <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    </ion-avatar>
+    <h2>{{ userNombre }} {{ userApellido }}</h2>
+    <small>{{ userUid }}</small>
   </div>
-  <ion-list [inset]="true">
-    <ion-item>
-      <ion-label>Nombre: {{ userNombre }} {{ userApellido }}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Correo: {{ userEmail }}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Tipo de cuenta: {{ userTipo }}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Numero de celular: {{ userCelular }}</ion-label>
-    </ion-item>
-  </ion-list>
-  <div class="boton-editar">
-    <ion-button [routerLink]="['/mod-usuarios', userUid]">Editar Datos Personales</ion-button>
-  </div>
+  <ion-content color="light">
+    <ion-list class="rounded-list" [inset]="true">
+      <ion-item>
+        <ion-label>
+          <p>Correo</p>
+          <h2>{{ userEmail }}</h2>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p>Telefono</p>
+          <h2>+56 9 {{ userCelular }}</h2>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p>Tipo de Cuenta</p>
+          <h2>{{ userTipo | titlecase }}</h2>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <div class="boton-editar">
+      <ion-button [routerLink]="['/mod-usuarios', userUid]">Modificar Usuario</ion-button>
+    </div>
+  </ion-content>
 </ion-content>
 
 <ion-footer>

@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ViajesService } from 'src/app/services/viajes.service';
 import * as L from 'leaflet';
+import { Usuario } from 'src/app/interfaces/usuario';
+import { AuthService } from 'src/app/services/firebase/auth.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-home',
@@ -19,9 +22,12 @@ export class HomePage implements OnInit {
 
   map: any;
 
-  constructor(private router: Router,
-              private menuController: MenuController,
-              private viajesService: ViajesService) { }
+  constructor(
+    private router: Router,
+    private menuController: MenuController,
+    private viajesService: ViajesService,
+    private authService: AuthService,
+    private fireStore: AngularFirestore) { }
 
   ionViewDidEnter() {
     this.map = L.map('mapId').setView([-33.598449986499055, -70.57880611157175], 17); 
@@ -33,16 +39,24 @@ export class HomePage implements OnInit {
              
   ngOnInit() {
     this.menuController.enable(true);
-    /*const usuarioLogin = localStorage.getItem('usuarioLogin');
-    
-    if (usuarioLogin) {
-      const user = JSON.parse(usuarioLogin);
-      this.tipoUsuario = user.tipo;
-      this.emailUsuario = user.email;
-      this.nombreUsuario = user.nombre;
-      this.apellUsuario = user.apellido;
-      this.idUsuario = user.id;
-    }*/
+    this.checklogin();
+  }
+
+  async checklogin() {
+    this.authService.isLogged().subscribe(async (user)=> {
+      if(user) {
+        // Logeado
+        const usuarioLogeado = await this.fireStore.collection('usuarios').doc(user.uid).get().toPromise();
+        const usuarioData = usuarioLogeado?.data() as Usuario;
+
+        if (usuarioData) {
+          this.tipoUsuario = usuarioData.tipo;
+          this.emailUsuario = usuarioData.email;
+          this.nombreUsuario = usuarioData.nombre;
+          this.apellUsuario = usuarioData.apellido;
+        }
+      }
+    })
   }
 }
 

@@ -21,6 +21,8 @@ export class DetUsuariosPage implements OnInit {
   userCelular?: string | null;
   userID?: string | null;
   userTipo?: string | null;
+  userModAuto?: string | null;
+  userPatAuto?: string | null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,6 +47,8 @@ export class DetUsuariosPage implements OnInit {
           this.userCelular = usuarioData.celular;
           this.userID = usuarioData.uid;
           this.userTipo = usuarioData.tipo;
+          this.userModAuto = usuarioData.modeloAuto;
+          this.userPatAuto = usuarioData.patenteAuto;
         }
       });
     }

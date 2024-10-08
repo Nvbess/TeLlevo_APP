@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { Usuario } from 'src/app/interfaces/usuario';
 import { Viaje } from 'src/app/interfaces/viaje';
+import { AuthService } from 'src/app/services/firebase/auth.service';
 import { ViajesService } from 'src/app/services/viajes.service';
 
 @Component({
@@ -19,40 +22,40 @@ export class HomePage implements OnInit {
   public apellUsuario?: string;
   public celUsuario?: string;
 
-  constructor(private router: Router,
-              private menuController: MenuController,
-              private viajesService: ViajesService
+  constructor(
+    private router: Router,
+    private menuController: MenuController,
+    private viajesService: ViajesService,
+    private authService: AuthService,
+    private fireStore: AngularFirestore
 
   ) { }
 
   ngOnInit() {
     this.config()
     this.menuController.enable(true);
-    /*const usuarioLogin = localStorage.getItem('usuarioLogin');
+    this.checklogin();
+  }
 
-    if (usuarioLogin) {
-      const user = JSON.parse(usuarioLogin);
-      this.tipoUsuario = user.tipo;
-      this.emailUsuario = user.email;
-      this.nombreUsuario = user.nombre;
-      this.apellUsuario = user.apellido;
-    }*/
+  async checklogin() {
+    this.authService.isLogged().subscribe(async (user)=> {
+      if(user) {
+        // Logeado
+        const usuarioLogeado = await this.fireStore.collection('usuarios').doc(user.uid).get().toPromise();
+        const usuarioData = usuarioLogeado?.data() as Usuario;
+
+        if (usuarioData) {
+          this.tipoUsuario = usuarioData.tipo;
+          this.emailUsuario = usuarioData.email;
+          this.nombreUsuario = usuarioData.nombre;
+          this.apellUsuario = usuarioData.apellido;
+        }
+      }
+    })
   }
 
   config(){
     this.viajes = this.viajesService.getViajes();
-  }
-
-  goHome() {
-
-  }
-
-  goHistorial() {
-
-  }
-
-  goPerfil() {
-
   }
 
 }

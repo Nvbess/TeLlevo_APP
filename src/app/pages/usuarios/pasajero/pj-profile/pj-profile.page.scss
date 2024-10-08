@@ -15,13 +15,86 @@ ion-toolbar {
     }
 }
 
-.titulo-datospasajero{
+.titulo-datos {
+    margin-top: 6vh;
+    left: 100%;
     text-align: center;
 }
 
-.boton-editar{
+ion-avatar {
     display: flex;
+    margin: 0 auto;
+    width: 120px;
+    height: 120px;
+}
+
+h2 {
+    margin: 10px 10px 0;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+.rounded-list {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.boton-editar {
     justify-content: center;
-    margin-top: 20px;
-    
+    align-items: center;
+    text-align: center;
+}
+
+.wave {
+    background: rgba(29, 100, 242, 1);
+    border-radius: 0 0 1000% 1000%;
+    position: absolute;
+    width: 200%;
+    height: 20vh;
+    animation: wave 10s -3s linear infinite;
+    transform: translate3d(0, 0, 0);
+    opacity: 0.8;
+    top: 0vh;
+    left: 0;
+    z-index: -1;
+}
+
+.wave:nth-of-type(2) {
+    background: rgba(11, 67, 140, 1);
+    left: 0vh;
+    top: 0vh;
+    animation: wave 18s linear reverse infinite;
+    opacity: 0.8;
+}
+
+.wave:nth-of-type(3) {
+    background: rgba(28, 70, 206, 1);
+    top: 0vh;
+    animation: wave 20s -1s reverse infinite;
+    opacity: 0.9;
+}
+
+@keyframes wave {
+    2% {
+        transform: translateX(1);
+    }
+
+    25% {
+        transform: translateX(-25%);
+    }
+
+    50% {
+        transform: translateX(-50%);
+    }
+
+    75% {
+        transform: translateX(-25%);
+    }
+
+    100% {
+        transform: translateX(1);
+    }
 }
