@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/firebase/auth.service';
+import { MensajesService } from 'src/app/services/mensajes.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,6 +19,7 @@ export class RegisterPage implements OnInit {
   deseaConductor?: boolean;
 
   constructor(
+    private mensajes: MensajesService,
     private router: Router, 
     private loadingController: LoadingController,
     private formBuilder: FormBuilder,
@@ -92,24 +94,12 @@ export class RegisterPage implements OnInit {
           patenteAuto: this.registerForm.value.patenteAuto || '',
           });
           await loading.dismiss();
-          Swal.fire({
-            icon: 'success',
-            title: 'Registro Exitoso',
-            text: 'Usuario Registrado Correctamente',
-            confirmButtonText: 'OK',
-            heightAuto: false,
-          }).then(() => {
+          this.mensajes.mensaje('success','Registro Exitoso','Usuario Registrado Correctamente').then(() => {
             this.router.navigate(['/login']);
           })
         }
       } catch (error) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Registro Fallido!',
-            text: 'Error al registrar',
-            confirmButtonText: 'OK',
-            heightAuto: false,
-          })
+        this.mensajes.mensaje('error','Registro Fallido!','Error al registrar')
       }
     }
 }
