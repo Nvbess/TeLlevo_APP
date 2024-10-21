@@ -23,7 +23,7 @@
     <h5 class="titulo-cont">Últimos viajes</h5>
     <swiper-container>
       <swiper-slide *ngFor="let aux of viajes">
-        <ion-card routerLink="/adm-viajes">
+        <ion-card routerLink="/cond-actividad">
           <img class="img-map" src="assets/maps/map-1.png" />
           <ion-card-header>
             <ion-card-title class="direccion-viaje">{{ aux.destino }}</ion-card-title>
@@ -45,11 +45,11 @@
 
     <ion-card class="mini-card" *ngIf="viajeEnCurso">
       <ion-card-content>
-        <h2 class="tit-adm">Tienes un viaje en curso</h2>
+        <h2 class="tit-adm">Tienes un viaje en espera</h2>
         <p>Destino: {{ viajeEnCurso.destino }}</p>
         <p>Estado: {{ viajeEnCurso.estado }}</p>
         <!-- Aquí puedes añadir el código QR o un botón para mostrarlo -->
-        <ion-button routerLink="/cond-viajeinit">Ver Código QR</ion-button>
+        <ion-button [routerLink]="['/cond-viajeinit', viajeEnCurso.id]">Ver Código QR</ion-button>
       </ion-card-content>
     </ion-card>
   </div>

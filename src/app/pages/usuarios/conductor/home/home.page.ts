@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class HomePage implements OnInit {
   viajes: any = [];
-  viajeEnCurso: Viaje | null = null; // Para almacenar el viaje en curso
+  viajeEnCurso: Viaje | null = null;
 
   public tipoUsuario?: string;
   public emailUsuario?: string;
@@ -54,7 +54,7 @@ export class HomePage implements OnInit {
           this.apellUsuario = usuarioData.apellido;
 
           // Obtener el viaje en curso
-          this.viajeEnCursoSubscription = this.viajesService.getViajeEnCurso(user.uid).subscribe(viajes => {
+          this.viajeEnCursoSubscription = this.viajesService.getViajeEnEspera(user.uid).subscribe(viajes => {
             this.viajeEnCurso = viajes.length > 0 ? viajes[0] : null; // Si hay un viaje en curso, guardarlo
           });
         }
@@ -63,8 +63,10 @@ export class HomePage implements OnInit {
   }
 
   config() {
-    this.fireStore.collection('viajes').valueChanges().subscribe(aux => {
-      this.viajes = aux;
+    this.fireStore.collection('viajes', ref => 
+      ref.orderBy('fecha', 'desc').limit(3)
+    ).valueChanges().subscribe(viajes => {
+      this.viajes = viajes;
     });
   }
 

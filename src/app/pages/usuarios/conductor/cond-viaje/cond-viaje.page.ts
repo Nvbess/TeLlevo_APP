@@ -38,7 +38,7 @@ export class CondViajePage implements OnInit {
     private menuController: MenuController
   ) {
     this.viajeForm = this.formBuilder.group({
-      origen: ['', [Validators.required]],
+      origen: [{ value: 'Duoc UC Sede Puente Alto', disabled: true }, [Validators.required]],
       destino: ['', [Validators.required]],
       fecha: ['', [Validators.required]],
       hora: ['', [Validators.required]],
@@ -48,7 +48,7 @@ export class CondViajePage implements OnInit {
   
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.conductorUid = user.uid;  // Guardamos el UID del conductor
+        this.conductorUid = user.uid;
       }
     });
   }
@@ -73,17 +73,18 @@ export class CondViajePage implements OnInit {
       });
       await loading.present();
   
+      // Extraer manualmente el valor del origen ya que está deshabilitado en el formulario
       const viajeData: Viaje = {
-        origen: this.viajeForm.value.origen,
+        origen: 'Duoc UC Sede Puente Alto',  // Valor fijo para el origen
         destino: this.viajeForm.value.destino,
         fecha: this.viajeForm.value.fecha,
         hora: this.viajeForm.value.hora,
         costo: this.viajeForm.value.valor,
         capacidad: this.viajeForm.value.capacidad,
         asientos_disponibles: this.viajeForm.value.capacidad,
-        conductorUid: this.conductorUid,  // Asegurarse que nunca sea null
+        conductorUid: this.conductorUid,
         pasajerosUids: [],
-        estado: 'en curso'
+        estado: 'en espera'
       };
   
       try {
@@ -108,5 +109,5 @@ export class CondViajePage implements OnInit {
       });
       await alert.present();
     }
-  }
+  }  
 }

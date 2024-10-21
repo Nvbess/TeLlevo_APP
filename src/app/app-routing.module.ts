@@ -118,7 +118,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/usuarios/conductor/cond-viaje/cond-viaje.module').then( m => m.CondViajePageModule)
   },
   {
-    path: 'cond-viajeinit',
+    path: 'cond-viajeinit/:id',
     loadChildren: () => import('./pages/usuarios/conductor/cond-viajeinit/cond-viajeinit.module').then( m => m.CondViajeinitPageModule)
   },
   {

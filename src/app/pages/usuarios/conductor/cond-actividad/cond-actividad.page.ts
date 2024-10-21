@@ -18,9 +18,11 @@ export class CondActividadPage implements OnInit {
     this.config()
   }
 
-  config(){
-    this.fireStore.collection('viajes').valueChanges().subscribe(aux => {
-      this.viajes = aux;
+  config() {
+    this.fireStore.collection('viajes', ref => 
+      ref.orderBy('fecha', 'desc')
+    ).valueChanges().subscribe(viajes => {
+      this.viajes = viajes;
     });
   }
 

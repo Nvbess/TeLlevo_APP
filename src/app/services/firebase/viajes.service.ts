@@ -14,19 +14,29 @@ export class ViajesService {
   constructor(private firestore: AngularFirestore) { }
 
   // Crear un nuevo viaje
-  addViaje(viaje: Viaje): Promise<any> {
-    return this.firestore.collection('viajes').add(viaje);
+  async addViaje(viaje: Viaje) {
+    const viajeRef = await this.firestore.collection('viajes').add(viaje);
+    const id = viajeRef.id;
+    await this.firestore.collection('viajes').doc(id).update({ id });
   }
 
-  // Obtener la lista de viajes
+  // Listar viajes
   getViajes(): Observable<Viaje[]> {
     return this.firestore.collection<Viaje>('viajes').valueChanges();
   }
-  // Método para obtener el viaje en curso del conductor
-  getViajeEnCurso(conductorUid: string): Observable<Viaje[]> {
+
+  // Obtener un viaje por Conductor
+  getViajesPorConductor(conductorId: string): Observable<Viaje[]> {
+    return this.firestore.collection<Viaje>('viajes', ref =>
+      ref.where('conductorId', '==', conductorId).orderBy('fecha', 'desc')
+    ).valueChanges();
+  }
+
+  // Obtener un viaje en espera
+  getViajeEnEspera(conductorUid: string): Observable<Viaje[]> {
     return this.firestore.collection<Viaje>(this.collectionName, ref => ref
       .where('conductorUid', '==', conductorUid)
-      .where('estado', '==', 'en curso')
+      .where('estado', '==', 'en espera')
     ).valueChanges();
   }
 
