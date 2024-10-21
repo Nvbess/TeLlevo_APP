@@ -17,7 +17,10 @@ export class ViajesService {
   async addViaje(viaje: Viaje) {
     const viajeRef = await this.firestore.collection('viajes').add(viaje);
     const id = viajeRef.id;
+    
     await this.firestore.collection('viajes').doc(id).update({ id });
+  
+    return viajeRef;
   }
 
   // Listar viajes

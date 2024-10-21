@@ -57,57 +57,62 @@ export class CondViajePage implements OnInit {
   }
 
   async registerViaje() {
-    if (this.viajeForm.valid) {
-      if (!this.conductorUid) {
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: 'No se pudo obtener el UID del conductor. Inicia sesión nuevamente.',
-          buttons: ['OK'],
-        });
-        await alert.present();
-        return;
-      }
-  
-      const loading = await this.loadingController.create({
-        message: 'Creando viaje...',
-      });
-      await loading.present();
-  
-      // Extraer manualmente el valor del origen ya que está deshabilitado en el formulario
-      const viajeData: Viaje = {
-        origen: 'Duoc UC Sede Puente Alto',  // Valor fijo para el origen
-        destino: this.viajeForm.value.destino,
-        fecha: this.viajeForm.value.fecha,
-        hora: this.viajeForm.value.hora,
-        costo: this.viajeForm.value.valor,
-        capacidad: this.viajeForm.value.capacidad,
-        asientos_disponibles: this.viajeForm.value.capacidad,
-        conductorUid: this.conductorUid,
-        pasajerosUids: [],
-        estado: 'en espera'
-      };
-  
-      try {
-        await this.viajeService.addViaje(viajeData);
-        await loading.dismiss();
-        this.router.navigate(['/cond-viajeinit']);  // Redirige a la página de inicio del viaje
-      } catch (error) {
-        await loading.dismiss();
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: 'Hubo un problema al crear el viaje. Inténtalo de nuevo.',
-          buttons: ['OK'],
-        });
-        await alert.present();
-      }
-  
-    } else {
+  if (this.viajeForm.valid) {
+    if (!this.conductorUid) {
       const alert = await this.alertController.create({
         header: 'Error',
-        message: 'Por favor, complete todos los campos correctamente.',
+        message: 'No se pudo obtener el UID del conductor. Inicia sesión nuevamente.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+
+    const loading = await this.loadingController.create({
+      message: 'Creando viaje...',
+    });
+    await loading.present();
+
+    // Extraer manualmente el valor del origen ya que está deshabilitado en el formulario
+    const viajeData: Viaje = {
+      origen: 'Duoc UC Sede Puente Alto',  // Valor fijo para el origen
+      destino: this.viajeForm.value.destino,
+      fecha: this.viajeForm.value.fecha,
+      hora: this.viajeForm.value.hora,
+      costo: this.viajeForm.value.valor,
+      capacidad: this.viajeForm.value.capacidad,
+      asientos_disponibles: this.viajeForm.value.capacidad,
+      conductorUid: this.conductorUid,
+      pasajerosUids: [],
+      estado: 'en espera'
+    };
+
+    try {
+
+      const viajeRef = await this.viajeService.addViaje(viajeData);
+      const viajeId = viajeRef.id;
+
+      await loading.dismiss();
+
+      this.router.navigate([`/cond-viajeinit/${viajeId}`]);
+
+    } catch (error) {
+      await loading.dismiss();
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'Hubo un problema al crear el viaje. Inténtalo de nuevo.',
         buttons: ['OK'],
       });
       await alert.present();
     }
-  }  
+
+  } else {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: 'Por favor, complete todos los campos correctamente.',
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+}
 }

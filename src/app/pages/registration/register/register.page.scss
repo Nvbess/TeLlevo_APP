@@ -119,3 +119,13 @@ ion-card {
         transform: translateX(1);
     }
 }
+
+.boton-random {
+    display: flex;
+    margin-top: 100px;
+    width: 10px;
+    height: 10px;
+    justify-content: end;
+    align-items: end;
+    text-align: end;
+}
