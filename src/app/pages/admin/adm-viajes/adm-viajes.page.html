@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true" color="light">
   <ion-list [inset]="true">
-    <ion-item [button]="true" *ngFor="let aux of viajes" [routerLink]="['/viajes', aux.id]">
+    <ion-item [button]="true" *ngFor="let aux of viajes" [routerLink]="['/det-viajes', aux.id]">
       <ion-avatar aria-hidden="true" slot="start">
         <img alt="" src="assets/icon/icono-car.png">
       </ion-avatar>

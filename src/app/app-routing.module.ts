@@ -61,16 +61,11 @@ const routes: Routes = [
   },
   {
     path: 'viajes-pas',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./pages/usuarios/pasajero/pj-actividad/pj-actividad.module').then( m => m.PjActividadPageModule)
-      },
-      {
-        path: ':id',
-        loadChildren: () => import('./pages/usuarios/pasajero/pj-detviaje/pj-detviaje.module').then( m => m.PjDetviajePageModule)
-      },
-    ]
+    loadChildren: () => import('./pages/usuarios/pasajero/pj-actividad/pj-actividad.module').then( m => m.PjActividadPageModule)
+  },
+  {
+    path: 'pj-detviaje/:id',
+    loadChildren: () => import('./pages/usuarios/pasajero/pj-detviaje/pj-detviaje.module').then( m => m.PjDetviajePageModule)
   },
   {
     path: 'det-usuarios',
@@ -86,19 +81,10 @@ const routes: Routes = [
   },
   {
     path: 'viajes',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./pages/admin/adm-viajes/adm-viajes.module').then( m => m.AdmViajesPageModule)
-      },
-      {
-        path: ':id',
-        loadChildren: () => import('./pages/admin/det-viajes/det-viajes.module').then( m => m.DetViajesPageModule)
-      },
-    ]
+    loadChildren: () => import('./pages/admin/adm-viajes/adm-viajes.module').then( m => m.AdmViajesPageModule)
   },
   {
-    path: 'det-viajes',
+    path: 'det-viajes/:id',
     loadChildren: () => import('./pages/admin/det-viajes/det-viajes.module').then( m => m.DetViajesPageModule)
   },
   {

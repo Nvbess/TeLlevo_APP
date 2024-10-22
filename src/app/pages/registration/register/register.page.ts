@@ -115,14 +115,19 @@ export class RegisterPage implements OnInit {
         await loading.present();
     
         const randomUsers = await this.randomUser.getRandomUsers(10);
+        console.log('Usuarios aleatorios obtenidos:', randomUsers);
     
         if (randomUsers && randomUsers.length === 10) {
-          const conductor = randomUsers.slice(0, 5);
-          const pasajero = randomUsers.slice(5);
+          const conductores = randomUsers.slice(0, 5);
+          const pasajeros = randomUsers.slice(5);
     
-          await this.registerRandomUser(conductor, true); 
+          for (const conductor of conductores) {
+            await this.registerRandomUser(conductor, true);
+          }
     
-          await this.registerRandomUser(pasajero, false);
+          for (const pasajero of pasajeros) {
+            await this.registerRandomUser(pasajero, false); 
+          }
     
           await loading.dismiss();
           this.mensajes.mensaje('success', 'Registro Exitoso', 'Se han registrado los usuarios correctamente');
