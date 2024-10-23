@@ -135,6 +135,11 @@ const routes: Routes = [
     path: 'cond-editprofile/:uid',
     loadChildren: () => import('./pages/usuarios/conductor/cond-editprofile/cond-editprofile.module').then( m => m.CondEditprofilePageModule)
   },
+  {
+    path: 'conf-viaje/:id',
+    loadChildren: () => import('./pages/admin/conf-viaje/conf-viaje.module').then( m => m.ConfViajePageModule)
+  },
+
 
 
 

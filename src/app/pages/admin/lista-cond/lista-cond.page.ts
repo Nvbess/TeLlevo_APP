@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class ListaCondPage implements OnInit {
 
+  count: number = 0; 
   usuarios: any = [];
 
   constructor(
@@ -22,7 +23,14 @@ export class ListaCondPage implements OnInit {
       .valueChanges()
       .subscribe(aux => {
         this.usuarios = aux;
+        this.contarUsuarios()
       });
+  }
+
+  contarUsuarios() {
+    this.firestore.collection('usuarios', ref => ref.where('tipo', '==', 'conductor')).get().subscribe((snapshot) => {
+      this.count = snapshot.size;
+    });
   }
 
 }

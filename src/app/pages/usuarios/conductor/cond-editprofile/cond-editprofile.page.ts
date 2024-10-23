@@ -74,6 +74,7 @@ export class CondEditprofilePage implements OnInit {
         this.router.navigateByUrl('/cond-profile');
       } else if (result.isDenied) {
         this.mensajeService.mensaje('info', 'Cancelado', 'No se guardaron cambios');
+        this.router.navigateByUrl('/cond-profile');
       }
     })
   }

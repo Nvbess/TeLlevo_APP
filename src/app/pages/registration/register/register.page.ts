@@ -119,7 +119,7 @@ export class RegisterPage implements OnInit {
     
         if (randomUsers && randomUsers.length === 10) {
           const conductores = randomUsers.slice(0, 5);
-          const pasajeros = randomUsers.slice(5);
+          const pasajeros = randomUsers.slice(5,10);
     
           for (const conductor of conductores) {
             await this.registerRandomUser(conductor, true);

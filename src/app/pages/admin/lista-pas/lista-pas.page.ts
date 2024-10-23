@@ -8,6 +8,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class ListaPasPage implements OnInit {
 
+  count: number = 0; 
+
   usuarios: any = [];
 
   constructor(
@@ -23,7 +25,14 @@ export class ListaPasPage implements OnInit {
       .valueChanges()
       .subscribe(aux => {
         this.usuarios = aux;
+        this.contarUsuarios()
       });
+  }
+
+  contarUsuarios() {
+    this.firestore.collection('usuarios', ref => ref.where('tipo', '==', 'pasajero')).get().subscribe((snapshot) => {
+      this.count = snapshot.size;
+    });
   }
 
 }

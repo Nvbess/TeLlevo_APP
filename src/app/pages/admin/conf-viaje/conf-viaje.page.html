@@ -1,0 +1,47 @@
+<ion-header class="ion-no-border header-transparent">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Detalle Viaje</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/adm-viajes"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" [fullscreen]="true">
+  <ion-card>
+    <img class="img-map" src="assets/maps/map-1.png" />
+    <ion-card-content>
+      <ion-card-title class="direccion-viaje" class="ion-text-center"> Viaje de <br> {{ nombreConductor }} {{ apellidoConductor }} </ion-card-title>
+      <ion-card-subtitle class="ion-text-center">{{ viajeID  }}</ion-card-subtitle>
+      <form [formGroup]="editViajeForm" (ngSubmit)="updateViaje()">
+        <ion-list>
+          <ion-item class="ion-text-center">
+            <ion-input formControlName="fecha" label="Fecha" labelPlacement="floating" readonly></ion-input>
+          </ion-item>
+          <ion-item class="ion-text-center">
+            <ion-input formControlName="hora" label="Hora" labelPlacement="floating" readonly></ion-input>
+          </ion-item>
+          <ion-item class="ion-text-center">
+            <ion-input formControlName="costo" label="Costo" labelPlacement="floating"></ion-input>
+          </ion-item>
+          <ion-item class="ion-text-center">
+            <ion-select formControlName="estado" type="estado" label="Estado" labelPlacement="floating">
+              <ion-select-option value="en espera">En espera</ion-select-option>
+              <ion-select-option value="en curso">En curso</ion-select-option>
+              <ion-select-option value="finalizado" color="success">Finalizado</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="ion-text-center">
+            <ion-input formControlName="origen" label="Origen" labelPlacement="floating" readonly></ion-input>
+          </ion-item>
+          <ion-item class="ion-text-center">
+            <ion-input formControlName="destino" label="Destino" labelPlacement="floating" readonly></ion-input>
+          </ion-item>
+        </ion-list>
+        <div class="button-container, ion-text-center">
+          <ion-button type="submit">Modificar</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class AdmUsuariosPage implements OnInit {
 
+  count: number = 0;
   usuarios: any = [];
 
   constructor(private firestore: AngularFirestore) { }
@@ -19,6 +20,13 @@ export class AdmUsuariosPage implements OnInit {
   config() {
     this.firestore.collection('usuarios').valueChanges().subscribe(aux => {
       this.usuarios = aux;
+      this.contarUsuarios()
     });
-  }
+}
+
+contarUsuarios() {
+  this.firestore.collection('usuarios').get().subscribe((snapshot) => {
+    this.count = snapshot.size;
+  });
+}
 }

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
+import { MensajesService } from 'src/app/services/mensajes.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-mod-usuarios',
@@ -16,8 +18,10 @@ export class ModUsuariosPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private mensajeService: MensajesService,
   ) {
     this.editUserForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -60,15 +64,22 @@ export class ModUsuariosPage implements OnInit {
   }
 
   async updateUser() {
-    await this.firestore
-      .collection('usuarios')
-      .doc(this.uid)
-      .update(this.editUserForm.value)
-      .then(() => {
-        // MENSAJE DE ALERTA
-      })
-      .catch((error) => {
-        // MENSAJE DE ERROR
-      });
+    Swal.fire({
+      title: 'Seguro que deseas confirmar?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Confirmar",
+      denyButtonText: "Cancelar",
+      heightAuto: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.firestore.collection('usuarios').doc(this.uid).update(this.editUserForm.value).then(() => {})
+        this.mensajeService.mensaje('success', 'Confirmado', 'Se guardaron los cambios');
+        this.router.navigateByUrl(`/usuarios/${this.uid}`);
+      } else if (result.isDenied) {
+        this.mensajeService.mensaje('info', 'Cancelado', 'No se guardaron cambios');
+        this.router.navigateByUrl(`/usuarios/${this.uid}`);
+      }
+    })
   }
 }

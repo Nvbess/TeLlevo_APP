@@ -23,9 +23,7 @@ export class HomePage implements OnInit {
   public celUsuario?: string;
 
   constructor(
-    private router: Router,
     private menuController: MenuController,
-    private viajesService: ViajesService,
     private authService: AuthService,
     private fireStore: AngularFirestore
   ) { }
@@ -54,10 +52,12 @@ export class HomePage implements OnInit {
     })
   }
 
-  config(){
-    this.fireStore.collection('viajes').valueChanges().subscribe(aux => {
-      this.viajes = aux;
-    });
+  config() {
+      this.fireStore.collection('viajes', ref => ref.limit(3)).valueChanges().subscribe(viajes => {
+        if (viajes.length > 0) {
+          this.viajes = viajes;
+        }
+      });
   }
   
 }
