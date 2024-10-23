@@ -13,7 +13,7 @@ export class ViajesService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  // Crear un nuevo viaje
+  // CREAR VIAJE
   async addViaje(viaje: Viaje) {
     const viajeRef = await this.firestore.collection('viajes').add(viaje);
     const id = viajeRef.id;
@@ -23,19 +23,19 @@ export class ViajesService {
     return viajeRef;
   }
 
-  // Listar viajes
+  // LISTAR VIAJE
   getViajes(): Observable<Viaje[]> {
     return this.firestore.collection<Viaje>('viajes').valueChanges();
   }
 
-  // Obtener un viaje por Conductor
-  getViajesPorConductor(conductorId: string): Observable<Viaje[]> {
+  // LISTAR VIAJES POR CONDUCTOR
+  getViajesPorConductor(conductorUid: string): Observable<Viaje[]> {
     return this.firestore.collection<Viaje>('viajes', ref =>
-      ref.where('conductorId', '==', conductorId).orderBy('fecha', 'desc')
+      ref.where('conductorUid', '==', conductorUid).orderBy('fecha', 'desc')
     ).valueChanges();
   }
 
-  // Obtener un viaje en espera
+  // LISTAR VIAJE EN ESPERA
   getViajeEnEspera(conductorUid: string): Observable<Viaje[]> {
     return this.firestore.collection<Viaje>(this.collectionName, ref => ref
       .where('conductorUid', '==', conductorUid)
@@ -43,31 +43,31 @@ export class ViajesService {
     ).valueChanges();
   }
 
-  // Obtener un viaje por ID
+  // OBTENER VIAJE
   getViaje(id: string): Observable<Viaje | undefined> {
     return this.firestore.collection('viajes').doc<Viaje>(id).valueChanges();
   }
 
-  // Agregar un pasajero al viaje
+  // AGREGAR PASAJERO
   addPasajero(viajeId: string, pasajeroUid: string): Promise<void> {
     return this.firestore.collection('viajes').doc(viajeId).update({
       pasajerosUids: firebase.firestore.FieldValue.arrayUnion(pasajeroUid)
     });
   }
 
-  // Eliminar un pasajero del viaje
+  // ELIMINAR PASAJERO
   delPasajero(viajeId: string, pasajeroUid: string): Promise<void> {
     return this.firestore.collection('viajes').doc(viajeId).update({
       pasajerosUids: firebase.firestore.FieldValue.arrayRemove(pasajeroUid)
     });
   }
 
-  // Actualizar un viaje
+  // ACTUALIZAR PASAJERO
   updViaje(viajeId: string, updatedViaje: Partial<Viaje>): Promise<void> {
     return this.firestore.collection('viajes').doc(viajeId).update(updatedViaje);
   }
 
-  // Eliminar un viaje
+  // ELIMINAR PASAJERO
   delViaje(viajeId: string): Promise<void> {
     return this.firestore.collection('viajes').doc(viajeId).delete();
   }

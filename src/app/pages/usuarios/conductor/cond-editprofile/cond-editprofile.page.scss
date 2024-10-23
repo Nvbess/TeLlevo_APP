@@ -18,7 +18,6 @@ ion-toolbar {
 ion-card {
     --background: #ffffff;
     border-radius: 20px;
-    justify-content: center;
 
     .img-map {
         width: 100%;
@@ -27,9 +26,22 @@ ion-card {
     }
 
     .direccion-viaje {
-        font-size: 20px;
-        font-weight: bold;
-        text-align: center;
-        justify-content: center;
+        font-size: 18px;
+    }
+
+    .boton {
+        margin-top: 15px;
     }
 }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .center-text {
+    text-align: center;
+  }
+  

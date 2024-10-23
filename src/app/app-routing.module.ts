@@ -120,7 +120,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/registration/reset-pass/reset-pass.module').then( m => m.ResetPassPageModule)
   },
   {
-    path: 'cond-detviaje',
+    path: 'cond-detviaje/:uid',
     loadChildren: () => import('./pages/usuarios/conductor/cond-detviaje/cond-detviaje.module').then( m => m.CondDetviajePageModule)
   },
   {
@@ -131,6 +131,11 @@ const routes: Routes = [
     path: 'mod-usuarios/:uid',
     loadChildren: () => import('./pages/admin/mod-usuarios/mod-usuarios.module').then( m => m.ModUsuariosPageModule)
   },
+  {
+    path: 'cond-editprofile/:uid',
+    loadChildren: () => import('./pages/usuarios/conductor/cond-editprofile/cond-editprofile.module').then( m => m.CondEditprofilePageModule)
+  },
+
 
 
 

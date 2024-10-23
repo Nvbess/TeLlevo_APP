@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/firebase/auth.service';
+import { MensajesService } from 'src/app/services/mensajes.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,10 +10,11 @@ import Swal from 'sweetalert2';
 })
 export class ResetPassPage implements OnInit {
 
-  email: string = '';
+  email: string ='';
 
   constructor(
     private authService: AuthService,
+    private mensajeService: MensajesService
   ) {}
 
   ngOnInit() {}
@@ -21,43 +22,15 @@ export class ResetPassPage implements OnInit {
   async recoveryEmail() {
     try {
       let timerInterval: any;
-      Swal.fire({
-        title: "Procesando",
-        html: "Enviando correo...",
-        timer: 1000,
-        timerProgressBar: true,
-        heightAuto: false,
-        didOpen: () => {
-          Swal.showLoading();
-          const timer = Swal.getPopup()!.querySelector("b");
-          timerInterval = setInterval(() => {
-            timer!.textContent = `${Swal.getTimerLeft()}`;
-          }, 100);
-        },
-        willClose: () => {
-          clearInterval(timerInterval);
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
+      this.mensajeService.mostrarMensajeCarga('Procesando','Enviando correo...', 2000)
+      .then((result) => {
         if (result.dismiss === Swal.DismissReason.timer) {
           this.authService.recoveryPassword(this.email);
-          Swal.fire({
-            icon:'success',
-            title:'Correo enviado',
-            text: 'Se ha enviado un correo para reetablecer tu contraseña!',
-            confirmButtonText: 'OK',
-            heightAuto: false
-          });
+          this.mensajeService.mensaje('success','Correo enviado','Se ha enviado un correo para reetablecer tu contraseña!');
         }
       });
     } catch (error) {
-      Swal.fire({
-        icon:'error',
-        title:'Error',
-        text: 'Hubo un problema al enviar el correo!',
-        confirmButtonText: 'OK',
-        heightAuto: false
-      });
+      this.mensajeService.mensaje('error','Error','Hubo un problema al enviar el correo!');
     }
   }
 }

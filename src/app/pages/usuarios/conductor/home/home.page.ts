@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { Viaje } from 'src/app/interfaces/viaje';
@@ -14,6 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+
   viajes: any = [];
   viajeEnCurso: Viaje | null = null;
 
@@ -22,12 +22,12 @@ export class HomePage implements OnInit {
   public nombreUsuario?: string;
   public apellUsuario?: string;
   public celUsuario?: string;
+  public conductorUid?: string;
 
   private viajeEnCursoSubscription: Subscription | undefined;
 
 
   constructor(
-    private router: Router,
     private menuController: MenuController,
     private viajesService: ViajesService,
     private authService: AuthService,
@@ -43,7 +43,6 @@ export class HomePage implements OnInit {
   async checklogin() {
     this.authService.isLogged().subscribe(async (user) => {
       if (user) {
-        // Logeado
         const usuarioLogeado = await this.fireStore.collection('usuarios').doc(user.uid).get().toPromise();
         const usuarioData = usuarioLogeado?.data() as Usuario;
 
@@ -52,10 +51,11 @@ export class HomePage implements OnInit {
           this.emailUsuario = usuarioData.email;
           this.nombreUsuario = usuarioData.nombre;
           this.apellUsuario = usuarioData.apellido;
+          this.conductorUid = usuarioData.uid;
+          this.config();
 
-          // Obtener el viaje en curso
           this.viajeEnCursoSubscription = this.viajesService.getViajeEnEspera(user.uid).subscribe(viajes => {
-            this.viajeEnCurso = viajes.length > 0 ? viajes[0] : null; // Si hay un viaje en curso, guardarlo
+            this.viajeEnCurso = viajes.length > 0 ? viajes[0] : null;
           });
         }
       }
@@ -63,11 +63,16 @@ export class HomePage implements OnInit {
   }
 
   config() {
-    this.fireStore.collection('viajes', ref => 
-      ref.orderBy('fecha', 'desc').limit(3)
-    ).valueChanges().subscribe(viajes => {
-      this.viajes = viajes;
-    });
+    if (this.conductorUid) {
+      this.fireStore.collection('viajes', ref => 
+        ref.where('conductorUid', '==', this.conductorUid).orderBy('fecha', 'desc').limit(3)
+      ).valueChanges().subscribe(viajes => {
+        if (viajes.length > 0) {
+          this.viajes = viajes;
+        }
+      });
+    }
   }
+
 
 }

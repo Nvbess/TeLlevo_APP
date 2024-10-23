@@ -1,0 +1,40 @@
+<ion-header class="ion-no-border header-transparent">
+  <ion-toolbar>
+    <ion-title class="ion-text-start">Modificar Usuario</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/cond-profile"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" [fullscreen]="true">
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="editUserForm" (ngSubmit)="updateUser()">
+        <ion-list>
+          <ion-item>
+            <ion-input formControlName="nombre" label="Nombre" labelPlacement="floating" class="center-text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="apellido" label="Apellido" labelPlacement="floating" class="center-text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="email" type="email" label="Email" labelPlacement="floating" class="center-text" readonly></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="pass" type="password" label="Contraseña" labelPlacement="floating" class="center-text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="modeloAuto" label="Modelo de Auto" labelPlacement="floating" class="center-text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="patenteAuto" label="Patente de Auto" labelPlacement="floating" class="center-text"></ion-input>
+          </ion-item>
+        </ion-list>
+        <div class="button-container">
+          <ion-button type="submit">Modificar</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

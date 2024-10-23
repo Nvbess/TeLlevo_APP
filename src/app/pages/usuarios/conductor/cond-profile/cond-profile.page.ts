@@ -29,7 +29,6 @@ export class CondProfilePage implements OnInit {
   ngOnInit() {
     this.authService.isLogged().subscribe(async (user)=> {
       if(user) {
-        // Logeado
         const usuarioLogeado = await this.fireStore.collection('usuarios').doc(user.uid).get().toPromise();
         const usuarioData = usuarioLogeado?.data() as Usuario;
 

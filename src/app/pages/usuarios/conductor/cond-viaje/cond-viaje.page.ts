@@ -9,6 +9,7 @@ import {
 } from '@ionic/angular';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { ViajesService } from 'src/app/services/firebase/viajes.service';
+import { MensajesService } from 'src/app/services/mensajes.service';
 
 @Component({
   selector: 'app-cond-viaje',
@@ -35,7 +36,7 @@ export class CondViajePage implements OnInit {
     private alertController: AlertController,
     private formBuilder: FormBuilder,
     private viajeService: ViajesService,
-    private menuController: MenuController
+    private mensajeService: MensajesService,
   ) {
     this.viajeForm = this.formBuilder.group({
       origen: [{ value: 'Duoc UC Sede Puente Alto', disabled: true }, [Validators.required]],
@@ -59,12 +60,7 @@ export class CondViajePage implements OnInit {
   async registerViaje() {
   if (this.viajeForm.valid) {
     if (!this.conductorUid) {
-      const alert = await this.alertController.create({
-        header: 'Error',
-        message: 'No se pudo obtener el UID del conductor. Inicia sesión nuevamente.',
-        buttons: ['OK'],
-      });
-      await alert.present();
+      this.mensajeService.mensaje('Error','Error al obtener UID', 'No se pudo obtener el UID del conductor. Inicia sesión nuevamente.');
       return;
     }
 
@@ -73,9 +69,8 @@ export class CondViajePage implements OnInit {
     });
     await loading.present();
 
-    // Extraer manualmente el valor del origen ya que está deshabilitado en el formulario
     const viajeData: Viaje = {
-      origen: 'Duoc UC Sede Puente Alto',  // Valor fijo para el origen
+      origen: 'Duoc UC Sede Puente Alto',
       destino: this.viajeForm.value.destino,
       fecha: this.viajeForm.value.fecha,
       hora: this.viajeForm.value.hora,
@@ -88,7 +83,6 @@ export class CondViajePage implements OnInit {
     };
 
     try {
-
       const viajeRef = await this.viajeService.addViaje(viajeData);
       const viajeId = viajeRef.id;
 

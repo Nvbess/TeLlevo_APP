@@ -1,7 +1,7 @@
+import { AuthService } from './../../../../services/firebase/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Viaje } from 'src/app/interfaces/viaje';
-import { ViajesService } from 'src/app/services/firebase/viajes.service';
+import { Usuario } from 'src/app/interfaces/usuario';
 
 @Component({
   selector: 'app-cond-actividad',
@@ -11,19 +11,49 @@ import { ViajesService } from 'src/app/services/firebase/viajes.service';
 export class CondActividadPage implements OnInit {
 
   viajes: any = [];
+  public tipoUsuario?: string;
+  public emailUsuario?: string;
+  public nombreUsuario?: string;
+  public apellUsuario?: string;
+  public celUsuario?: string;
+  public conductorUid?: string;
 
-  constructor(private fireStore: AngularFirestore) { }
+  constructor(
+    private authService: AuthService,
+    private fireStore: AngularFirestore
+  ) {}
 
   ngOnInit() {
-    this.config()
+    this.checklogin();
   }
 
-  config() {
-    this.fireStore.collection('viajes', ref => 
-      ref.orderBy('fecha', 'desc')
-    ).valueChanges().subscribe(viajes => {
-      this.viajes = viajes;
+  async checklogin() {
+    this.authService.isLogged().subscribe(async (user) => {
+      if (user) {
+        const usuarioLogeado = await this.fireStore.collection('usuarios').doc(user.uid).get().toPromise();
+        const usuarioData = usuarioLogeado?.data() as Usuario;
+
+        if (usuarioData) {
+          this.tipoUsuario = usuarioData.tipo;
+          this.emailUsuario = usuarioData.email;
+          this.nombreUsuario = usuarioData.nombre;
+          this.apellUsuario = usuarioData.apellido;
+          this.conductorUid = usuarioData.uid;
+          this.config();
+        }
+      }
     });
   }
 
+  config() {
+    if (this.conductorUid) {
+      this.fireStore.collection('viajes', ref => 
+        ref.where('conductorUid', '==', this.conductorUid).orderBy('fecha', 'desc')
+      ).valueChanges().subscribe(viajes => {
+        if (viajes.length > 0) {
+          this.viajes = viajes;
+        }
+      });
+    }
+  }
 }
