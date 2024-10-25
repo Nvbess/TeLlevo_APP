@@ -9,12 +9,14 @@
 
 <ion-content [fullscreen]="true">
   <ion-list [inset]="true">
-    <ion-item [button]="true" *ngFor="let aux of viajes" [routerLink]="['/viajes-pas', aux.id]">
+    <ion-item [button]="true" *ngFor="let aux of viajes" (click)="selectViaje(aux)">
       <ion-avatar aria-hidden="true" slot="start">
         <img alt="" src="assets/icon/icono-car.png">
       </ion-avatar>
-      <ion-note slot="end" color="tertiary"> ID {{ aux.id }} </ion-note>
-      <ion-label slot="start"> Viaje <br> {{ aux.fecha }} {{ aux.hora }} </ion-label>
+      <ion-note slot="end" color="tertiary">ID {{ aux.id }}</ion-note>
+      <ion-label slot="start">
+        Viaje <br> {{ aux.fecha }} {{ aux.hora }}
+      </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
