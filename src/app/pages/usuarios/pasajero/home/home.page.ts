@@ -3,11 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ViajesService } from 'src/app/services/firebase/viajes.service';
 import * as L from 'leaflet';
-import 'leaflet-routing-machine';  // Importar el plugin de enrutamiento
+import 'leaflet-routing-machine';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { HttpClient } from '@angular/common/http'; // Para hacer las peticiones a Nominatim
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +27,8 @@ export class HomePage implements OnInit {
   origenLng = -70.57880611157175;
   destinoLat!: number;
   destinoLng!: number;
-  rutaCapa: any; // Referencia para la ruta dibujada
+  rutaCapa: any;  // Referencia para la ruta dibujada
+  apiKey = 'AIzaSyBcRMif7zFwRxG5uDWZeGradSVnT-WGmd0';  // Clave de API de Google
 
   constructor(
     private router: Router,
@@ -36,7 +37,7 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private fireStore: AngularFirestore,
     private route: ActivatedRoute,
-    private http: HttpClient, // Para usar la API de Nominatim
+    private http: HttpClient  // Para usar HttpClient en la solicitud a Google Geocoding API
   ) {}
 
   ionViewDidEnter() {
@@ -48,24 +49,23 @@ export class HomePage implements OnInit {
     this.menuController.enable(true);
     this.checklogin();
 
-    // Capturamos el destino desde los parámetros de la URL
+    // Capturar el destino desde los parámetros de la URL
     this.route.queryParams.subscribe(params => {
       if (params['destino']) {
-        this.geocodeDestino(params['destino']);
+        this.geocodeDestinoGoogle(params['destino']);
       }
     });
 
-    // Detectamos cuando el usuario presiona el botón de "Home" o cualquier otro evento de navegación
+    // Limpiar la ruta al navegar de regreso
     this.router.events.subscribe(() => {
-      this.clearRoute();  // Limpiar la ruta al navegar de regreso
+      this.clearRoute();
     });
   }
 
-  // Verificamos si el usuario está logueado
+  // Verificar si el usuario está logueado
   async checklogin() {
     this.authService.isLogged().subscribe(async (user) => {
-      if(user) {
-        // Si está logueado, obtenemos los datos del usuario desde Firestore
+      if (user) {
         const usuarioLogeado = await this.fireStore.collection('usuarios').doc(user.uid).get().toPromise();
         const usuarioData = usuarioLogeado?.data() as Usuario;
 
@@ -76,7 +76,7 @@ export class HomePage implements OnInit {
           this.apellUsuario = usuarioData.apellido;
         }
       }
-    })
+    });
   }
 
   // Cargar el mapa sin rutas al inicio
@@ -88,29 +88,32 @@ export class HomePage implements OnInit {
     this.map.zoomControl.setPosition('bottomright');
   }
 
-  // Función para limpiar la ruta del mapa
+  // Limpiar la ruta del mapa
   clearRoute() {
     if (this.rutaCapa) {
-      this.map.removeLayer(this.rutaCapa);  // Remover la capa de la ruta del mapa
-      this.rutaCapa = null;  // Asegurarse de limpiar la referencia a la capa
+      this.map.removeLayer(this.rutaCapa);
+      this.rutaCapa = null;
     }
   }
 
-  // Función para convertir la dirección de destino en coordenadas usando Nominatim
-  geocodeDestino(destino: string) {
-    // Definimos una caja delimitadora que cubre Santiago de Chile
-    const viewbox = "-70.9100,-33.4280,-70.5100,-33.7900";  // Oeste, Norte, Este, Sur de Santiago
-  
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destino)}&viewbox=${viewbox}&bounded=1`;
-    this.http.get(url).subscribe((data: any) => {
-      if (data.length > 0) {
-        // Obtenemos las coordenadas del destino
-        this.destinoLat = data[0].lat;
-        this.destinoLng = data[0].lon;
+  // Función para convertir la dirección de destino en coordenadas usando Google Geocoding API
+  geocodeDestinoGoogle(direccionCompleta: string) {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccionCompleta)}&key=${this.apiKey}`;
+
+    this.http.get(url).subscribe((response: any) => {
+      if (response.status === 'OK' && response.results.length > 0) {
+        const location = response.results[0].geometry.location;
+        this.destinoLat = location.lat;
+        this.destinoLng = location.lng;
         this.addRoute();  // Llamamos a la función para agregar la ruta en el mapa
+      } else {
+        console.error("No se encontró la dirección especificada o hubo un problema con la solicitud.");
       }
+    }, (error) => {
+      console.error("Error en la geocodificación:", error);
     });
   }
+  
 
   // Agregar la ruta en el mapa desde el origen al destino
   addRoute() {
