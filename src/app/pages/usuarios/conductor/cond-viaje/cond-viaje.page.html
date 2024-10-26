@@ -23,11 +23,25 @@
       </ion-item>
       
       <ion-item>
-        <ion-input formControlName="destino" label="Destino" labelPlacement="floating" placeholder="Ej: Avenida Siempre Viva 742"></ion-input>
+        <ion-input
+          formControlName="destino"
+          label="Destino"
+          labelPlacement="floating"
+          placeholder="Ej: Avenida Siempre Viva 742"
+          (ionInput)="buscarDirecciones($event)"
+        ></ion-input>
       </ion-item>
       
+      <ion-list *ngIf="autocompleteItems.length > 0">
+        <ion-item *ngFor="let item of autocompleteItems" (click)="seleccionarDireccion(item)">
+          {{ item.description }}
+        </ion-item>
+      </ion-list>
+      
       <ion-item>
-        <ion-input formControlName="fecha" label="Fecha" labelPlacement="floating" placeholder="Ej: 24 / 03 / 2024"></ion-input>
+        <ion-label position="floating">Fecha</ion-label>
+        <ion-input type="text" formControlName="fecha" 
+                   (ionChange)="fechaToString($event.target.value)"></ion-input>
       </ion-item>
       
       <ion-item>

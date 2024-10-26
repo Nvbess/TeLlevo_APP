@@ -112,6 +112,9 @@ export class HomePage implements OnInit {
   
   addRoute() {
     if (this.destinoLat && this.destinoLng) {
+      // Eliminar la ruta anterior, si existe
+      this.clearRoute(); 
+  
       const directionsService = new google.maps.DirectionsService();
       const request = {
         origin: new google.maps.LatLng(this.origenLat, this.origenLng),
@@ -135,8 +138,8 @@ export class HomePage implements OnInit {
           });
   
           // Dibuja la ruta en el mapa de Leaflet
-          const polyline = L.polyline(points, { color: 'blue' }).addTo(this.map);
-          this.map.fitBounds(polyline.getBounds());
+          this.rutaCapa = L.polyline(points, { color: 'blue' }).addTo(this.map);
+          this.map.fitBounds(this.rutaCapa.getBounds());
         } else {
           console.error("Error al obtener la ruta:", status);
         }
