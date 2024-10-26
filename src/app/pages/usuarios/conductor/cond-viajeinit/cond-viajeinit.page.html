@@ -15,7 +15,7 @@
     <p class="titulo">Muestra tu código QR a los pasajeros!</p>
   </div>
   <div class="box-med">
-    <img class="img-qr" src="assets/qr/qrviaje.png" />
+    <qr-code class="img-qr" [value]="qrValue" size="200" errorCorrectionLevel="M"></qr-code>
   </div>
   
   <ion-card *ngIf="viaje">

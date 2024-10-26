@@ -40,6 +40,7 @@
     "leaflet-geosearch": "^4.0.0",
     "leaflet-image": "^0.4.0",
     "leaflet-routing-machine": "^3.2.12",
+    "ng-qrcode": "^18.0.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.1",
     "swiper": "^11.1.12",

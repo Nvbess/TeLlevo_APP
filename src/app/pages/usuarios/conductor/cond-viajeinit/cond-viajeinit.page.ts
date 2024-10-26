@@ -14,6 +14,7 @@ export class CondViajeinitPage implements OnInit {
   viajeId: string | null = null;
   viaje: Viaje | null | undefined;
   pasajeros: string[] = [];
+  qrValue= '';
 
   constructor(
     private router: Router,
@@ -26,6 +27,7 @@ export class CondViajeinitPage implements OnInit {
     this.viajeId = this.route.snapshot.paramMap.get('id');
     if (this.viajeId) {
       this.loadViaje(this.viajeId);
+      this.qrValue = this.viajeId; 
     }
   }
 

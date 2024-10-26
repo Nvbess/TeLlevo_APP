@@ -47,9 +47,18 @@ ion-content {
         margin-bottom: 10px;
     }
 }
+.box-med {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-top: 20px;
+}
+
 
 .img-qr {
-    padding: 30px;
+    width: 200px;
+    height: 200px;
+    padding: 0;
 }
 
 .ion-list {
@@ -86,6 +95,8 @@ ion-content {
     animation: wave 20s -1s reverse infinite;
     opacity: 0.9;
 }
+
+
 
 @keyframes wave {
     2% {

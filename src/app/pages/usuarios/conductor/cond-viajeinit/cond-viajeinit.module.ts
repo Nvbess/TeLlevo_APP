@@ -8,6 +8,7 @@ import { CondViajeinitPageRoutingModule } from './cond-viajeinit-routing.module'
 
 import { CondViajeinitPage } from './cond-viajeinit.page';
 import { CondtoolbarModule } from 'src/app/components/condtoolbar/condtoolbar.module';
+import { QrCodeModule } from 'ng-qrcode';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CondtoolbarModule } from 'src/app/components/condtoolbar/condtoolbar.mo
     FormsModule,
     IonicModule,
     CondViajeinitPageRoutingModule,
-    CondtoolbarModule
+    CondtoolbarModule,
+    QrCodeModule
   ],
   declarations: [CondViajeinitPage]
 })

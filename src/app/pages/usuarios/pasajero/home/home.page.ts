@@ -10,6 +10,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
