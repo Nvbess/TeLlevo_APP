@@ -86,7 +86,7 @@ export class CondViajePage implements OnInit {
   
       this.autocompleteService.getPlacePredictions(request, (predictions: any[], status: string) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          this.autocompleteItems = predictions.slice(0, 3);
+          this.autocompleteItems = predictions.slice(0, 2);
         } else {
           this.autocompleteItems = [];
         }
