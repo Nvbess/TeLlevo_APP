@@ -23,8 +23,10 @@ export class HomePage implements OnInit {
   public apellUsuario?: string;
   public idUsuario?: number;
 
+  public viajes: any = [];
+
   map: any;
-  origenLat = -33.598449986499055;  // Coordenadas fijas de Duoc UC Puente Alto
+  origenLat = -33.598449986499055;  
   origenLng = -70.57880611157175;
   destinoLat!: number;
   destinoLng!: number;
@@ -42,7 +44,8 @@ export class HomePage implements OnInit {
   ) {}
 
   ionViewDidEnter() {
-    this.loadMap(); 
+    this.loadMap();
+    this.cargarViajesEnEspera(); 
   }
 
   ngOnInit() {
@@ -91,7 +94,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  // Función para convertir la dirección de destino en coordenadas usando la API de Google Geocoding
+ 
   async geocodeDestino(direccionCompleta: string) {
     const loader = new Loader({ apiKey: this.apiKey });
     
@@ -109,10 +112,23 @@ export class HomePage implements OnInit {
       });
     });
   }
+
+  cargarViajesEnEspera() {
+    this.fireStore.collection('viajes', ref => ref.where('estado', '==', 'en espera'))
+      .valueChanges()
+      .subscribe(viajes => {
+        this.viajes = viajes;
+      });
+  }
+
+  // Función para seleccionar un viaje y redirigir al home con el destino seleccionado
+  selectViaje(viaje: any) {
+    this.router.navigate(['/pasajero-home'], { queryParams: { destino: viaje.destino } });
+  }
   
   addRoute() {
     if (this.destinoLat && this.destinoLng) {
-      // Eliminar la ruta anterior, si existe
+
       this.clearRoute(); 
   
       const directionsService = new google.maps.DirectionsService();
@@ -127,7 +143,7 @@ export class HomePage implements OnInit {
           const route = result.routes[0];
           const points: [number, number][] = [];
   
-          // Extraer los puntos de la ruta
+
           route.legs.forEach(leg => {
             leg.steps.forEach(step => {
               const path = step.path;
@@ -137,7 +153,7 @@ export class HomePage implements OnInit {
             });
           });
   
-          // Dibuja la ruta en el mapa de Leaflet
+
           this.rutaCapa = L.polyline(points, { color: 'blue' }).addTo(this.map);
           this.map.fitBounds(this.rutaCapa.getBounds());
         } else {
