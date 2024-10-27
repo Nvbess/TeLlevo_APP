@@ -46,6 +46,14 @@ export class ViajesService {
     ).valueChanges();
   }
 
+  // LISTAR VIAJE EN CURSO
+  getViajeEnCurso(conductorUid: string): Observable<Viaje[]> {
+    return this.firestore.collection<Viaje>(this.collectionName, ref => ref
+      .where('conductorUid', '==', conductorUid)
+      .where('estado', '==', 'en curso')
+    ).valueChanges();
+  }
+
   // OBTENER VIAJE
   getViaje(id: string): Observable<Viaje | undefined> {
     return this.firestore.collection('viajes').doc<Viaje>(id).valueChanges();

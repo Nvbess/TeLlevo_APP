@@ -37,22 +37,38 @@
     </swiper-container>
 
     <!-- Mostrar botón o mensaje dependiendo del estado del viaje -->
-    <ion-card class="mini-card" *ngIf="!viajeEnCurso" routerLink="/cond-viaje">
+    <ion-card class="mini-card" *ngIf="!viajeEnEspera && !viajeEnCurso" routerLink="/cond-viaje">
       <ion-card-content>
         <h2 class="tit-adm">Comenzar Viaje</h2>
       </ion-card-content>
     </ion-card>
 
-    <ion-card class="mini-card" *ngIf="viajeEnCurso">
+    <ion-card class="mini-card" *ngIf="viajeEnEspera || viajeEnCurso">
       <ion-card-content>
-        <h2 class="tit-adm">Tienes un viaje en espera</h2>
-        <p>Destino: {{ viajeEnCurso.destino }}</p>
-        <p>Estado: {{ viajeEnCurso.estado }}</p>
-        <!-- Aquí puedes añadir el código QR o un botón para mostrarlo -->
-        <ion-button [routerLink]="['/cond-viajeinit', viajeEnCurso.id]">Ver Código QR</ion-button>
-        <ion-button (click)="openWaze()">Navegar con Waze</ion-button>
+        <h2 class="tit-adm">
+          {{ viajeEnEspera ? 'Tienes un viaje en espera' : 'Ver Ruta en Waze' }}
+        </h2>
+        <p>Destino: {{ viajeEnEspera?.destino || viajeEnCurso?.destino }}</p>
+        <p>Estado: {{ viajeEnEspera?.estado || viajeEnCurso?.estado }}</p>
+    
+        <!-- Botón para ver el QR del viaje en espera -->
+        <ion-button *ngIf="viajeEnEspera" [routerLink]="['/cond-viajeinit', viajeEnEspera.id]">
+          Ver Código QR
+        </ion-button>
+    
+        <!-- Botón para ver el mapa del viaje en curso -->
+        <ion-button (click)="openWaze()">Abrir en Waze</ion-button>
+        
+    
+        <!-- Botón para finalizar el viaje si está en curso -->
+        <ion-button color="danger" *ngIf="viajeEnCurso" (click)="finalizarViaje()">
+          Finalizar Viaje
+        </ion-button>
       </ion-card-content>
     </ion-card>
+    
+
+    
   </div>
 </ion-content>
 

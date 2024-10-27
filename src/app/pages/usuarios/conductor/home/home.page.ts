@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/firebase/auth.service';
 import { ViajesService } from 'src/app/services/firebase/viajes.service';
 import { Subscription } from 'rxjs';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomePage implements OnInit {
 
   viajes: any = [];
   viajeEnCurso: Viaje | null = null;
+  viajeEnEspera: Viaje | null = null;
 
   destinoLat?: number;
   destinoLng?: number;
@@ -30,6 +32,7 @@ export class HomePage implements OnInit {
   public conductorUid?: string;
 
   private viajeEnCursoSubscription: Subscription | undefined;
+  private viajeEnEsperaSubscription: Subscription | undefined;
 
 
   constructor(
@@ -37,6 +40,7 @@ export class HomePage implements OnInit {
     private viajesService: ViajesService,
     private authService: AuthService,
     private fireStore: AngularFirestore,
+    private router: Router,
     private iab: InAppBrowser
   ) {}
 
@@ -60,13 +64,16 @@ export class HomePage implements OnInit {
           this.conductorUid = usuarioData.uid;
           this.config();
 
-          this.viajeEnCursoSubscription = this.viajesService.getViajeEnEspera(user.uid).subscribe(viajes => {
+          this.viajeEnEsperaSubscription = this.viajesService.getViajeEnEspera(user.uid).subscribe(viajes => {
+            this.viajeEnEspera = viajes.length > 0 ? viajes[0] : null;
+          });
+          this.viajeEnCursoSubscription = this.viajesService.getViajeEnCurso(user.uid).subscribe(viajes => {
             this.viajeEnCurso = viajes.length > 0 ? viajes[0] : null;
 
             if (this.viajeEnCurso) {
               this.obtenerDatosViaje();
             }
-          });
+          })
         }
       }
     });
@@ -81,6 +88,26 @@ export class HomePage implements OnInit {
           this.viajes = viajes;
         }
       });
+    }
+  }
+
+  finalizarViaje() {
+    if (this.viajeEnCurso?.id) {
+      this.fireStore.collection('viajes').doc(this.viajeEnCurso?.id).update({
+        estado: 'finalizado'
+      }).then(() => {
+        this.router.navigate(['/conductor-home']);
+      })
+    }
+  }
+
+  cancelarViaje() {
+    if (this.viajeEnEspera?.id) {
+      this.fireStore.collection('viajes').doc(this.viajeEnEspera?.id).update({
+        estado: 'finalizado'
+      }).then(() => {
+        this.router.navigate(['/conductor-home']);
+      })
     }
   }
 
