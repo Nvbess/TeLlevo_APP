@@ -60,7 +60,6 @@ export class PjActividadPage implements OnInit {
       .subscribe({
         next: (aux) => {
           this.viajes = aux;
-          console.log('Viajes encontrados:', this.viajes);
         },
         error: (err) => {
           console.error('Error al obtener viajes:', err);

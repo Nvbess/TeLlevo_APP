@@ -35,12 +35,13 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando...',
+    });
+    
+    await loading.present();
+
     try {
-      const loading = await this.loadingController.create({
-        message: 'Cargando...',
-      });
-  
-      await loading.present();
       const { email, pass } = this.loginForm.value;
   
       const aux = await this.authService.login(email as string, pass as string);
@@ -62,9 +63,12 @@ export class LoginPage implements OnInit {
             loading.dismiss();
           }
         });
+      } else {
+        loading.dismiss();
       }
     } catch (error) {
       console.error('Error en el login:', error);
+      loading.dismiss();
       Swal.fire({
         icon: 'error',
         title: 'Error',
