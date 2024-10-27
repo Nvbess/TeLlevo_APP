@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ViajesService } from 'src/app/services/firebase/viajes.service';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-cond-viajeinit',
@@ -14,7 +16,7 @@ export class CondViajeinitPage implements OnInit {
   viajeId: string | null = null;
   viaje: Viaje | null | undefined;
   pasajeros: string[] = [];
-  qrValue= '';
+  qrValue = '';
 
   constructor(
     private router: Router,
@@ -44,17 +46,40 @@ export class CondViajeinitPage implements OnInit {
     if (this.viajeId) {
       this.fireStore.collection('viajes').doc(this.viajeId).update({
         estado: 'en curso'
-      })
-    }
-  }
-
-  finalizarViaje() {
-    if (this.viajeId) {
-      this.fireStore.collection('viajes').doc(this.viajeId).update({
-        estado: 'finalizado'
       }).then(() => {
         this.router.navigate(['/conductor-home']);
       })
     }
   }
+
+  cancelarViaje() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esta acción!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, cancelar viaje',
+      cancelButtonText: 'No, mantener viaje',
+      heightAuto: false  
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.viajeId) {
+          this.fireStore.collection('viajes').doc(this.viajeId).delete().then(() => {
+            Swal.fire({
+              title: 'Cancelado',
+              text: 'El viaje ha sido cancelado.',
+              icon: 'success',
+              confirmButtonText: 'OK',
+              heightAuto: false  
+            }).then(() => {
+              this.router.navigate(['/conductor-home']);
+            });
+          });
+        }
+      }
+    });
+  }
+
 }

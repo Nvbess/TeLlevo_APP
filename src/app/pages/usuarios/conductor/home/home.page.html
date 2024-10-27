@@ -57,8 +57,14 @@
         </ion-button>
     
         <!-- Botón para ver el mapa del viaje en curso -->
-        <ion-button (click)="openWaze()">Abrir en Waze</ion-button>
+        <ion-button (click)="openWaze()">Abrir en Waze</ion-button> <!-- ESTE BOTON SOLO SE DEBE VER CUANDO EL VIAJE ESTE EN CURSO -->
         
+        <!-- 
+        <ion-button *ngIf="viajeEnCurso" [routerLink]="['', viajeEnCurso.id]">
+          Ver Mapa
+        </ion-button>
+        -->
+
     
         <!-- Botón para finalizar el viaje si está en curso -->
         <ion-button color="danger" *ngIf="viajeEnCurso" (click)="finalizarViaje()">

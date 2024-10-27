@@ -8,6 +8,7 @@ import { ViajesService } from 'src/app/services/firebase/viajes.service';
 import { Subscription } from 'rxjs';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -92,24 +93,38 @@ export class HomePage implements OnInit {
   }
 
   finalizarViaje() {
-    if (this.viajeEnCurso?.id) {
-      this.fireStore.collection('viajes').doc(this.viajeEnCurso?.id).update({
-        estado: 'finalizado'
-      }).then(() => {
-        this.router.navigate(['/conductor-home']);
-      })
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esta acción!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, finalizar viaje',
+      cancelButtonText: 'No, mantener viaje',
+      heightAuto: false  
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.viajeEnCurso?.id) {
+          this.fireStore.collection('viajes').doc(this.viajeEnCurso?.id).update({
+            estado: 'finalizado'
+          }).then(() => {
+            Swal.fire({
+              title: 'Finalizado',
+              text: 'El viaje ha sido finalizado con éxito.',
+              icon: 'success',
+              confirmButtonText: 'OK',
+              heightAuto: false  
+            }).then(() => {
+              this.router.navigate(['/conductor-home']);
+            });
+          });
+        }
+      }
+    });
   }
 
-  cancelarViaje() {
-    if (this.viajeEnEspera?.id) {
-      this.fireStore.collection('viajes').doc(this.viajeEnEspera?.id).update({
-        estado: 'finalizado'
-      }).then(() => {
-        this.router.navigate(['/conductor-home']);
-      })
-    }
-  }
+  
 
   async obtenerDatosViaje() {
     const destino = this.viajeEnCurso?.destino;
@@ -133,7 +148,6 @@ export class HomePage implements OnInit {
       this.iab.create(url, '_system');
     } else {
       console.error("Coordenadas no definidas");
-      // Aquí podrías mostrar un mensaje al usuario
     }
   }
 
