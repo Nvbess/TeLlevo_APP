@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { Viaje } from '../../interfaces/viaje';
 import firebase from 'firebase/compat/app'; 
+import { environment } from 'src/environments/environment.prod';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,9 @@ import firebase from 'firebase/compat/app';
 export class ViajesService {
 
   private collectionName = 'viajes';
+  private apiKey = environment.googleApiKey;
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private http: HttpClient) { }
 
   // CREAR VIAJE
   async addViaje(viaje: Viaje) {
@@ -70,5 +73,22 @@ export class ViajesService {
   // ELIMINAR PASAJERO
   delViaje(viajeId: string): Promise<void> {
     return this.firestore.collection('viajes').doc(viajeId).delete();
+  }
+
+  async obtenerCoordenadas(direccion: string): Promise<{ lat: number; lng: number }> {
+    if (!direccion) {
+      throw new Error("La dirección no puede estar vacía");
+    }
+  
+    const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccion)}&key=${this.apiKey}`;
+    
+    return this.http.get<any>(geocodingUrl).toPromise().then(response => {
+      if (response.status === 'OK' && response.results.length > 0) {
+        const location = response.results[0].geometry.location;
+        return { lat: location.lat, lng: location.lng };
+      } else {
+        throw new Error("No se pudo obtener la geocodificación");
+      }
+    });
   }
 }

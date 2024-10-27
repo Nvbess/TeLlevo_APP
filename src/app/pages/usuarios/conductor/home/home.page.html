@@ -50,6 +50,7 @@
         <p>Estado: {{ viajeEnCurso.estado }}</p>
         <!-- Aquí puedes añadir el código QR o un botón para mostrarlo -->
         <ion-button [routerLink]="['/cond-viajeinit', viajeEnCurso.id]">Ver Código QR</ion-button>
+        <ion-button (click)="openWaze()">Navegar con Waze</ion-button>
       </ion-card-content>
     </ion-card>
   </div>

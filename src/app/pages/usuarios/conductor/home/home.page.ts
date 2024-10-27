@@ -6,16 +6,21 @@ import { Viaje } from 'src/app/interfaces/viaje';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import { ViajesService } from 'src/app/services/firebase/viajes.service';
 import { Subscription } from 'rxjs';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  providers: [InAppBrowser]
 })
 export class HomePage implements OnInit {
 
   viajes: any = [];
   viajeEnCurso: Viaje | null = null;
+
+  destinoLat?: number;
+  destinoLng?: number;
 
   public tipoUsuario?: string;
   public emailUsuario?: string;
@@ -31,7 +36,8 @@ export class HomePage implements OnInit {
     private menuController: MenuController,
     private viajesService: ViajesService,
     private authService: AuthService,
-    private fireStore: AngularFirestore
+    private fireStore: AngularFirestore,
+    private iab: InAppBrowser
   ) {}
 
   ngOnInit() {
@@ -56,6 +62,10 @@ export class HomePage implements OnInit {
 
           this.viajeEnCursoSubscription = this.viajesService.getViajeEnEspera(user.uid).subscribe(viajes => {
             this.viajeEnCurso = viajes.length > 0 ? viajes[0] : null;
+
+            if (this.viajeEnCurso) {
+              this.obtenerDatosViaje();
+            }
           });
         }
       }
@@ -71,6 +81,32 @@ export class HomePage implements OnInit {
           this.viajes = viajes;
         }
       });
+    }
+  }
+
+  async obtenerDatosViaje() {
+    const destino = this.viajeEnCurso?.destino;
+    if (typeof destino === 'string' && destino.trim() !== '') {
+      try {
+        const coordenadas = await this.viajesService.obtenerCoordenadas(destino);
+        this.destinoLat = coordenadas.lat;
+        this.destinoLng = coordenadas.lng;
+        console.log(`Latitud: ${this.destinoLat}, Longitud: ${this.destinoLng}`);
+      } catch (error) {
+        console.error("Error al obtener coordenadas:", error);
+      }
+    } else {
+      console.error("El destino no es válido");
+    }
+  }
+
+  openWaze() {
+    if (this.destinoLat !== undefined && this.destinoLng !== undefined) {
+      const url = `https://waze.com/ul?ll=${this.destinoLat},${this.destinoLng}&navigate=yes`;
+      this.iab.create(url, '_system');
+    } else {
+      console.error("Coordenadas no definidas");
+      // Aquí podrías mostrar un mensaje al usuario
     }
   }
 
