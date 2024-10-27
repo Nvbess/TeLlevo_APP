@@ -68,6 +68,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/usuarios/pasajero/pj-detviaje/pj-detviaje.module').then( m => m.PjDetviajePageModule)
   },
   {
+    path: 'pj-aceptarviaje/:id',
+    loadChildren: () => import('./pages/usuarios/pasajero/pj-aceptarviaje/pj-aceptarviaje.module').then( m => m.PjAceptarviajePageModule)
+  },
+  {
     path: 'det-usuarios',
     loadChildren: () => import('./pages/admin/det-usuarios/det-usuarios.module').then( m => m.DetUsuariosPageModule)
   },
@@ -139,6 +143,8 @@ const routes: Routes = [
     path: 'conf-viaje/:id',
     loadChildren: () => import('./pages/admin/conf-viaje/conf-viaje.module').then( m => m.ConfViajePageModule)
   },
+  
+
 
 
 

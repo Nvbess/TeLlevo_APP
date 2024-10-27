@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Actividad</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/pasajero-home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-img [src]="imagenMapa" alt="Imagen del Mapa"></ion-img>
+    <ion-card-content>
+      <p>Este es un pantallazo del mapa del viaje seleccionado.</p>
+      <ion-button expand="full" color="primary" (click)="escanearQR()">
+        Escanear QR
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+

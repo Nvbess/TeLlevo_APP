@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/firebase/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import html2canvas from 'html2canvas';
 
 
 @Component({
@@ -40,6 +42,7 @@ export class HomePage implements OnInit {
     private viajesService: ViajesService,
     private authService: AuthService,
     private fireStore: AngularFirestore,
+    private storage: AngularFireStorage,
     private route: ActivatedRoute,
     private http: HttpClient
   ) {}
@@ -163,4 +166,78 @@ export class HomePage implements OnInit {
       });
     }
   }
+
+  /*async aceptarViaje(viaje: any) {
+    // Capturar y guardar el pantallazo del mapa
+    await this.capturarMapaYGuardar(viaje.id);
+
+    // Redirige a `pj-aceptarviaje` pasando el ID del viaje
+    this.router.navigate([`/pj-aceptarviaje/${viaje.id}`]);
+  }*/
+
+  /*async capturarMapaYGuardar(viajeId: string) {
+    const mapElement = document.getElementById('mapId');  // Asegúrate de que el ID corresponde al contenedor del mapa
+    if (mapElement) {
+      const canvas = await html2canvas(mapElement);
+      const imageData = canvas.toDataURL('image/png');
+
+      // Subir la imagen a Firebase Storage
+      const filePath = `viajes/${viajeId}/imagenmapa.png`;
+      const ref = this.storage.ref(filePath);
+      await ref.putString(imageData, 'data_url');
+
+      // Obtener la URL de descarga de la imagen y guardarla en Firestore
+      const downloadURL = await ref.getDownloadURL().toPromise();
+      this.fireStore.collection('viajes').doc(viajeId).update({
+        imagenmapa: downloadURL
+      });
+    }
+  }*/
+
+    async obtenerMapaEstaticoConRuta(origenLat: number, origenLng: number, destinoLat: number, destinoLng: number): Promise<string> {
+      const apiKey = this.apiKey;
+      const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?size=800x800&maptype=roadmap&markers=color:blue|label:O|${origenLat},${origenLng}&markers=color:red|label:D|${destinoLat},${destinoLng}&path=color:0x0000ff|weight:5|${origenLat},${origenLng}|${destinoLat},${destinoLng}&key=${apiKey}`;
+      return mapUrl;
+    }
+    
+    async capturarMapaEstaticoYGuardar(viajeId: string): Promise<void> {
+      const urlImagen = await this.obtenerMapaEstaticoConRuta(this.origenLat, this.origenLng, this.destinoLat, this.destinoLng);
+      
+      return new Promise((resolve, reject) => {
+        this.http.get(urlImagen, { responseType: 'blob' }).subscribe(async (blob) => {
+          try {
+            const filePath = `viajes/${viajeId}/imagenmapa.png`;
+            const ref = this.storage.ref(filePath);
+            await ref.put(blob);
+            
+            // Obtener la URL de descarga de la imagen y guardarla en Firestore
+            const downloadURL = await ref.getDownloadURL().toPromise();
+            await this.fireStore.collection('viajes').doc(viajeId).update({
+              imagenmapa: downloadURL
+            });
+            
+            resolve(); // Resolviendo la promesa después de guardar la imagen
+          } catch (error) {
+            reject(error); // Rechaza la promesa si ocurre un error
+            console.error("Error al guardar la imagen en Firebase Storage:", error);
+          }
+        }, (error) => {
+          reject(error); // Rechaza la promesa si ocurre un error en la solicitud HTTP
+          console.error("Error al descargar la imagen del mapa estático:", error);
+        });
+      });
+    }
+    
+    async aceptarViaje(viaje: any) {
+      try {
+        await this.capturarMapaEstaticoYGuardar(viaje.id); // Espera a que se guarde la imagen
+        this.router.navigate([`/pj-aceptarviaje/${viaje.id}`]); // Redirige solo después de guardar
+      } catch (error) {
+        console.error("Error en aceptarViaje:", error);
+        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
+    }
+    
+  
+  
 }

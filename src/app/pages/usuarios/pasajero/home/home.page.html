@@ -23,6 +23,10 @@
     <ion-label slot="start">
       Viaje <br> {{ viaje.fecha }} {{ viaje.hora }}
     </ion-label>
+    <ion-button slot="end" color="primary" (click)="aceptarViaje(viaje)">
+      Aceptar Viaje
+    </ion-button>
+
   </ion-item>
 </ion-list>
 
