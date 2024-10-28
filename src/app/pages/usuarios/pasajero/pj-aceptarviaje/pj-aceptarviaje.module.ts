@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PjAceptarviajePageRoutingModule } from './pj-aceptarviaje-routing.module';
 
 import { PjAceptarviajePage } from './pj-aceptarviaje.page';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { PjAceptarviajePage } from './pj-aceptarviaje.page';
     IonicModule,
     PjAceptarviajePageRoutingModule
   ],
-  declarations: [PjAceptarviajePage]
+  declarations: [PjAceptarviajePage, BarcodeScanningModalComponent]
 })
 export class PjAceptarviajePageModule {}

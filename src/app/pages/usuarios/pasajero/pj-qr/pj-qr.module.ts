@@ -9,6 +9,7 @@ import { PjQrPageRoutingModule } from './pj-qr-routing.module';
 import { PjQrPage } from './pj-qr.page';
 import { PastoolbarModule } from 'src/app/components/pastoolbar/pastoolbar.module';
 
+
 @NgModule({
   imports: [
     CommonModule,

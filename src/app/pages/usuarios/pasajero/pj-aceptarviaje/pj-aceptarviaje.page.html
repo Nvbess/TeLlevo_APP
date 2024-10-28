@@ -12,8 +12,9 @@
     <ion-img [src]="imagenMapa" alt="Imagen del Mapa"></ion-img>
     <ion-card-content>
       <p>Este es un pantallazo del mapa del viaje seleccionado.</p>
-      <ion-button expand="full" color="primary" (click)="escanearQR()">
-        Escanear QR
+      <ion-button (click)="startScan()">
+        Scanear
+        <ion-icon name="camera" slot="start"></ion-icon>
       </ion-button>
     </ion-card-content>
   </ion-card>
