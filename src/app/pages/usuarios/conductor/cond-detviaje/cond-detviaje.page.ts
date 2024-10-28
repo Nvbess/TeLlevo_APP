@@ -25,6 +25,7 @@ export class CondDetviajePage implements OnInit {
   apellidoPasajero?: string | null;
   viajeOrigen?: string | null;
   viajeDestino?: string | null;
+  viajeImagen?: string | null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,6 +50,7 @@ export class CondDetviajePage implements OnInit {
           this.pasajeroIDs = viajeData.pasajerosUids;
           this.viajeOrigen = viajeData.origen;
           this.viajeDestino = viajeData.destino;
+          this.viajeImagen = viajeData.imagenMapa;
   
           this.firestore.collection('usuarios').doc(this.conductorID).get().toPromise().then((userDoc) => {
             if (userDoc?.exists) {

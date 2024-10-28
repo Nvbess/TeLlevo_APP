@@ -83,7 +83,10 @@ export class HomePage implements OnInit {
   config() {
     if (this.conductorUid) {
       this.fireStore.collection('viajes', ref => 
-        ref.where('conductorUid', '==', this.conductorUid).orderBy('fecha', 'desc').limit(3)
+        ref.where('conductorUid', '==', this.conductorUid)
+           
+           .orderBy('fecha', 'desc')
+           .limit(3)
       ).valueChanges().subscribe(viajes => {
         if (viajes.length > 0) {
           this.viajes = viajes;

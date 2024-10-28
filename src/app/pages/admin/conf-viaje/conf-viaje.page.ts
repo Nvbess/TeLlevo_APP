@@ -30,6 +30,7 @@ export class ConfViajePage implements OnInit {
   viajeOrigen?: string | null;
   viajeDestino?: string | null;
   viajeEstado?: string | null;
+  viajeImagen?: string | null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -70,6 +71,7 @@ export class ConfViajePage implements OnInit {
           this.viajeOrigen = viajeData.origen;
           this.viajeDestino = viajeData.destino;
           this.viajeEstado = viajeData.estado;
+          this.viajeImagen = viajeData.imagenMapa;
   
         const userDoc = await this.firestore.collection('usuarios').doc(viajeData.conductorUid).get().toPromise();
         if (userDoc?.exists) {
@@ -96,6 +98,7 @@ export class ConfViajePage implements OnInit {
           origen: viajeData.origen,
           imagenMapa: viajeData.imagenMapa,
           id: viajeData.id,
+          
 
         });
       }

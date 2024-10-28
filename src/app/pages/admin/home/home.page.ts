@@ -53,7 +53,9 @@ export class HomePage implements OnInit {
   }
 
   config() {
-      this.fireStore.collection('viajes', ref => ref.limit(3)).valueChanges().subscribe(viajes => {
+    this.fireStore.collection('viajes', ref => 
+        ref.where('estado', '==', 'finalizado').limit(3)
+      ).valueChanges().subscribe(viajes => {
         if (viajes.length > 0) {
           this.viajes = viajes;
         }

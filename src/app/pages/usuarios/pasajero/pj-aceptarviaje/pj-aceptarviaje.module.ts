@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PjAceptarviajePageRoutingModule } from './pj-aceptarviaje-routing.module';
 
 import { PjAceptarviajePage } from './pj-aceptarviaje.page';
+import { PastoolbarModule } from 'src/app/components/pastoolbar/pastoolbar.module';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { BarcodeScanningModalComponent } from './barcode-scanning-modal.componen
     CommonModule,
     FormsModule,
     IonicModule,
+    PastoolbarModule,
     PjAceptarviajePageRoutingModule
   ],
   declarations: [PjAceptarviajePage, BarcodeScanningModalComponent]
