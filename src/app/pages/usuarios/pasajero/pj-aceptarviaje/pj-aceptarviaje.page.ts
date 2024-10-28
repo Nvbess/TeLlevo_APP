@@ -48,6 +48,12 @@ export class PjAceptarviajePage implements OnInit {
   ngOnInit() {
     this.viajeId = this.route.snapshot.paramMap.get('id') as string;
 
+    if (this.platform.is('capacitor')){
+      BarcodeScanner.isSupported().then()
+      BarcodeScanner.checkPermissions().then()
+      BarcodeScanner.removeAllListeners();
+    }
+    
     if (this.viajeId) {
       this.fireStore.collection('viajes', ref => ref.where('id', '==', this.viajeId)).get().subscribe((querySnapshot) => {
         if (!querySnapshot.empty) {
@@ -91,11 +97,7 @@ export class PjAceptarviajePage implements OnInit {
       this.viajeId = id;
       this.cargarImagenMapa();
     }
-    if (this.platform.is('capacitor')){
-      BarcodeScanner.isSupported().then()
-      BarcodeScanner.checkPermissions().then()
-      BarcodeScanner.removeAllListeners();
-    }
+    
   }
 
   // Método para mostrar un toast de notificación

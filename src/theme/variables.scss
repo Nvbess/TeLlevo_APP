@@ -1,6 +1,17 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
-
+// Hide all elements
+body.barcode-scanner-active {
+    visibility: hidden;
+  }
+  
+  // Show only the barcode scanner modal
+  .barcode-scanning-active {
+    ion-app, ion-content {
+      opacity: 0;
+    }
+  }
+  
 :root {
     --ion-font-family: "Roboto", sans-serif;
 }

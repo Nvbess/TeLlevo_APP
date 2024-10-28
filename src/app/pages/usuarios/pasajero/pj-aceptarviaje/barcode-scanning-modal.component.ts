@@ -16,7 +16,6 @@ import {
   StartScanOptions,
 } from '@capacitor-mlkit/barcode-scanning';
 import { ModalController } from '@ionic/angular';
-import { MenuController } from '@ionic/angular';
 
 
 @Component({

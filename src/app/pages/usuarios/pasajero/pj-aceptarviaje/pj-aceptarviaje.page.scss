@@ -1,21 +1,29 @@
-//QR
 body.barcode-scanner-active {
-    visibility: hidden;
+  visibility: hidden;
+  --background: transparent;
+  --ion-background-color: transparent;
+}
+
+// Show only the barcode scanner modal
+.barcode-scanner-modal {
+  visibility: visible;
+}
+
+@media (prefers-color-scheme: dark) {
+  .barcode-scanner-modal {
     --background: transparent;
     --ion-background-color: transparent;
   }
-  
-  // Show only the barcode scanner modal
-  .barcode-scanner-modal {
-    visibility: visible;
-  }
-  
-  @media (prefers-color-scheme: dark) {
-    .barcode-scanner-modal {
-      --background: transparent;
-      --ion-background-color: transparent;
-    }
-  }
+}
+
+body.barcode-scanner-active {
+  visibility: hidden;
+}
+
+// Show only the barcode scanner modal
+.barcode-scanner-modal {
+  visibility: visible;
+}
 
   ion-toolbar ion-title {
     margin-right: 50px;

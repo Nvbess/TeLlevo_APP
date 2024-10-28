@@ -30,7 +30,7 @@ export class AppComponent {
 
   private PASAJERO_PAGES: Page[] = [
     { title: 'Home', url: '/pasajero-home', icon: 'home' },
-    { title: 'Actividad', url: '/pj-actividad', icon: 'receipt' },
+    { title: 'Actividad', url: '/viajes-pas', icon: 'receipt' },
     { title: 'Perfil', url: '/pj-profile', icon: 'person' },
     { title: 'Cerrar Sesión', url: '', icon: 'log-out'},
   ];

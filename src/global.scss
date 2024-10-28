@@ -55,7 +55,14 @@
 /* Color Warning */
 .UIUX-5-hex { color: #ffc409; }
 
-
+body.barcode-scanning-active {
+    visibility: hidden;
+    background: transparent !important;
+  }
+  
+  .barcode-scanner-modal {
+    visibility: visible;
+  }
 
 
 
