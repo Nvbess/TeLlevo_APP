@@ -143,6 +143,11 @@ const routes: Routes = [
     path: 'conf-viaje/:id',
     loadChildren: () => import('./pages/admin/conf-viaje/conf-viaje.module').then( m => m.ConfViajePageModule)
   },
+  {
+    path: 'pj-editprofile/:uid',
+    loadChildren: () => import('./pages/usuarios/pasajero/pj-editprofile/pj-editprofile.module').then( m => m.PjEditprofilePageModule)
+  },
+
   
 
 
