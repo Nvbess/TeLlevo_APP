@@ -68,8 +68,7 @@ export class PjActividadPage implements OnInit {
   }
 
   selectViaje(viaje: any) {
-    this.router.navigate(['/pasajero-home'], {
-      queryParams: { destino: viaje.destino },
-    });
+    // Redirige a `pj-detviaje` usando el ID del viaje en la URL
+    this.router.navigate([`/pj-detviaje/${viaje.id}`]);
   }
 }

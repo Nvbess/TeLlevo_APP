@@ -27,6 +27,7 @@ export class DetViajesPage implements OnInit {
   viajeOrigen?: string | null;
   viajeDestino?: string | null;
   viajeEstado?: string | null;
+  viajeImagen?: string | null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -52,6 +53,7 @@ export class DetViajesPage implements OnInit {
           this.viajeOrigen = viajeData.origen;
           this.viajeDestino = viajeData.destino;
           this.viajeEstado = viajeData.estado;
+          this.viajeImagen = viajeData.imagenMapa;
   
           this.firestore.collection('usuarios').doc(this.conductorID).get().toPromise().then((userDoc) => {
             if (userDoc?.exists) {

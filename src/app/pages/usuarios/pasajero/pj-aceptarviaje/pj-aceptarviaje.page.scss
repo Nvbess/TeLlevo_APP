@@ -16,3 +16,20 @@ body.barcode-scanner-active {
       --ion-background-color: transparent;
     }
   }
+
+  ion-toolbar ion-title {
+    margin-right: 50px;
+    --background: transparent;
+    --color: white;
+    --border-color: transparent;
+}
+
+ion-toolbar {
+    --background: #1c46ce;
+
+    ion-buttons, ion-back-button {
+        --background: transparent;
+        --color: white;
+        --border-color: transparent;
+    }
+}

@@ -24,7 +24,7 @@
     <swiper-container>
       <swiper-slide *ngFor="let aux of viajes">
         <ion-card routerLink="/cond-actividad">
-          <img class="img-map" src="assets/maps/map-1.png" />
+          <img class="img-map" src="{{ aux.imagenmapa }}" />
           <ion-card-header>
             <ion-card-title class="direccion-viaje">{{ aux.destino }}</ion-card-title>
           </ion-card-header>

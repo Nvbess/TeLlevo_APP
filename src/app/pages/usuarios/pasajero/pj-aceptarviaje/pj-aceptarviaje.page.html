@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="ion-text-center">Actividad</ion-title>
+    <ion-title class="ion-text-center">Aceptar Viaje</ion-title>
     <ion-buttons slot="start">
       <ion-back-button default-href="/pasajero-home"></ion-back-button>
     </ion-buttons>
@@ -10,8 +10,53 @@
 <ion-content>
   <ion-card>
     <ion-img [src]="imagenMapa" alt="Imagen del Mapa"></ion-img>
+    <ion-card-header>
+      <ion-card-title class="direccion-viaje" class="ion-text-center"> {{ viajeDestino }} </ion-card-title>
+      <ion-card-subtitle class="ion-text-center">{{ viajeId }}</ion-card-subtitle>
+    </ion-card-header>
     <ion-card-content>
-      <p>Este es un pantallazo del mapa del viaje seleccionado.</p>
+      <ion-list>
+        <ion-item class="ion-text-center">
+          <ion-label>
+            <p>Fecha</p>
+            <h2>{{ viajeFecha }}</h2>
+          </ion-label>
+            <ion-label>
+              <p>Hora</p>
+              <h2>{{ viajeHora }}</h2>
+            </ion-label>
+        </ion-item>
+        <ion-item class="ion-text-center">
+            <ion-label>
+              <p>Costo</p>
+              <h2>{{ viajeCosto | currency:'CLP ':'symbol':'1.0-0' }}</h2>
+            </ion-label>
+            <ion-label>
+              <p>Estado</p>
+              <h2 class="ion-text-center">{{ viajeEstado }}</h2>
+            </ion-label>
+        </ion-item>
+        <ion-item class="ion-text-center">
+          <ion-label>
+            <p>Conductor</p>
+            <h2 class="ion-text-center">{{ nombreConductor }} {{ apellidoConductor }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="ion-text-center">
+            <p>Origen</p>
+            <h2>{{ viajeOrigen }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item class="ion-text-center">
+          <ion-label>
+            <p>Destino</p>
+            <h2>{{ viajeDestino }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+    <ion-card-content>
       <ion-button (click)="startScan()">
         Scanear
         <ion-icon name="camera" slot="start"></ion-icon>
@@ -19,5 +64,10 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+<ion-footer>
+  <app-toolbar-pas></app-toolbar-pas>
+</ion-footer>
+
 
 
