@@ -31,6 +31,7 @@ export class ModUsuariosPage implements OnInit {
       tipo: ['', [Validators.required]],
       modeloAuto: ['',],
       patenteAuto: ['',],
+      estado: ['',],
     });
   }
 
@@ -57,6 +58,7 @@ export class ModUsuariosPage implements OnInit {
             tipo: userData.tipo,
             modeloAuto: userData.modeloAuto,
             patenteAuto: userData.patenteAuto,
+            estado: userData.estado,
           });
         }
       })

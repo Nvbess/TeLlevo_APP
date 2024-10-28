@@ -3,6 +3,7 @@ export interface Usuario {
   nombre: string;
   apellido: string;
   email: string;
+  estado: string;
   pass: string;
   celular: string;
   tipo: string;

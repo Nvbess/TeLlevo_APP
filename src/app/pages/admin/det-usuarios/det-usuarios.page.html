@@ -38,6 +38,12 @@
           <h2>{{ userTipo | titlecase }}</h2>
         </ion-label>
       </ion-item>
+      <ion-item>
+        <ion-label>
+          <p>Estado de Cuenta</p>
+          <h2>{{ userEstado | titlecase }}</h2>
+        </ion-label>
+      </ion-item>
     </ion-list>
     <div class="boton-editar">
       <ion-button [routerLink]="['/mod-usuarios', userUid]">Modificar Usuario</ion-button>
