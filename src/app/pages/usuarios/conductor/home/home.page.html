@@ -24,7 +24,7 @@
     <swiper-container>
       <swiper-slide *ngFor="let aux of viajes">
         <ion-card routerLink="/cond-actividad">
-          <img class="img-map" src="{{ aux.imagenmapa }}" />
+          <img class="img-map" src="{{ aux.imagenMapa }}" />
           <ion-card-header>
             <ion-card-title class="direccion-viaje">{{ aux.destino }}</ion-card-title>
           </ion-card-header>
@@ -57,7 +57,7 @@
         </ion-button>
     
         <!-- Botón para ver el mapa del viaje en curso -->
-        <ion-button (click)="openWaze()">Abrir en Waze</ion-button> <!-- ESTE BOTON SOLO SE DEBE VER CUANDO EL VIAJE ESTE EN CURSO -->
+        <ion-button *ngIf="viajeEnCurso"(click)="openWaze()">Abrir en Waze</ion-button> <!-- ESTE BOTON SOLO SE DEBE VER CUANDO EL VIAJE ESTE EN CURSO -->
         
         <!-- 
         <ion-button *ngIf="viajeEnCurso" [routerLink]="['', viajeEnCurso.id]">

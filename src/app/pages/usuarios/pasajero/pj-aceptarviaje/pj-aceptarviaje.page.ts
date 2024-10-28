@@ -112,7 +112,7 @@ export class PjAceptarviajePage implements OnInit {
   cargarImagenMapa() {
     // Obtener la URL de la imagen almacenada en Firebase para el viaje
     this.fireStore.collection('viajes').doc(this.viajeId).valueChanges().subscribe((viaje: any) => {
-      this.imagenMapa = viaje?.imagenmapa || '';  
+      this.imagenMapa = viaje?.imagenMapa || '';  
     });
   }
 

@@ -213,7 +213,7 @@ export class HomePage implements OnInit {
             // Obtener la URL de descarga de la imagen y guardarla en Firestore
             const downloadURL = await ref.getDownloadURL().toPromise();
             await this.fireStore.collection('viajes').doc(viajeId).update({
-              imagenmapa: downloadURL
+              imagenMapa: downloadURL
             });
             
             resolve(); // Resolviendo la promesa después de guardar la imagen

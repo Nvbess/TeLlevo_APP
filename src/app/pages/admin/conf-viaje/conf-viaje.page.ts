@@ -16,6 +16,7 @@ export class ConfViajePage implements OnInit {
 
   editViajeForm: FormGroup;
   uid: string = '';
+  viaje?: Viaje;
   viajeUid?: string = '';
   viajeFecha?: string | null;
   viajeHora?: string | null;
@@ -62,6 +63,7 @@ export class ConfViajePage implements OnInit {
       if (viajeDoc) {
         const viajeData = viajeDoc.data() as Viaje;
 
+          this.viaje = viajeData;
           this.viajeFecha = viajeData.fecha;
           this.viajeHora = viajeData.hora;
           this.viajeCosto = viajeData.costo;
