@@ -4,7 +4,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { Router } from '@angular/router';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/firebase/auth.service';
+import { ViajesService } from 'src/app/services/firebase/viajes.service';
 
 @Component({
   selector: 'app-pj-aceptarviaje',
@@ -21,7 +23,10 @@ export class PjAceptarviajePage implements OnInit {
               private fireStore: AngularFirestore,
               private platform: Platform,
               private modalController: ModalController,
-              private router: Router
+              private router: Router,
+              private authService: AuthService,
+              private viajesService: ViajesService,  
+              private toastController: ToastController
             ) { }
 
   ngOnInit() {
@@ -37,10 +42,21 @@ export class PjAceptarviajePage implements OnInit {
     }
   }
 
+  // Método para mostrar un toast de notificación
+  async presentToast(message: string, color: string = 'success') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+      color: color
+    });
+    toast.present();
+  }
+
   cargarImagenMapa() {
     // Obtener la URL de la imagen almacenada en Firebase para el viaje
     this.fireStore.collection('viajes').doc(this.viajeId).valueChanges().subscribe((viaje: any) => {
-      this.imagenMapa = viaje?.imagenmapa || '';  // Asegúrate de que imagenmapa exista en Firebase
+      this.imagenMapa = viaje?.imagenmapa || '';  
     });
   }
 
@@ -54,19 +70,35 @@ export class PjAceptarviajePage implements OnInit {
         LensFacing: LensFacing.Back
       }
     });
-
+  
     await modal.present();
-
-    // DESPUES DE LEER QR
+  
+    // Después de leer el QR
     const { data } = await modal.onDidDismiss();
-
-    // SI SE OBTIENE INFORMACION EN DATA
+  
+    // Si el QR contiene información
     if (data?.barcode?.displayValue) {
-      this.resultadoQR = data.barcode.displayValue;
+      this.resultadoQR = data.barcode.displayValue;  
+  
+      // Obtener el UID del pasajero autenticado
+      this.authService.isLogged().subscribe(async (user) => {
+        if (user) {
+          try {
+            // Registrar el pasajero en el viaje utilizando el ID obtenido del QR
+            await this.viajesService.addPasajero(this.resultadoQR, user.id);
+            this.presentToast('Te has unido al viaje correctamente.');
 
-      setTimeout(()=>{
-        this.router.navigate(['', this.resultadoQR]) //Redirigir a pasajero en curso?
-      }, 1000);
+            setTimeout(() => {
+              this.router.navigate(['/pj-qr', this.resultadoQR]);  
+            }, 1000);  
+            
+          } catch (error) {
+            this.presentToast('Error al unirse al viaje', 'danger');
+          }
+        }
+      });
+    } else {
+      this.presentToast('No se pudo escanear el código QR. Inténtalo de nuevo.', 'danger');
     }
   }
 
