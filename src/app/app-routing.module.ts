@@ -128,7 +128,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/usuarios/conductor/cond-detviaje/cond-detviaje.module').then( m => m.CondDetviajePageModule)
   },
   {
-    path: 'pj-qr',
+    path: 'pj-qr/:id',
     loadChildren: () => import('./pages/usuarios/pasajero/pj-qr/pj-qr.module').then( m => m.PjQrPageModule)
   },
   {

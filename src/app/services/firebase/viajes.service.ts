@@ -60,9 +60,9 @@ export class ViajesService {
   }
 
   // AGREGAR PASAJERO
-  addPasajero(viajeId: string, pasajeroUid: string): Promise<void> {
+  addPasajero(viajeId: string, pasajerosUid: string): Promise<void> {
     return this.firestore.collection('viajes').doc(viajeId).update({
-      pasajerosUids: firebase.firestore.FieldValue.arrayUnion(pasajeroUid)
+      pasajerosUids: firebase.firestore.FieldValue.arrayUnion(pasajerosUid)
     });
   }
 
