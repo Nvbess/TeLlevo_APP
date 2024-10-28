@@ -99,4 +99,30 @@ export class ViajesService {
       }
     });
   }
+
+  async deshabilitarUsuarioEnViajes(uid: string) {
+    try {
+      const viajesSnapshot = await this.firestore.collection('viajes').get().toPromise();
+  
+      if (viajesSnapshot && !viajesSnapshot.empty) {
+        viajesSnapshot.forEach(async (viajeDoc) => {
+          const viajeData = viajeDoc.data() as any;
+  
+          if (viajeData && viajeData.pasajeros) {
+            const pasajerosActualizados = viajeData.pasajeros.filter((id: string) => id !== uid);
+  
+            await this.firestore.collection('viajes').doc(viajeDoc.id).update({
+              pasajeros: pasajerosActualizados,
+            });
+          }
+        });
+        console.log(`Usuario ${uid} eliminado de los viajes en los que participaba.`);
+      } else {
+        console.log("No se encontraron viajes o el snapshot está vacío.");
+      }
+    } catch (error) {
+      console.error("Error al deshabilitar usuario en los viajes:", error);
+    }
+  }
+  
 }

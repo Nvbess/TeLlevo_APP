@@ -1,3 +1,4 @@
+import { MensajesService } from './../../../services/mensajes.service';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,7 +19,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private router: Router, 
-    private loadingController: LoadingController, 
+    private loadingController: LoadingController,
+    private MensajesService: MensajesService, 
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private menuController: MenuController,
@@ -40,7 +42,7 @@ export class LoginPage implements OnInit {
     });
     
     await loading.present();
-
+  
     try {
       const { email, pass } = this.loginForm.value;
   
@@ -50,6 +52,14 @@ export class LoginPage implements OnInit {
         const usuarioLogeado = await this.firestore.collection('usuarios').doc(aux.user.uid).get().toPromise();
         const usuarioData = usuarioLogeado?.data() as Usuario;
   
+        if (usuarioData.estado === 'deshabilitado') {
+          await this.authService.logout(); 
+          loading.dismiss();
+          this.MensajesService.mensaje('error','Cuenta deshabilitada','Tu cuenta ha sido deshabilitada. No puedes acceder a la aplicación.');
+          return;
+        }
+  
+        // Redireccionar según el tipo de usuario
         if (usuarioData.tipo === 'admin') {
           this.router.navigate(['/admin-home']);
         } else if (usuarioData.tipo === 'pasajero') {
@@ -58,6 +68,7 @@ export class LoginPage implements OnInit {
           this.router.navigate(['/conductor-home']);
         }
   
+        // Esperar hasta que la navegación termine para cerrar el loading
         this.router.events.subscribe(event => {
           if (event instanceof NavigationEnd) {
             loading.dismiss();
@@ -69,15 +80,10 @@ export class LoginPage implements OnInit {
     } catch (error) {
       console.error('Error en el login:', error);
       loading.dismiss();
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un error al iniciar sesión.',
-        confirmButtonText: 'OK',
-        heightAuto: false
-      });
+      this.MensajesService.mensaje('error','Error','Hubo un error al iniciar sesión.');
       this.loginForm.reset();
     }
   }
+  
 
 }
