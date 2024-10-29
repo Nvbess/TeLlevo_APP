@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/firebase/auth.service';
+import { MensajesService } from 'src/app/services/mensajes.service';
 
 @Component({
   selector: 'app-pj-profile',
@@ -25,7 +25,9 @@ export class PjProfilePage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private fireStore: AngularFirestore) { }
+    private fireStore: AngularFirestore,
+    private router: Router,
+    private MensajesService: MensajesService,) { }
 
   ngOnInit() {
     this.authService.isLogged().subscribe(async (user)=> {
@@ -45,6 +47,12 @@ export class PjProfilePage implements OnInit {
           this.userModAuto = usuarioData.modeloAuto;
           this.userPatAuto = usuarioData.patenteAuto;
         }
+        if (usuarioData.estado === 'deshabilitado') {
+          await this.authService.logout();
+          this.MensajesService.mensaje('error', 'Cuenta deshabilitada', 'Tu cuenta ha sido deshabilitada. No puedes acceder a la aplicación.');
+          this.router.navigate(['/inicio']);
+        }
+      
       }
     })
 }

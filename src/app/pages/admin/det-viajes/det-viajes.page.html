@@ -45,7 +45,9 @@
         <ion-item class="ion-text-center">
           <ion-label>
             <p>Pasajeros</p>
-            <h2 class="ion-text-center">{{ nombrePasajero }} {{ apellidoPasajero }}</h2>
+            <ion-item *ngFor="let pasajero of pasajerosInfo" class="ion-text-center">
+              <h2 class="ion-text-center" style="margin-left: 7vh;">{{ pasajero.nombre }} {{ pasajero.apellido }}<br>Estado: {{ pasajero.estado }}</h2>
+            </ion-item>
           </ion-label>
         </ion-item>
         <ion-item>

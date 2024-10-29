@@ -32,6 +32,7 @@ export class ConfViajePage implements OnInit {
   viajeDestino?: string | null;
   viajeEstado?: string | null;
   viajeImagen?: string | null;
+  pasajerosEstados?: {} | null;
 
   constructor(
     private activatedRoute: ActivatedRoute,

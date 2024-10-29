@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { Viaje } from 'src/app/interfaces/viaje';
+import { GoogleAuthProvider } from '@angular/fire/auth';
+import firebase from 'firebase/compat/app';
 
 @Injectable({
   providedIn: 'root'
@@ -58,4 +59,25 @@ export class AuthService {
     console.log(`Usuario con UID ${uid} ha sido deshabilitado`);
     this.ViajesService.deshabilitarUsuarioEnViajes(uid);
   }
+
+  async loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    try {
+      const credential = await this.angularFireAuth.signInWithPopup(provider);
+      return credential;
+    } catch (error) {
+      console.error('Error al iniciar sesión con Google:', error);
+      throw error;
+    }
+  }
+
+  async registerWithGitHub() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    return this.angularFireAuth.signInWithPopup(provider);
+  }
+
+  loginWithGitHub() {
+    return this.angularFireAuth.signInWithPopup(new firebase.auth.GithubAuthProvider());
+  }
+  
 }

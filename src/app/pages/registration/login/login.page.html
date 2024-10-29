@@ -39,6 +39,15 @@
       </ion-text>
 
       <ion-button expand="block" (click)="login()">Ingresar</ion-button>
+      <div class="divider"><span>Ingresa con</span></div>
+      <div class="boton">
+        <ion-button shape="round" color="dark" (click)="loginWithGoogle()" class="boton-app">
+          <ion-icon slot="icon-only" name="logo-google"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" color="dark" (click)="loginWithGitHub()">
+          <ion-icon slot="icon-only" name="logo-github"></ion-icon>
+        </ion-button>
+      </div> 
     </ion-card-content>
   </ion-card>
   <h1 class="forgot-pass" routerLink="/reset-pass">Olvidaste tu contraseña?</h1>

@@ -24,7 +24,7 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private menuController: MenuController,
-    private firestore: AngularFirestore) 
+    private firestore: AngularFirestore,) 
   { 
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -84,6 +84,43 @@ export class LoginPage implements OnInit {
       this.loginForm.reset();
     }
   }
+
+  async loginWithGoogle() {
+    try {
+      const loading = await this.loadingController.create({
+        message: 'Iniciando sesión con Google...',
+        duration: 2000,
+      });
+      await loading.present();
+
+      const credential = await this.authService.loginWithGoogle();
+      const user = credential.user;
+
+      if (user) {
+        await this.firestore.collection('usuarios').doc(user.uid).set({
+          uid: user.uid,
+          nombre: user.displayName?.split(' ')[0] || '',
+          apellido: user.displayName?.split(' ')[1] || '',
+          email: user.email,
+          tipo: 'pasajero',
+          celular: '',
+          estado: 'habilitado'
+        });
+        await loading.dismiss();
+        this.router.navigate(['/pasajero-home']);
+      }
+    } catch (error) {
+      this.MensajesService.mensaje('error', 'Inicio de sesión fallido!', 'Error al iniciar sesión con Google');
+    }
+  }
   
+  async loginWithGitHub() {
+    try {
+      const result = await this.authService.loginWithGitHub();
+      this.router.navigate(['/pasajero-home']);
+    } catch (error) {
+      console.error('Error al iniciar sesión con GitHub:', error);
+    }
+  }
 
 }

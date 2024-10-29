@@ -144,6 +144,7 @@ export class PjAceptarviajePage implements OnInit {
           try {
             // Registrar el pasajero en el viaje utilizando el ID obtenido del QR
             await this.viajesService.addPasajero(this.resultadoQR, user.uid);
+            await this.viajesService.confirmarPasajero(this.resultadoQR, user.uid);
             this.presentToast('Te has unido al viaje correctamente.');
 
             setTimeout(() => {

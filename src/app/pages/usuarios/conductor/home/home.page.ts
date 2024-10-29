@@ -1,3 +1,4 @@
+import { MensajesService } from './../../../../services/mensajes.service';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MenuController } from '@ionic/angular';
@@ -31,6 +32,7 @@ export class HomePage implements OnInit {
   public apellUsuario?: string;
   public celUsuario?: string;
   public conductorUid?: string;
+  public estadoUsuario?: string;
 
   private viajeEnCursoSubscription: Subscription | undefined;
   private viajeEnEsperaSubscription: Subscription | undefined;
@@ -42,7 +44,8 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private fireStore: AngularFirestore,
     private router: Router,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    private MensajesService: MensajesService,
   ) {}
 
   ngOnInit() {
@@ -63,6 +66,8 @@ export class HomePage implements OnInit {
           this.nombreUsuario = usuarioData.nombre;
           this.apellUsuario = usuarioData.apellido;
           this.conductorUid = usuarioData.uid;
+          this.estadoUsuario = usuarioData.estado;
+          
           this.config();
 
           this.viajeEnEsperaSubscription = this.viajesService.getViajeEnEspera(user.uid).subscribe(viajes => {
@@ -75,6 +80,12 @@ export class HomePage implements OnInit {
               this.obtenerDatosViaje();
             }
           })
+        }
+        
+        if (usuarioData.estado === 'deshabilitado') {
+          await this.authService.logout();
+          this.MensajesService.mensaje('error', 'Cuenta deshabilitada', 'Tu cuenta ha sido deshabilitada. No puedes acceder a la aplicación.');
+          this.router.navigate(['/inicio']);
         }
       }
     });

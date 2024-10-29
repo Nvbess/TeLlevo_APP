@@ -1,3 +1,4 @@
+import { MensajesService } from './../../../../services/mensajes.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
@@ -25,6 +26,7 @@ export class HomePage implements OnInit {
   public nombreUsuario?: string;
   public apellUsuario?: string;
   public idUsuario?: number;
+  public estadoUsuario?: string;
 
   public viajes: any = [];
 
@@ -44,7 +46,8 @@ export class HomePage implements OnInit {
     private fireStore: AngularFirestore,
     private storage: AngularFireStorage,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private MensajesService: MensajesService
   ) {}
 
   ionViewDidEnter() {
@@ -78,6 +81,13 @@ export class HomePage implements OnInit {
           this.emailUsuario = usuarioData.email;
           this.nombreUsuario = usuarioData.nombre;
           this.apellUsuario = usuarioData.apellido;
+          this.estadoUsuario = usuarioData.estado;
+        }
+
+        if (usuarioData.estado === 'deshabilitado') {
+          await this.authService.logout();
+          this.MensajesService.mensaje('error', 'Cuenta deshabilitada', 'Tu cuenta ha sido deshabilitada. No puedes acceder a la aplicación.');
+          this.router.navigate(['/inicio']);
         }
       }
     });

@@ -66,6 +66,18 @@ export class ViajesService {
     });
   }
 
+  async confirmarPasajero(viajeId: string, pasajeroUid: string): Promise<void> {
+    const viajeRef = this.firestore.collection('viajes').doc(viajeId);
+  
+    try {
+      await viajeRef.update({
+        [`pasajerosEstados.${pasajeroUid}`]: 'confirmado'
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // ELIMINAR PASAJERO
   delPasajero(viajeId: string, pasajeroUid: string): Promise<void> {
     return this.firestore.collection('viajes').doc(viajeId).update({

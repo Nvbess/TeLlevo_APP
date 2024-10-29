@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Viaje } from 'src/app/interfaces/viaje';
-import { ViajesService } from 'src/app/services/firebase/viajes.service';
 
 @Component({
   selector: 'app-adm-viajes',

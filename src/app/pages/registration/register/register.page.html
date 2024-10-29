@@ -69,7 +69,16 @@
       </ion-item>
       
 
-      <ion-button expand="block" (click)="register()">Registrarse</ion-button>
+      <ion-button expand="block" (click)="register()" class="botonreg">Registrarse</ion-button>
+      <div class="divider"><span>o</span></div>
+      <div class="boton">
+        <ion-button shape="round" color="dark" (click)="loginWithGoogle()" class="boton-app">
+          <ion-icon slot="icon-only" name="logo-google"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" color="dark" (click)="registerWithGitHub()">
+          <ion-icon slot="icon-only" name="logo-github"></ion-icon>
+        </ion-button>
+      </div> 
     </ion-card-content>
   </ion-card>
 

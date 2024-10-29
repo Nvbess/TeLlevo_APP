@@ -122,12 +122,12 @@ export class CondViajePage implements OnInit {
         this.mensajeService.mensaje('Error', 'Error al obtener UID', 'No se pudo obtener el UID del conductor. Inicia sesión nuevamente.');
         return;
       }
-
+  
       const loading = await this.loadingController.create({
         message: 'Creando viaje...',
       });
       await loading.present();
-
+  
       const viajeData: Viaje = {
         origen: 'Duoc UC Sede Puente Alto',
         destino: this.viajeForm.value.destino,
@@ -138,17 +138,18 @@ export class CondViajePage implements OnInit {
         asientos_disponibles: this.viajeForm.value.capacidad,
         conductorUid: this.conductorUid,
         pasajerosUids: [],
+        pasajerosEstados: {},
         estado: 'en espera',
         imagenMapa: ''
       };
-
+  
       try {
         const viajeRef = await this.viajeService.addViaje(viajeData);
         const viajeId = viajeRef.id;
-
+  
         await loading.dismiss();
         this.router.navigate([`/cond-viajeinit/${viajeId}`]);
-
+  
       } catch (error) {
         await loading.dismiss();
         const alert = await this.alertController.create({
@@ -158,7 +159,7 @@ export class CondViajePage implements OnInit {
         });
         await alert.present();
       }
-
+  
     } else {
       const alert = await this.alertController.create({
         header: 'Error',
@@ -168,4 +169,5 @@ export class CondViajePage implements OnInit {
       await alert.present();
     }
   }
+  
 }

@@ -94,6 +94,7 @@ export class RegisterPage implements OnInit {
           celular: this.registerForm.value.celular,
           modeloAuto: this.registerForm.value.modeloAuto || '',
           patenteAuto: this.registerForm.value.patenteAuto || '',
+          estado: 'habilitado'
           });
           await loading.dismiss();
           this.mensajes.mensaje('success','Registro Exitoso','Usuario Registrado Correctamente').then(() => {
@@ -159,12 +160,68 @@ export class RegisterPage implements OnInit {
             tipo: esConductor ? 'conductor' : 'pasajero',
             celular: randomUser.cell || randomUser.phone, 
             modeloAuto: esConductor ? 'Toyota Corolla' : '', 
-            patenteAuto: esConductor ? 'ABC123' : '', 
+            patenteAuto: esConductor ? 'ABC123' : '',
+            estado: 'habilitado'
           });
         }
       } catch (error) {
         this.mensajes.mensaje('error', 'Registro Fallido!', 'Error al registrar');
       }
     }
+
+    async loginWithGoogle() {
+      try {
+        const loading = await this.loadingController.create({
+          message: 'Iniciando sesión...',
+          duration: 2000,
+        });
+        await loading.present();
     
+        const credential = await this.authService.loginWithGoogle();
+        const user = credential.user;
+    
+        if (user) {
+          await this.fireStore.collection('usuarios').doc(user.uid).set({
+            uid: user.uid,
+            nombre: user.displayName?.split(' ')[0] || '',
+            apellido: user.displayName?.split(' ')[1] || '',
+            email: user.email,
+            tipo: 'pasajero',
+            celular: '',
+            estado: 'habilitado'
+          });
+          await loading.dismiss();
+          this.router.navigate(['/login']);
+        }
+      } catch (error) {
+        this.mensajes.mensaje('error', 'Inicio de sesión fallido!', 'Error al iniciar sesión con Google');
+      }
+    }
+    
+    async registerWithGitHub() {
+      try {
+        const loading = await this.loadingController.create({
+          message: 'Registrando con GitHub...',
+          duration: 2000,
+        });
+        await loading.present();
+    
+        const credential = await this.authService.registerWithGitHub();
+        const user = credential.user;
+    
+        if (user) {
+          await this.fireStore.collection('usuarios').doc(user.uid).set({
+            uid: user.uid,
+            nombre: user.displayName || '',
+            email: user.email,
+            tipo: 'pasajero',
+            estado: 'habilitado'
+          });
+          await loading.dismiss();
+          this.router.navigate(['/login']);
+        }
+      } catch (error) {
+        this.mensajes.mensaje('error', 'Registro fallido', 'Error al registrarse con GitHub');
+      }
+    }
 }
