@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -22,6 +25,11 @@ export class CondViajePage implements OnInit {
   autocompleteService: any;
   autocompleteItems: any[] = [];
   conductorUid: string | null = null;
+  apiKey = environment.googleApiKey;
+  origenLat = -33.598449986499055;  // Coordenadas de ejemplo (cambia según tu aplicación)
+  origenLng = -70.57880611157175;
+  destinoLat!: number;  // Define el destino según el viaje que esté creando el conductor
+  destinoLng!: number;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -31,6 +39,9 @@ export class CondViajePage implements OnInit {
     private formBuilder: FormBuilder,
     private viajeService: ViajesService,
     private mensajeService: MensajesService,
+    private firestore: AngularFirestore,
+    private storage: AngularFireStorage,
+    private http: HttpClient
   ) {
     this.viajeForm = this.formBuilder.group({
       origen: [{ value: 'Duoc UC Sede Puente Alto', disabled: true }, [Validators.required]],
@@ -96,6 +107,7 @@ export class CondViajePage implements OnInit {
     }
   }
 
+
   seleccionarDireccion(item: any) {
     this.viajeForm.patchValue({ destino: item.description });
     this.autocompleteItems = [];
@@ -122,15 +134,20 @@ export class CondViajePage implements OnInit {
         this.mensajeService.mensaje('Error', 'Error al obtener UID', 'No se pudo obtener el UID del conductor. Inicia sesión nuevamente.');
         return;
       }
-  
+
       const loading = await this.loadingController.create({
         message: 'Creando viaje...',
       });
       await loading.present();
-  
+
+      const destino = this.viajeForm.value.destino;
+
+      // Primero, convierte la dirección de destino en coordenadas
+      await this.geocodeDestino(destino);
+
       const viajeData: Viaje = {
         origen: 'Duoc UC Sede Puente Alto',
-        destino: this.viajeForm.value.destino,
+        destino,
         fecha: this.viajeForm.value.fecha,
         hora: this.viajeForm.value.hora,
         costo: this.viajeForm.value.valor,
@@ -138,18 +155,20 @@ export class CondViajePage implements OnInit {
         asientos_disponibles: this.viajeForm.value.capacidad,
         conductorUid: this.conductorUid,
         pasajerosUids: [],
-        pasajerosEstados: {},
         estado: 'en espera',
         imagenMapa: ''
       };
-  
+
       try {
         const viajeRef = await this.viajeService.addViaje(viajeData);
         const viajeId = viajeRef.id;
-  
+
+        // Llama al método para guardar el mapa estático
+        await this.capturarMapaEstaticoYGuardar(viajeId);
+
         await loading.dismiss();
         this.router.navigate([`/cond-viajeinit/${viajeId}`]);
-  
+
       } catch (error) {
         await loading.dismiss();
         const alert = await this.alertController.create({
@@ -159,7 +178,7 @@ export class CondViajePage implements OnInit {
         });
         await alert.present();
       }
-  
+
     } else {
       const alert = await this.alertController.create({
         header: 'Error',
@@ -169,5 +188,55 @@ export class CondViajePage implements OnInit {
       await alert.present();
     }
   }
+
+  async geocodeDestino(direccion: string) {
+    const geocoder = new google.maps.Geocoder();
+    return new Promise<void>((resolve, reject) => {
+      geocoder.geocode({ address: direccion }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
+          const location = results[0].geometry.location;
+          this.destinoLat = location.lat();
+          this.destinoLng = location.lng();
+          resolve();
+        } else {
+          console.error('Error al obtener coordenadas:', status);
+          reject(new Error('No se pudieron obtener las coordenadas del destino.'));
+        }
+      });
+    });
+  }
   
+
+  async obtenerMapaEstaticoConRuta(origenLat: number, origenLng: number, destinoLat: number, destinoLng: number): Promise<string> {
+    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?size=800x800&maptype=roadmap&markers=color:blue|label:O|${origenLat},${origenLng}&markers=color:red|label:D|${destinoLat},${destinoLng}&path=color:0x0000ff|weight:5|${origenLat},${origenLng}|${destinoLat},${destinoLng}&key=${this.apiKey}`;
+    return mapUrl;
+  }
+
+  async capturarMapaEstaticoYGuardar(viajeId: string): Promise<void> {
+    const urlImagen = await this.obtenerMapaEstaticoConRuta(this.origenLat, this.origenLng, this.destinoLat, this.destinoLng);
+
+    return new Promise((resolve, reject) => {
+      this.http.get(urlImagen, { responseType: 'blob' }).subscribe(async (blob) => {
+        try {
+          const filePath = `viajes/${viajeId}/imagenmapa.png`;
+          const ref = this.storage.ref(filePath);
+          await ref.put(blob);
+          
+          // Obtener la URL de descarga de la imagen y guardarla en Firestore
+          const downloadURL = await ref.getDownloadURL().toPromise();
+          await this.firestore.collection('viajes').doc(viajeId).update({
+            imagenMapa: downloadURL
+          });
+          
+          resolve();
+        } catch (error) {
+          reject(error);
+          console.error("Error al guardar la imagen en Firebase Storage:", error);
+        }
+      }, (error) => {
+        reject(error);
+        console.error("Error al descargar la imagen del mapa estático:", error);
+      });
+    });
+  }
 }
