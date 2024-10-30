@@ -32,30 +32,37 @@
 <!-- Tarjeta cuando el pasajero ha confirmado el viaje escaneando el QR -->
 <ion-card *ngIf="estaEnViaje && viajeActual && qrEscaneado">
   <ion-card-header>
-    <ion-card-title>En Ruta</ion-card-title>
+    <ion-card-title>Viaje Actual</ion-card-title>
+    <ion-card-subtitle>{{ viajeActual.destino }}</ion-card-subtitle>
   </ion-card-header>
-  <ion-card-content>
-    <p>Destino: {{ viajeActual.destino }}</p>
+  <ion-card-content class="ion-text-center">
+    <h2>Estas en un viaje con <br> <b>{{ nombreConductor }} {{ apellidoConductor }}</b></h2>
     <p>Fecha: {{ viajeActual.fecha }}</p>
     <p>Hora: {{ viajeActual.hora }}</p>
-    <p>Estado: En ruta hacia el destino</p>
+    <p>Modelo del auto: <b>{{ autoConductor }}</b> Patente: <b>{{ patenteConductor }}</b></p>
+    <p>Actualmente estas en ruta!</p>
   </ion-card-content>
 </ion-card>
 
 <!-- Tarjeta cuando el pasajero tiene un viaje reservado pero no ha escaneado el QR -->
-<ion-card *ngIf="estaEnViaje && viajeActual && !qrEscaneado">
-  <ion-card-header>
+<ion-card *ngIf="estaEnViaje && viajeActual && !qrEscaneado" color="light">
+  <ion-card-header class="ion-text-center">
     <ion-card-title>Viaje Actual</ion-card-title>
+    <ion-card-subtitle>{{ viajeActual.destino }}</ion-card-subtitle>
   </ion-card-header>
-  <ion-card-content>
-    <p>Destino: {{ viajeActual.destino }}</p>
+  <ion-card-content class="ion-text-center">
+    <h2>Tienes un viaje con<br> <b>{{ nombreConductor }} {{ apellidoConductor }}</b></h2>
     <p>Fecha: {{ viajeActual.fecha }}</p>
     <p>Hora: {{ viajeActual.hora }}</p>
-    <p>Estado: {{ viajeActual.estado }}</p>
-    <ion-button expand="block" color="primary" (click)="startScan()">
-      Escanear código QR
-    </ion-button>
-  </ion-card-content>
+    <p>Modelo del auto: <b>{{ autoConductor }}</b> Patente: <b>{{ patenteConductor }}</b></p>
+    <p>Encuentrate con {{ nombreConductor }} en el costado de DuocUC </p>
+    </ion-card-content>    
+    <ion-card-content class="ion-text-center" style="display: flex; justify-content: center; align-items: center;">
+      <ion-button color="primary" (click)="startScan()" style="min-height: 45px;">
+        Escanear QR
+      </ion-button>
+      <ion-button color="danger" style="max-width: 100px; margin-left: 20px;" (click)="eliminarPasajero(idUsuario!)">Cancelar Reserva</ion-button>
+    </ion-card-content>
 </ion-card>
 
 
@@ -74,6 +81,8 @@
     </ion-button>
   </ion-item>
 </ion-list>
+
+
 
 <ion-footer>
   <app-toolbar-pas></app-toolbar-pas>

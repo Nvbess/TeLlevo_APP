@@ -15,6 +15,9 @@ import html2canvas from 'html2canvas';
 import { BarcodeScanningModalComponent } from '../home/barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { Viaje } from 'src/app/interfaces/viaje';
+import firebase from 'firebase/compat/app'; 
+import 'firebase/compat/firestore';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -28,8 +31,15 @@ export class HomePage implements OnInit {
   public emailUsuario?: string;
   public nombreUsuario?: string;
   public apellUsuario?: string;
-  public idUsuario?: number;
+  public idUsuario?: string
   public estadoUsuario?: string;
+  nombreConductor?: string;
+  apellidoConductor?: string;
+  autoConductor?: string;
+  patenteConductor?: string;
+  idViaje?: string;
+  viaje: Viaje | null | undefined;
+  pasajeros: { id: string; nombre: string; apellido: string; estado: string }[] = [];
 
   public viajes: any = [];
 
@@ -77,6 +87,11 @@ export class HomePage implements OnInit {
     this.router.events.subscribe(() => {
       this.clearRoute();
     });
+    this.authService.getUsuario().then(user => {
+      if (user) {
+        this.idUsuario = user.uid;
+      }
+    });
   }
 
   async checklogin() {
@@ -86,6 +101,7 @@ export class HomePage implements OnInit {
         const usuarioData = usuarioLogeado?.data() as Usuario;
 
         if (usuarioData) {
+          this.idUsuario = usuarioData.uid;
           this.tipoUsuario = usuarioData.tipo;
           this.emailUsuario = usuarioData.email;
           this.nombreUsuario = usuarioData.nombre;
@@ -115,9 +131,20 @@ export class HomePage implements OnInit {
           if (viajes.length > 0) {
             this.viajeActual = viajes[0]; // Obtener el primer viaje
             console.log('Viaje Actual:', this.viajeActual); // Para verificar la información
-            
+
+            this.fireStore.collection('usuarios').doc(this.viajeActual.conductorUid).get().toPromise().then((userDoc) => {
+              if (userDoc?.exists) {
+                const userData = userDoc.data() as Usuario;
+                this.nombreConductor = userData.nombre;
+                this.apellidoConductor = userData.apellido;
+                this.autoConductor = userData.modeloAuto;
+                this.patenteConductor = userData.patenteAuto;
+              }
+            });
+            this.idViaje = this.viajeActual.id;
             // Acceder a los campos del viaje
             console.log('Destino del viaje:', this.viajeActual.destino);
+            console.log('Conductor Uid:', this.viajeActual.conductorUid);
             console.log('Fecha del viaje:', this.viajeActual.fecha);
             console.log('Hora del viaje:', this.viajeActual.hora);
           } else {
@@ -128,6 +155,43 @@ export class HomePage implements OnInit {
       }
     });
   }
+
+  eliminarPasajero(pasajeroID: string) {
+    if (this.viajeActual.id) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Tu asiento dejará de estar reservado!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, cancelar reserva',
+        cancelButtonText: 'No, cancelar',
+        heightAuto: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Definir pasajerosUids para evitar errores si es undefined
+          const pasajerosUidsActualizado = (this.viaje?.pasajerosUids || []).filter(id => id !== pasajeroID);
+  
+          this.fireStore.collection('viajes').doc(this.viajeActual.id!).update({
+            pasajerosUids: pasajerosUidsActualizado,
+            [`pasajerosEstados.${pasajeroID}`]: firebase.firestore.FieldValue.delete() // Eliminar el estado del pasajero
+          }).then(() => {
+            this.pasajeros = this.pasajeros.filter(pasajero => pasajero.id !== pasajeroID);
+            Swal.fire({
+              title: 'Eliminado!',
+              text: 'Tu reserva ha sido eliminada',
+              icon: 'success',
+              heightAuto: false
+            });
+          }).catch(error => {
+            console.error("Error al eliminar el pasajero: ", error);
+          });
+        }
+      });
+    }
+  }
+  
 
   async confirmarEstadoPasajero(viajeId: string, userId: string) {
     const viajeDoc = await this.fireStore.collection('viajes').doc(viajeId).get().toPromise();
