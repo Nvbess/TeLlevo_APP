@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { BarcodeScanningModalComponent } from '../home/barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { Router } from '@angular/router';
 import { ModalController, Platform, ToastController } from '@ionic/angular';

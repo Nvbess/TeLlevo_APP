@@ -15,7 +15,7 @@
 </ion-content>
 
 <!-- Mostrar información del viaje si el pasajero está en un viaje -->
-<ion-card *ngIf="estaEnViaje && viajeActual">
+<!--<ion-card *ngIf="estaEnViaje && viajeActual">
   <ion-card-header>
     <ion-card-title>Viaje Actual</ion-card-title>
   </ion-card-header>
@@ -24,8 +24,40 @@
     <p>Fecha: {{ viajeActual.fecha }}</p>
     <p>Hora: {{ viajeActual.hora }}</p>
     <p>Estado: {{ viajeActual.estado }}</p>
+    <ion-button expand="block" color="primary" (click)="startScan()">
+      Escanear código QR
+    </ion-button>
+  </ion-card-content>
+</ion-card>-->
+<!-- Tarjeta cuando el pasajero ha confirmado el viaje escaneando el QR -->
+<ion-card *ngIf="estaEnViaje && viajeActual && qrEscaneado">
+  <ion-card-header>
+    <ion-card-title>En Ruta</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <p>Destino: {{ viajeActual.destino }}</p>
+    <p>Fecha: {{ viajeActual.fecha }}</p>
+    <p>Hora: {{ viajeActual.hora }}</p>
+    <p>Estado: En ruta hacia el destino</p>
   </ion-card-content>
 </ion-card>
+
+<!-- Tarjeta cuando el pasajero tiene un viaje reservado pero no ha escaneado el QR -->
+<ion-card *ngIf="estaEnViaje && viajeActual && !qrEscaneado">
+  <ion-card-header>
+    <ion-card-title>Viaje Actual</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <p>Destino: {{ viajeActual.destino }}</p>
+    <p>Fecha: {{ viajeActual.fecha }}</p>
+    <p>Hora: {{ viajeActual.hora }}</p>
+    <p>Estado: {{ viajeActual.estado }}</p>
+    <ion-button expand="block" color="primary" (click)="startScan()">
+      Escanear código QR
+    </ion-button>
+  </ion-card-content>
+</ion-card>
+
 
 <!-- Si no está en un viaje, mostrar la lista de viajes -->
 <ion-list class="lista-viajes" *ngIf="!estaEnViaje">
@@ -38,7 +70,7 @@
       Viaje <br> {{ viaje.fecha }} {{ viaje.hora }}
     </ion-label>
     <ion-button slot="end" color="primary" (click)="aceptarViaje(viaje)">
-      Aceptar Viaje
+      Ver Detalle Viaje
     </ion-button>
   </ion-item>
 </ion-list>

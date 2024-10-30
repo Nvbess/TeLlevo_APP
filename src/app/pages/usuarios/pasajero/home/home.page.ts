@@ -1,7 +1,7 @@
 import { MensajesService } from './../../../../services/mensajes.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ModalController, ToastController } from '@ionic/angular';
 import { ViajesService } from 'src/app/services/firebase/viajes.service';
 import * as L from 'leaflet';
 import { Loader } from '@googlemaps/js-api-loader';
@@ -12,6 +12,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import html2canvas from 'html2canvas';
+import { BarcodeScanningModalComponent } from '../home/barcode-scanning-modal.component';
+import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { Viaje } from 'src/app/interfaces/viaje';
 
 
 @Component({
@@ -38,7 +41,9 @@ export class HomePage implements OnInit {
   rutaCapa: any = null;
   apiKey = environment.googleApiKey;
   public estaEnViaje: boolean = false;
+  public qrEscaneado: boolean = false;
   viajeActual: any;
+  resultadoQR = '';
 
   constructor(
     private router: Router,
@@ -49,7 +54,9 @@ export class HomePage implements OnInit {
     private storage: AngularFireStorage,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private MensajesService: MensajesService
+    private MensajesService: MensajesService,
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {}
 
   ionViewDidEnter() {
@@ -121,6 +128,25 @@ export class HomePage implements OnInit {
       }
     });
   }
+
+  async confirmarEstadoPasajero(viajeId: string, userId: string) {
+    const viajeDoc = await this.fireStore.collection('viajes').doc(viajeId).get().toPromise();
+    
+    if (viajeDoc && viajeDoc.exists) {
+      const data = viajeDoc.data() as Viaje; // Cast de `data` al tipo `Viaje`
+      
+      // Verifica si existe `pasajerosEstados` y si el estado del usuario es "confirmado"
+      if (data.pasajerosEstados && data.pasajerosEstados[userId]?.estado === 'confirmado') {  
+        this.qrEscaneado = true; // Actualiza la variable para reflejar el estado confirmado en la interfaz
+        this.presentToast('Estado confirmado: Estás en ruta para el viaje.');
+      } else {
+        this.presentToast('Error: El estado no ha sido actualizado a "confirmado".', 'danger');
+      }
+    } else {
+      this.presentToast('Error: No se encontró el viaje.', 'danger');
+    }
+  }
+  
   
 
   loadMap() {
@@ -250,6 +276,99 @@ export class HomePage implements OnInit {
         // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
       }
     }
+
+    /*async startScan() {
+      const modal = await this.modalController.create({
+        component: BarcodeScanningModalComponent,
+        cssClass: 'barcode-scanner-modal',
+        showBackdrop: false,
+        componentProps: {
+          formats: [],
+          LensFacing: LensFacing.Back
+        }
+      });
+    
+      await modal.present();
+    
+      // Después de leer el QR
+      const { data } = await modal.onDidDismiss();
+    
+      // Si el QR contiene información
+      if (data?.barcode?.displayValue) {
+        this.resultadoQR = data.barcode.displayValue;  
+    
+        // Obtener el UID del pasajero autenticado
+        this.authService.isLogged().subscribe(async (user) => {
+          if (user) {
+            try {
+              // Registrar el pasajero en el viaje utilizando el ID obtenido del QR
+              await this.viajesService.addPasajero(this.resultadoQR, user.uid);
+              this.presentToast('Te has unido al viaje correctamente.');
+  
+              setTimeout(() => {
+                // this.router.navigate(['/pj-qr', this.resultadoQR]);  
+              }, 1000);  
+              
+            } catch (error) {
+              this.presentToast('Error al unirse al viaje', 'danger');
+            }
+          }
+        });
+      } else {
+        this.presentToast('No se pudo escanear el código QR. Inténtalo de nuevo.', 'danger');
+      }
+    }*/
+
+      async startScan() {
+        const modal = await this.modalController.create({
+          component: BarcodeScanningModalComponent,
+          cssClass: 'barcode-scanner-modal',
+          showBackdrop: false,
+          componentProps: {
+            formats: [],
+            LensFacing: LensFacing.Back
+          }
+        });
+      
+        await modal.present();
+      
+        const { data } = await modal.onDidDismiss();
+      
+        if (data?.barcode?.displayValue) {
+          this.resultadoQR = data.barcode.displayValue;
+      
+          this.authService.isLogged().subscribe(async (user) => {
+            if (user) {
+              try {
+                // Actualizar el estado del pasajero en Firebase a "confirmado"
+                await this.fireStore.collection('viajes').doc(this.resultadoQR).update({
+                  [`pasajerosEstados.${user.uid}.estado`]: 'confirmado'
+                });
+      
+                // Llama a confirmarEstadoPasajero para verificar el estado en la interfaz
+                this.confirmarEstadoPasajero(this.resultadoQR, user.uid);
+      
+              } catch (error) {
+                this.presentToast('Error al unirse al viaje', 'danger');
+              }
+            }
+          });
+        } else {
+          this.presentToast('No se pudo escanear el código QR. Inténtalo de nuevo.', 'danger');
+        }
+      }
+      
+
+    // Método para mostrar un toast de notificación
+  async presentToast(message: string, color: string = 'success') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+      color: color
+    });
+    toast.present();
+  }
     
   
   

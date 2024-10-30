@@ -8,7 +8,7 @@ import { PjAceptarviajePageRoutingModule } from './pj-aceptarviaje-routing.modul
 
 import { PjAceptarviajePage } from './pj-aceptarviaje.page';
 import { PastoolbarModule } from 'src/app/components/pastoolbar/pastoolbar.module';
-import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { BarcodeScanningModalComponent } from '../home/barcode-scanning-modal.component';
 
 @NgModule({
   imports: [
