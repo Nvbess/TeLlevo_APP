@@ -19,7 +19,7 @@ export class DetViajesPage implements OnInit {
   conductorID?: string | null;
   nombreConductor?: string | null;
   apellidoConductor?: string | null;
-  pasajerosInfo: { id: string; nombre: string | null; apellido: string | null; estado: string }[] = []; // Arreglo para almacenar la info de los pasajeros
+  //pasajerosInfo: { id: string; nombre: string | null; apellido: string | null; estado: string }[] = []; // Arreglo para almacenar la info de los pasajeros
   viajeOrigen?: string | null;
   viajeDestino?: string | null;
   viajeEstado?: string | null;
@@ -59,14 +59,14 @@ export class DetViajesPage implements OnInit {
             }
           });
 
-          this.getPasajerosInfo(viajeData.pasajerosUids);
+          //this.getPasajerosInfo(viajeData.pasajerosUids);
         }
       });
     }
   }
 
   // Función para obtener información de los pasajeros
-  private async getPasajerosInfo(pasajeroIDs: string[]) {
+  /*private async getPasajerosInfo(pasajeroIDs: string[]) {
     for (const pasajeroID of pasajeroIDs) {
       const userDoc = await this.firestore.collection('usuarios').doc(pasajeroID).get().toPromise();
       if (userDoc?.exists) {
@@ -85,5 +85,5 @@ export class DetViajesPage implements OnInit {
         });
       }
     }
-  }  
+  }  */
 }

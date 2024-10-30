@@ -118,6 +118,22 @@ export class PjAceptarviajePage implements OnInit {
     });
   }
 
+  async reservarViaje() {
+    this.authService.isLogged().subscribe(async (user) => {
+      if (user) {
+        if (this.viajeId) {
+          try {
+            await this.viajesService.addPasajeroReserva(this.viajeId, user.uid);
+            this.presentToast('Has reservado un viaje correctamente.');
+            this.router.navigate(['/pasajero-home']);
+          } catch (error) {
+            this.presentToast('Error al unirse al viaje', 'danger');
+          }
+        }
+      }
+    });
+  }
+
   async startScan() {
     const modal = await this.modalController.create({
       component: BarcodeScanningModalComponent,
@@ -144,7 +160,6 @@ export class PjAceptarviajePage implements OnInit {
           try {
             // Registrar el pasajero en el viaje utilizando el ID obtenido del QR
             await this.viajesService.addPasajero(this.resultadoQR, user.uid);
-            await this.viajesService.confirmarPasajero(this.resultadoQR, user.uid);
             this.presentToast('Te has unido al viaje correctamente.');
 
             setTimeout(() => {

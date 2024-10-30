@@ -9,11 +9,7 @@ export interface Viaje {
   asientos_disponibles: number;
   conductorUid: string;
   pasajerosUids: string[];
-  pasajerosEstados?: {
-    [uid: string]: {
-      estado: 'reservado' | 'confirmado';
-    };
-  };
+  pasajerosEstados: { [uid: string]: string };
   imagenMapa?: string;
   estado: string;
 }

@@ -1,10 +1,10 @@
+import { MensajesService } from './../../../../services/mensajes.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViajesService } from 'src/app/services/firebase/viajes.service';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-cond-viajeinit',
@@ -22,7 +22,8 @@ export class CondViajeinitPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private viajeService: ViajesService,
-    private fireStore: AngularFirestore
+    private fireStore: AngularFirestore,
+    private MensajesService: MensajesService,
   ) { }
 
   ngOnInit() {
@@ -42,15 +43,34 @@ export class CondViajeinitPage implements OnInit {
     });
   }
 
-  empezarViaje() {
-    if (this.viajeId) {
-      this.fireStore.collection('viajes').doc(this.viajeId).update({
-        estado: 'en curso'
-      }).then(() => {
+  async empezarViaje() {
+    if (this.viajeId && this.viaje) {
+      
+      const confirmados = Object.values(this.viaje.pasajerosEstados || {}).filter(
+        (estado) => estado === 'confirmado'
+      );
+  
+      console.log('Confirmados:', confirmados);
+  
+      if (confirmados.length > 0) {
+        await this.fireStore.collection('viajes').doc(this.viajeId).update({
+          estado: 'en curso'
+        });
         this.router.navigate(['/conductor-home']);
-      })
+      } else {
+        this.MensajesService.mensaje('error','Error','Debe haber al menos un pasajero confirmado para empezar el viaje.');
+      }
     }
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   cancelarViaje() {
     Swal.fire({

@@ -155,6 +155,7 @@ export class CondViajePage implements OnInit {
         asientos_disponibles: this.viajeForm.value.capacidad,
         conductorUid: this.conductorUid,
         pasajerosUids: [],
+        pasajerosEstados: {},
         estado: 'en espera',
         imagenMapa: ''
       };

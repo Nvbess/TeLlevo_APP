@@ -59,24 +59,52 @@ export class ViajesService {
     return this.firestore.collection('viajes').doc<Viaje>(id).valueChanges();
   }
 
-  // AGREGAR PASAJERO
-  addPasajero(viajeId: string, pasajerosUid: string): Promise<void> {
-    return this.firestore.collection('viajes').doc(viajeId).update({
-      pasajerosUids: firebase.firestore.FieldValue.arrayUnion(pasajerosUid)
-    });
-  }
-
-  async confirmarPasajero(viajeId: string, pasajeroUid: string): Promise<void> {
+  // VIAJES SERVICE
+  // AGREGAR PASAJERO con verificación de capacidad
+  async addPasajeroReserva(viajeId: string, pasajeroUid: string): Promise<void> {
     const viajeRef = this.firestore.collection('viajes').doc(viajeId);
+    const viajeSnapshot = await viajeRef.get().toPromise();
   
-    try {
-      await viajeRef.update({
-        [`pasajerosEstados.${pasajeroUid}`]: 'confirmado'
-      });
-    } catch (error) {
-      throw error;
+    if (viajeSnapshot?.exists) {
+      const viajeData = viajeSnapshot.data() as Viaje;
+  
+      if (viajeData.pasajerosUids.length < viajeData.capacidad) {
+        await viajeRef.update({
+          pasajerosUids: firebase.firestore.FieldValue.arrayUnion(pasajeroUid),
+          [`pasajerosEstados.${pasajeroUid}`]: 'reservado'
+        });
+      } else {
+        throw new Error("Capacidad máxima alcanzada");
+      }
+    } else {
+      throw new Error("Viaje no encontrado");
     }
   }
+
+  // VIAJES SERVICE
+  // AGREGAR PASAJERO con verificación de capacidad
+  async addPasajero(viajeId: string, pasajeroUid: string): Promise<void> {
+    const viajeRef = this.firestore.collection('viajes').doc(viajeId);
+    const viajeSnapshot = await viajeRef.get().toPromise();
+  
+    if (viajeSnapshot?.exists) {
+      const viajeData = viajeSnapshot.data() as Viaje;
+  
+      // Verificar si la capacidad ya está llena
+      if (viajeData.pasajerosUids.length < viajeData.capacidad) {
+        await viajeRef.update({
+          pasajerosUids: firebase.firestore.FieldValue.arrayUnion(pasajeroUid),
+          [`pasajerosEstados.${pasajeroUid}`]: 'confirmado'
+        });
+      } else {
+        throw new Error("Capacidad máxima alcanzada");
+      }
+    } else {
+      throw new Error("Viaje no encontrado");
+    }
+  }
+  
+
 
   // ELIMINAR PASAJERO
   delPasajero(viajeId: string, pasajeroUid: string): Promise<void> {
@@ -111,6 +139,7 @@ export class ViajesService {
       }
     });
   }
+
 
   async deshabilitarUsuarioEnViajes(uid: string) {
     try {
