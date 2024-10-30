@@ -1,8 +1,6 @@
 <ion-header class="ion-no-border header-transparent">
   <ion-toolbar>
     <ion-title class="ion-text-center">QR Viaje</ion-title>
-    <ion-buttons slot="start">
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -26,7 +24,10 @@
       
       <!-- Listar los pasajeros del viaje -->
       <ion-item *ngFor="let pasajero of pasajeros">
-        <ion-label>{{ pasajero }}</ion-label>
+        <ion-label>{{ pasajero.nombre | titlecase }} {{ pasajero.apellido | titlecase }} <br><p>{{ pasajero.estado | titlecase }}</p></ion-label>
+        <ion-button color="danger" slot="end" (click)="eliminarPasajero(pasajero.id)">
+          Eliminar
+        </ion-button>
       </ion-item>
       
       <!-- Si no hay pasajeros -->

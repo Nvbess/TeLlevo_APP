@@ -71,7 +71,7 @@ export class ViajesService {
       if (viajeData.pasajerosUids.length < viajeData.capacidad) {
         await viajeRef.update({
           pasajerosUids: firebase.firestore.FieldValue.arrayUnion(pasajeroUid),
-          [`pasajerosEstados.${pasajeroUid}`]: 'reservado'
+          [`pasajerosEstados.${pasajeroUid}`]: { estado: 'reservado' }
         });
       } else {
         throw new Error("Capacidad máxima alcanzada");
@@ -94,7 +94,7 @@ export class ViajesService {
       if (viajeData.pasajerosUids.length < viajeData.capacidad) {
         await viajeRef.update({
           pasajerosUids: firebase.firestore.FieldValue.arrayUnion(pasajeroUid),
-          [`pasajerosEstados.${pasajeroUid}`]: 'confirmado'
+          [`pasajerosEstados.${pasajeroUid}`]: { estado: 'confirmado' }
         });
       } else {
         throw new Error("Capacidad máxima alcanzada");
@@ -104,7 +104,14 @@ export class ViajesService {
     }
   }
   
-
+  // OBTENER VIAJE POR PASAJERO
+  getViajePorPasajero(userId: string): Observable<Viaje[]> {
+    return this.firestore.collection<Viaje>('viajes', ref => 
+      ref.where('pasajerosUids', 'array-contains', userId)
+         .where('estado', 'in', ['en curso', 'en espera']) // Asegúrate de que estos sean los estados correctos
+    ).valueChanges();
+  }
+  
 
   // ELIMINAR PASAJERO
   delPasajero(viajeId: string, pasajeroUid: string): Promise<void> {

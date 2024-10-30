@@ -37,6 +37,8 @@ export class HomePage implements OnInit {
   destinoLng!: number;
   rutaCapa: any = null;
   apiKey = environment.googleApiKey;
+  public estaEnViaje: boolean = false;
+  viajeActual: any;
 
   constructor(
     private router: Router,
@@ -89,9 +91,37 @@ export class HomePage implements OnInit {
           this.MensajesService.mensaje('error', 'Cuenta deshabilitada', 'Tu cuenta ha sido deshabilitada. No puedes acceder a la aplicación.');
           this.router.navigate(['/inicio']);
         }
+        this.checkViajeActual(user.uid);
       }
     });
   }
+
+  async checkViajeActual(userId: string) {
+    this.authService.isUserInTrip(userId).subscribe(async (isInTrip) => {
+      console.log('¿El usuario está en un viaje?', isInTrip); // Debug
+  
+      this.estaEnViaje = isInTrip;
+  
+      if (this.estaEnViaje) {
+        // Obtener el viaje actual
+        this.viajesService.getViajePorPasajero(userId).subscribe(viajes => {
+          if (viajes.length > 0) {
+            this.viajeActual = viajes[0]; // Obtener el primer viaje
+            console.log('Viaje Actual:', this.viajeActual); // Para verificar la información
+            
+            // Acceder a los campos del viaje
+            console.log('Destino del viaje:', this.viajeActual.destino);
+            console.log('Fecha del viaje:', this.viajeActual.fecha);
+            console.log('Hora del viaje:', this.viajeActual.hora);
+          } else {
+            console.log('No hay viaje activo para este usuario.'); // Debug
+            this.viajeActual = null; // No hay viaje activo
+          }
+        });
+      }
+    });
+  }
+  
 
   loadMap() {
     this.map = L.map('mapId').setView([this.origenLat, this.origenLng], 17); 
@@ -176,33 +206,6 @@ export class HomePage implements OnInit {
       });
     }
   }
-
-  /*async aceptarViaje(viaje: any) {
-    // Capturar y guardar el pantallazo del mapa
-    await this.capturarMapaYGuardar(viaje.id);
-
-    // Redirige a `pj-aceptarviaje` pasando el ID del viaje
-    this.router.navigate([`/pj-aceptarviaje/${viaje.id}`]);
-  }*/
-
-  /*async capturarMapaYGuardar(viajeId: string) {
-    const mapElement = document.getElementById('mapId');  // Asegúrate de que el ID corresponde al contenedor del mapa
-    if (mapElement) {
-      const canvas = await html2canvas(mapElement);
-      const imageData = canvas.toDataURL('image/png');
-
-      // Subir la imagen a Firebase Storage
-      const filePath = `viajes/${viajeId}/imagenmapa.png`;
-      const ref = this.storage.ref(filePath);
-      await ref.putString(imageData, 'data_url');
-
-      // Obtener la URL de descarga de la imagen y guardarla en Firestore
-      const downloadURL = await ref.getDownloadURL().toPromise();
-      this.fireStore.collection('viajes').doc(viajeId).update({
-        imagenmapa: downloadURL
-      });
-    }
-  }*/
 
     async obtenerMapaEstaticoConRuta(origenLat: number, origenLng: number, destinoLat: number, destinoLng: number): Promise<string> {
       const apiKey = this.apiKey;

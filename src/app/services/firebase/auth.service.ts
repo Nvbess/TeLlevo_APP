@@ -80,4 +80,16 @@ export class AuthService {
     return this.angularFireAuth.signInWithPopup(new firebase.auth.GithubAuthProvider());
   }
   
+  isUserInTrip(userId: string): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      this.fireStore.collection('viajes', ref => 
+        ref.where('pasajerosUids', 'array-contains', userId)
+           .where('estado', 'in', ['en curso', 'en espera']) // Asegúrate de que estos sean los estados correctos
+      ).valueChanges()
+      .subscribe(viajes => {
+        observer.next(viajes.length > 0); // Devuelve true si hay viajes donde el usuario está en curso o en espera
+      });
+    });
+  }
+  
 }

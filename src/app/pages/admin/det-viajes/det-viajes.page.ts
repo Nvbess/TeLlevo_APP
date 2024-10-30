@@ -19,7 +19,7 @@ export class DetViajesPage implements OnInit {
   conductorID?: string | null;
   nombreConductor?: string | null;
   apellidoConductor?: string | null;
-  //pasajerosInfo: { id: string; nombre: string | null; apellido: string | null; estado: string }[] = []; // Arreglo para almacenar la info de los pasajeros
+  pasajerosInfo: { id: string; nombre: string | null; apellido: string | null; estado: string }[] = []; 
   viajeOrigen?: string | null;
   viajeDestino?: string | null;
   viajeEstado?: string | null;
@@ -59,31 +59,38 @@ export class DetViajesPage implements OnInit {
             }
           });
 
-          //this.getPasajerosInfo(viajeData.pasajerosUids);
+          this.getPasajerosInfo(viajeData.pasajerosUids, viajeData.pasajerosEstados);
         }
       });
     }
   }
 
   // Función para obtener información de los pasajeros
-  /*private async getPasajerosInfo(pasajeroIDs: string[]) {
+  async getPasajerosInfo(pasajeroIDs: string[], pasajerosEstados: { [uid: string]: { estado: string } }) {
+    console.log('Pasajeros Estados:', pasajerosEstados);
+  
     for (const pasajeroID of pasajeroIDs) {
+      console.log('Buscando pasajero:', pasajeroID);
+  
       const userDoc = await this.firestore.collection('usuarios').doc(pasajeroID).get().toPromise();
       if (userDoc?.exists) {
         const userData = userDoc.data() as Usuario;
-  
-        // Comprobar si viaje y pasajerosEstados existen
-        const estado = this.viaje && this.viaje.pasajerosEstados && this.viaje.pasajerosEstados[pasajeroID]?.estado 
-                       ? this.viaje.pasajerosEstados[pasajeroID].estado 
-                       : 'desconocido';
+        const estado = pasajerosEstados[pasajeroID]?.estado || 'desconocido';
         
+        console.log('Estado del pasajero:', estado);
+  
         this.pasajerosInfo.push({
           id: pasajeroID,
           nombre: userData.nombre,
           apellido: userData.apellido,
           estado: estado,
         });
+      } else {
+        console.log(`Pasajero no encontrado: ${pasajeroID}`);
       }
     }
-  }  */
+  
+    console.log('Pasajeros Info:', this.pasajerosInfo);
+  }
+  
 }

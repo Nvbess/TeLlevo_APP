@@ -14,7 +14,21 @@
 <ion-content id="mapId" style="height: 100%; width: 100%;">
 </ion-content>
 
-<ion-list class="lista-viajes">
+<!-- Mostrar información del viaje si el pasajero está en un viaje -->
+<ion-card *ngIf="estaEnViaje && viajeActual">
+  <ion-card-header>
+    <ion-card-title>Viaje Actual</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <p>Destino: {{ viajeActual.destino }}</p>
+    <p>Fecha: {{ viajeActual.fecha }}</p>
+    <p>Hora: {{ viajeActual.hora }}</p>
+    <p>Estado: {{ viajeActual.estado }}</p>
+  </ion-card-content>
+</ion-card>
+
+<!-- Si no está en un viaje, mostrar la lista de viajes -->
+<ion-list class="lista-viajes" *ngIf="!estaEnViaje">
   <ion-item [button]="true" *ngFor="let viaje of viajes" (click)="selectViaje(viaje)">
     <ion-avatar aria-hidden="true" slot="start">
       <img alt="" src="assets/icon/icono-car.png">
@@ -26,7 +40,6 @@
     <ion-button slot="end" color="primary" (click)="aceptarViaje(viaje)">
       Aceptar Viaje
     </ion-button>
-
   </ion-item>
 </ion-list>
 

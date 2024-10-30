@@ -9,7 +9,7 @@ export interface Viaje {
   asientos_disponibles: number;
   conductorUid: string;
   pasajerosUids: string[];
-  pasajerosEstados: { [uid: string]: string };
+  pasajerosEstados: { [uid: string]: { estado: string } };
   imagenMapa?: string;
   estado: string;
 }
