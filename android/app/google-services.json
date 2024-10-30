@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "875028993466",
+    "project_id": "tellevoapp-46e7f",
+    "storage_bucket": "tellevoapp-46e7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875028993466:android:1f4c04641ef4faa6cc3983",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875028993466-4tvbut4o7papied3c5b2bc82cfqhbecc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx-PKZgqBttovbOe9AfdvOoMspIcO4qNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875028993466-4tvbut4o7papied3c5b2bc82cfqhbecc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
