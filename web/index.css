@@ -1,0 +1,38 @@
+body {
+    background: url('./img/fondo.png');
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+}
+
+.content-box {
+    background: rgb(242, 242, 242 , 0.8); 
+    justify-content: center;
+    align-items: left;
+    margin-top: 48vh;
+    margin-left: 30vh;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+    text-align: center;
+    width: 600px;
+    height: 280px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/* Heading styling */
+.content-box h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #000000;
+}
+
+.content-box h5 {
+    margin-bottom: 15px;
+    color: #000000;
+}
+
+/* Paragraph styling */
+.content-box a {
+    font-size: 1rem;
+}

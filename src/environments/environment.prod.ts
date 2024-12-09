@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: "AIzaSyCgJX3cfj8-JYT8xHL88h3QyXjXjRNAt2E",
+    apiKey: "API_KEY_FIREBASE_CAMBIAR",
     authDomain: "tellevoapp-46e7f.firebaseapp.com",
     projectId: "tellevoapp-46e7f",
     storageBucket: "tellevoapp-46e7f.appspot.com",
@@ -9,5 +9,5 @@ export const environment = {
     appId: "1:875028993466:web:a5cfa60a038d4db3cc3983",
     measurementId: "G-QG26WDZ8BK"
   },
-  googleApiKey: 'AIzaSyBcRMif7zFwRxG5uDWZeGradSVnT-WGmd0',
+  googleApiKey: "API_KEY_GOOGLE_MAPS_CAMBIAR",
 };
